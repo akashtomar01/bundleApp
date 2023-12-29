@@ -1,0 +1,254 @@
+@media only screen and (max-width:1499px) {
+.sd-productCustom-preview {
+    width: 60% !important;
+}
+}
+@media only screen and (min-width:1399px) {
+    .sd-popUp-customise-preview {
+        width: 60% !important;
+    }
+}
+
+@media only screen and (min-width:1199px) {
+    .sd-bundle-selectedProductList {
+        flex-wrap: nowrap;
+    }
+}
+@media only screen and (max-width:1120px){
+    .ant-table-content {
+        overflow-x: auto;
+    }
+    .sd-bundle-dashboard-img-box {
+        width: 130px !important;
+    }
+    .sd-bundle-faq-parent-img {
+        width: 100% !important;
+    }
+    /* .sd-bundle-analytics-tab-box .ant-tabs-content-holder .ant-row {
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)) !important;
+    } */
+
+}
+@media screen and (max-width:1009px) {
+
+    /******** build your bundle page css ********/
+    .sd-bundle-wrapper-common {
+        flex-direction: column;
+    }
+
+    .sd-bundle-wrapper-common .sd-bundle-left-section-common {
+        max-width: 100% !important;
+    }
+
+    .sd-bundle-total-common span {
+        padding: 5px !important;
+    }
+
+    /*********** customization design css ********/
+    .sd-bundle-customizationBundle-wrapper {
+        height: auto !important;
+        background: #f2edf3;
+    }
+
+    .sd-bundle-mainContent-wrapper .sd-bundle-centerContent {
+        width: 100% !important;
+        order: 3 !important;
+    }
+
+    .sd-bundle-mainContent-wrapper .sd-bundle-leftSider {
+        width: 60% !important;
+        height: max-content !important;
+    }
+
+    .sd-preview-wrapper-common {
+        width: 100% !important;
+    }
+
+    .sd-bundle-mainContent-wrapper .sd-bundle-rightSider {
+        width: 30% !important;
+        height: auto !important;
+    }
+
+    .swiper.swiper-initialized .anticon.anticon-plus.plusBtn {
+        height: 25px;
+        width: 25px;
+    }
+
+    .swiper.swiper-initialized .anticon.anticon-plus.plusBtn svg {
+        font-size: 20px;
+    }
+
+
+}
+
+@media screen and (max-width:992px) {
+    .ant-modal {
+        width: 70% !important;
+    }
+
+    .sd-bundle-select-bundle {
+        flex-wrap: wrap;
+    }
+
+    .sd-bundle-productBundle-rightSection {
+        margin-left: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .sd-bundle-bundleSection-common,
+    .ant-modal-body .ant-card,
+    .sd-bundle-customization-sub-section .sd-bundle-customization-card {
+        margin-left: 0 !important;
+    }
+
+    .sd-preview-wrapper-common {
+        margin-top: 20px !important;
+    }
+    button.Polaris-Navigation__Item {
+        padding: 0 12px !important;
+    }
+    .Polaris-Navigation__PrimaryNavigation.Polaris-Scrollable.Polaris-Scrollable--vertical {
+        padding-top: 1rem;
+    }
+
+}
+
+@media screen and (max-width:767px){
+    .Polaris-Frame__Navigation--enterActive {
+        width: 270px;
+    }
+}
+
+@media screen and (max-width:640px) {
+    .sd-bundle-selectedProductList {
+        flex-wrap: nowrap !important;
+    }
+
+    .sd-bundle-bundleSection-common::before,
+    .ant-card::before,
+    .sd-bundle-customization-card::before {
+        width: 130px;
+        height: 130px;
+        right: -75px;
+    }
+
+    .sd-bundle-bundleSection-common::after,
+    .ant-card::after,
+    .sd-bundle-customization-card::after {
+        width: 130px;
+        height: 130px;
+        right: 0px;
+    }
+
+    .sd-popUp-customise-preview {
+        width: 100% !important;
+    }
+    .sd-bundle-mainContent-wrapper .sd-bundle-centerContent {
+        margin-top: 1rem !important;
+      }
+}
+
+@media screen and (max-width:576px) {
+    .sd-bundle-selectedProductList {
+        flex-wrap: wrap !important;
+        row-gap: 10px;
+    }
+    
+    .sd-bundle-custom-item-common {
+        padding: 10px 0px 10px 0px !important;
+    }
+    p.sd-bundle-custom-item-heading-common {
+        padding-left: 0;
+    }
+    .sd-bundle-custom-item-inputSection {
+        padding-left: 0;
+    }
+    .sd-bundle-editSection-wrappper {
+        padding-left: 0;
+    }
+    .sd-bundle-custom-item-common .sd-bundle-custom-item-inputSection {
+        flex-direction: column;
+        font-size: 11px;
+    }
+    .sd-bundle-setting-box .ant-card-body {
+        width: 100% !important;
+    }
+    .sd-bundle-name-email {
+     flex-wrap: wrap;
+    }
+    .sd-bundle-name-email .ant-form-item{
+        width: 100%;
+      }
+ 
+}
+
+@media screen and (max-width:490px) {
+    .ant-modal {
+        width: 100% !important;
+    }
+
+    .sd-bundle-bundleSection-common {
+        margin: 25px 0px 0px 0px !important;
+    }
+
+    .Polaris-Layout__Section,
+    .Polaris-Layout__AnnotatedSection {
+        margin-left: 0 !important;
+        max-width: 100% !important;
+    }
+
+    /************ customization page css **********/
+    .sd-bundle-customization-section .ant-row {
+        display: block;
+    }
+
+    .sd-bundle-customization-section .ant-col {
+        max-width: 100%;
+    }
+ 
+    .sd-bundle-customization-title {
+        padding: 13px 0px 13px 13px !important;
+    }
+
+    .sd-bundle-customization-wrapper .sd-bundle-customization-section {
+        padding: 0 !important;
+    }
+
+    .sd-popUp-productData img {
+        width: 130px !important;
+        height: 130px !important;
+    }
+}
+
+@media screen and (max-width:390px) {
+    button.Polaris-Navigation__Item {
+        padding: 1px 12px !important; 
+    }
+    .sd-bundle-search-box-common {
+        width: 60% !important;
+    }
+
+    .sd-bundle-custom-item-common {
+        padding: 10px 0px 10px 0px !important;
+    }
+
+    .sd-bundle-custom-item-common .sd-bundle-custom-item-inputSection {
+        padding-left: 0 !important;
+    }
+    .sd-bundle-bundleList-section .sd-bundle-listItem-common>* {
+        padding: 4px !important;
+    }
+    .sd-bundle-mainContent-wrapper .sd-bundle-rightSider {
+        width: 35% !important;
+    }
+    .sd-popUp-productData img {
+        width: 100px !important;
+        height: 90px !important;
+    }
+    .sd-bundle-mainContent-wrapper .sd-bundle-leftSider {
+        height: auto !important;
+    }
+    .sd-bundle-translate-originalText {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+    }
+}

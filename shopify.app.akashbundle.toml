@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "akashbundle"
+client_id = "d2a22c5ede7eb9ed65436e4d5b3d85fb"
+application_url = "https://republicans-chem-encouraged-operations.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,write_price_rules,write_discounts,read_content,write_content,write_orders,read_themes"
+
+[auth]
+redirect_urls = [
+  "https://republicans-chem-encouraged-operations.trycloudflare.com/auth/callback",
+  "https://republicans-chem-encouraged-operations.trycloudflare.com/auth/shopify/callback",
+  "https://republicans-chem-encouraged-operations.trycloudflare.com/api/auth/callback",
+  "https://republicans-chem-encouraged-operations.trycloudflare.com/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "playgroundstoree.myshopify.com"
