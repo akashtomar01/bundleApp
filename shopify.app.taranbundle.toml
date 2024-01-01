@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "taranBundle"
+client_id = "fd6ba8ee7496639493774747c49976c3"
+application_url = "https://ate-publicly-patrick-petroleum.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,write_price_rules,write_discounts,read_content,write_content,write_orders,read_themes"
+
+[auth]
+redirect_urls = [
+  "https://ate-publicly-patrick-petroleum.trycloudflare.com/auth/callback",
+  "https://ate-publicly-patrick-petroleum.trycloudflare.com/auth/shopify/callback",
+  "https://ate-publicly-patrick-petroleum.trycloudflare.com/api/auth/callback",
+  "https://ate-publicly-patrick-petroleum.trycloudflare.com/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "playgroundstoree.myshopify.com"
