@@ -16,8 +16,12 @@
     "@shopify/app": "^3.51.0",
     "@shopify/cli": "^3.51.0",
     "@shopify/shopify_function": "0.1.0",
+    "@shopify/ui-extensions": "2023.10.0",
+    "@shopify/ui-extensions-react": "2023.10.0",
+    "@shopify/web-pixels-extension": "^0.4.22",
     "dotenv": "^16.3.1",
-    "javy": "0.1.1"
+    "javy": "0.1.1",
+    "react": "^18.2.0"
   },
   "author": "ShineD-106"
 }
