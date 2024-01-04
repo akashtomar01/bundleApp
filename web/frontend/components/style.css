@@ -3030,3 +3030,15 @@ nav.Polaris-Navigation {
     z-index: 9;
     left: 50%;
 }
+.design{
+    display: flex;
+}
+.designChildDiv{
+    margin: 10px; 
+}
+.designChilDevPlusIcon{
+    margin-top: 50px;
+}
+.iconDesign{
+    margin-top: 20px;
+}

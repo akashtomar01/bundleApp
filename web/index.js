@@ -53,7 +53,6 @@ app.get(
   
     const customizationData =  await customizationModel.findOneAndUpdate({shop : session.shop}, {shop : session.shop, bundle:Customizations['bundle'],collectionMixMatch :Customizations['collectionMixMatch'],popUp :Customizations["popUp"],
        volume:Customizations["volume"],bxgy:Customizations["buyXgetY"]}, {upsert:true, new : true})
-       console.log("customization data",customizationData)
        if(customizationData){
         console.log("customization data saved successfully !!!")
        }

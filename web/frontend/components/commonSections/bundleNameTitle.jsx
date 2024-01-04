@@ -65,7 +65,7 @@ const BundleNameTitle=(props)=>{
         ""
       )}
     </div>
-{ props.type == "collectonMix&Match"   ? 
+{(props.type == "collectonMix&Match" || props.type== "productMix&Match")  &&
 <div className="sd-bundle-descriptionBlock">
       <label className="sd-bundle-plainText-common">Description</label>
       <br />
@@ -91,7 +91,7 @@ const BundleNameTitle=(props)=>{
         *You can add more details about this bundle here to aware your customers of. For example explaining the number of items they should buy from each collection.
       </p>
     </div>
-     : ""
+    //  : ""
    
   }
 

@@ -238,6 +238,9 @@
       "originalPrice": { "color": "#FF0000", "fontSize": 18 },
       "finalPrice": { "color": "#008061", "fontSize": 18 }
     }
+  },
+  "frequentlyBoughtTogether": {
+    "design": "modern"
   }
   
     }

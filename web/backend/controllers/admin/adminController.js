@@ -396,7 +396,9 @@ return res.status(503).send({message:"something went wrong",status:503})
                                                                             collectionMixMatch:req.body.collection,
                                                                             volume:req.body.volume,
                                                                             buyXgetY:req.body.buyXgetY,
-                                                                          popUp:req.body.popUp},{upsert:true})
+                                                                            frequentlyBoughtTogether:req.body.frequentlyBoughtTogether,
+                                                                          popUp:req.body.popUp}
+                                                                          ,{upsert:true})
 
                                                                 
   if(response){

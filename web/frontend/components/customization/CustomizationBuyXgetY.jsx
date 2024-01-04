@@ -7,7 +7,7 @@ import pic from "../../assets/image2.png";
 const CustomizationBuyXgetY = ({data}) => {
     const {currency}=useAPI();
 const discount=40;
-console.log(data)
+// console.log("hello check bxgy",data)
   return (
 //     <div className="sd-preview-wrapper-common sd-productCustom-preview"  style={{"backgroundColor":data.buyXgetY.box.backgroundColor,"borderColor": data.buyXgetY.box.borderColor,"borderRadius":data.buyXgetY.box.borderRadius+"px"}} >
 

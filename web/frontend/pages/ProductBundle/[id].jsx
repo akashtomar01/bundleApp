@@ -471,6 +471,7 @@ function CreateBundle() {
   }
 
   const handleSave = async () => {
+   
     let alertText = [];
     let flag = true;
 
@@ -489,6 +490,7 @@ function CreateBundle() {
       );
     }
 
+ 
     if (data.name == "") {
       if (!errorArray.includes("bundleName")) {
         setErrorArray((prev) => [...prev, "bundleName"]);
@@ -516,11 +518,14 @@ function CreateBundle() {
       alertCommon(setAlert, alertText, "critical", false);
     }
 
+
     if (flag == true) {
       setSpinner(true);
       setErrorArray("");
       setPickerError([]);
       if (param.id == "create") {
+       try{
+        console.log("in the try")
         const response = await postApi("/api/admin/createBundle", data, app);
         if (response.data.status === 200) {
           return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
@@ -532,6 +537,9 @@ function CreateBundle() {
             false
           );
         }
+       }catch(err){
+        console.log(err)
+       }
       } else {
         const response = await postApi("/api/admin/updateBundle", data, app);
         if (response.data.status === 200) {

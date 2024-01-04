@@ -36,6 +36,7 @@ import { useAppBridge } from "@shopify/app-bridge-react";
 import BoatLoader from "../BoatLoader";
 import toastNotification from "../commonSections/Toast";
 import CustomizationBuyXgetY from "./CustomizationBuyXgetY";
+import CustomizationFBt from "./CustomizationFBTPreview";
 const CustomizationEditor = (props) => {
   const app = useAppBridge();
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ const CustomizationEditor = (props) => {
       // props.setData(defaultData["popUp"]) 2
     }
   };
-console.log(props)
+// console.log("hello*******",props)
   const handleBundleOption = (bundleName) => {
     if (props.bundleOption != bundleName) {
       props.setBundleOption(bundleName);
@@ -88,7 +89,8 @@ console.log(props)
       bundleName == "bundle" ||
       bundleName == "volume" ||
       bundleName == "buyXgetY" ||
-      bundleName == "productMixMatch" 
+      bundleName == "productMixMatch" ||
+      bundleName == "frequentlyBoughtTogether" 
         ? setCustomOption("Box")
         : "";
     }
@@ -99,7 +101,7 @@ console.log(props)
     customOption != clickedOption ? setCustomOption(clickedOption) : "";
   };
 
-  const leftSideSectionCommon = () => {
+  const leftSideSectionCommon = (type) => {
     return (
       <div className="sd-bundle-listItem-wrapper">
         {/* {bundleOption != "collection" &&<div className="sd-bundle-listItem-common sd-bundle-listItem-sub" onClick={()=>handleCustomOption("Design")}><AntDesignOutlined /><p>Design</p></div> } */}
@@ -110,92 +112,102 @@ console.log(props)
           <PicCenterOutlined />
           <p>Theme</p>
         </div>} */}
-        <div
-          className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
-            customOption == "Box" ? "sd-option-active" : ""
-          }`}
-          onClick={() => handleCustomOption("Box")}
-        >
-          <BoxPlotOutlined />
-          <p>Box</p>
-        </div>
-        <div
-          className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
-            customOption == "Title" ? "sd-option-active" : ""
-          }`}
-          onClick={() => handleCustomOption("Title")}
-        >
-          <FileTextOutlined />
-          <p>Title</p>
-        </div>
-        <div
-          className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
-            customOption == "Button" ? "sd-option-active" : ""
-          }`}
-          onClick={() => handleCustomOption("Button")}
-        >
-          <LinkOutlined />
-          <p>Button</p>
-        </div>
+        {type==='frequentlyBoughtTogether'?
+          <div  className="sd-bundle-listItem-common sd-bundle-listItem-sub sd-option-active">
+          <AntDesignOutlined />
+          <p>Design</p>
+          </div>
+          :
+          <div>
+            <div
+            className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
+              customOption == "Box" ? "sd-option-active" : ""
+            }`}
+            onClick={() => handleCustomOption("Box")}
+          >
+            <BoxPlotOutlined />
+            <p>Box</p>
+            </div>
+            <div
+              className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
+                customOption == "Title" ? "sd-option-active" : ""
+              }`}
+              onClick={() => handleCustomOption("Title")}
+            >
+              <FileTextOutlined />
+              <p>Title</p>
+            </div>
+            <div
+              className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
+                customOption == "Button" ? "sd-option-active" : ""
+              }`}
+              onClick={() => handleCustomOption("Button")}
+            >
+              <LinkOutlined />
+              <p>Button</p>
+            </div>
 
-        {props.bundleOption != "collection" && (
-          <div
-            className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
-              customOption == "productDetails" ? "sd-option-active" : ""
-            }`}
-            onClick={() => handleCustomOption("productDetails")}
-          >
-            <DatabaseOutlined />
-            <p>Product Details</p>
-          </div>
-        )}
+            {props.bundleOption != "collection" && (
+              <div
+                className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
+                  customOption == "productDetails" ? "sd-option-active" : ""
+                }`}
+                onClick={() => handleCustomOption("productDetails")}
+              >
+                <DatabaseOutlined />
+                <p>Product Details</p>
+              </div>
+            )}
 
-        {props.bundleOption == "collection" && (
-          <div
-            className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
-              customOption == "collectionDetails" ? "sd-option-active" : ""
-            }`}
-            onClick={() => handleCustomOption("collectionDetails")}
-          >
-            <DatabaseOutlined />
-            <p>Collection Details</p>
-          </div>
-        )}
+            {props.bundleOption == "collection" && (
+              <div
+                className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
+                  customOption == "collectionDetails" ? "sd-option-active" : ""
+                }`}
+                onClick={() => handleCustomOption("collectionDetails")}
+              >
+                <DatabaseOutlined />
+                <p>Collection Details</p>
+              </div>
+            )}
 
-        {props.bundleOption == "volume" && (
-          <div
-            className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
-              customOption == "Options" ? "sd-option-active" : ""
-            }`}
-            onClick={() => handleCustomOption("Options")}
-          >
-            <DatabaseOutlined />
-            <p>Options</p>
-          </div>
-        )}
-        {props.bundleOption != "collection" && (
-          <div
-            className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
-              customOption == "Total_section" ? "sd-option-active" : ""
-            }`}
-            onClick={() => handleCustomOption("Total_section")}
-          >
-            <CalculatorOutlined />
-            <p>Total Section</p>
-          </div>
-        )}
+            {props.bundleOption == "volume" && (
+              <div
+                className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
+                  customOption == "Options" ? "sd-option-active" : ""
+                }`}
+                onClick={() => handleCustomOption("Options")}
+              >
+                <DatabaseOutlined />
+                <p>Options</p>
+              </div>
+            )}
+            {props.bundleOption != "collection" && (
+              <div
+                className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
+                  customOption == "Total_section" ? "sd-option-active" : ""
+                }`}
+                onClick={() => handleCustomOption("Total_section")}
+              >
+                <CalculatorOutlined />
+                <p>Total Section</p>
+              </div>
+            )}
 
-        {(props.bundleOption == "collection"  || props.bundleOption == "buyXgetY" ) && (
-          <div
-            className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
-              customOption == "DiscountBadge" ? "sd-option-active" : ""
-            }`}
-            onClick={() => handleCustomOption("DiscountBadge")}
-          >
-            <TransactionOutlined />
-            <p>Discount Badge</p>
-          </div>
-        )}
+            {(props.bundleOption == "collection"  || props.bundleOption == "buyXgetY" ) && (
+              <div
+                className={`sd-bundle-listItem-common sd-bundle-listItem-sub ${
+                  customOption == "DiscountBadge" ? "sd-option-active" : ""
+                }`}
+                onClick={() => handleCustomOption("DiscountBadge")}
+              >
+                <TransactionOutlined />
+                <p>Discount Badge</p>
+              </div>
+            )}
+          </div>        
+        }
+        
       </div>
     );
   };
@@ -319,6 +331,25 @@ console.log(props)
                 {props.bundleOption == "productMixMatch"
                   ? leftSideSectionCommon()
                   : ""}
+
+                  <div
+                  className={`sd-bundle-listItem-common sd-bundle-listItem  ${
+                    props.bundleOption == "frequentlyBoughtTogether" ? "sd-active" : ""
+                  }`}
+                  onClick={() => { handleBundleOption("frequentlyBoughtTogether") 
+                  setCustomOption("Design")}}
+                >
+                  {props.bundleOption == "frequentlyBoughtTogether" ? (
+                    <CaretDownOutlined />
+                  ) : (
+                    <CaretRightOutlined />
+                  )}
+                  <AppstoreAddOutlined />
+                  <p>Frequently Bought Together</p>
+                </div>
+                {props.bundleOption == "frequentlyBoughtTogether"
+                  ? leftSideSectionCommon("frequentlyBoughtTogether")
+                  : ""}
                   
               </div>
             ) : displayOption == "popUp" ? (
@@ -349,6 +380,9 @@ console.log(props)
               )}
               {props.bundleOption == "buyXgetY" && (
                 <CustomizationBuyXgetY data={props.data} />
+              )}
+              {props.bundleOption == "frequentlyBoughtTogether" && (
+                <CustomizationFBt data={props.data}/>
               )}
             </div>
           ) : displayOption == "popUp" ? (
@@ -443,7 +477,7 @@ console.log(props)
 
             {displayOption == "productPages" ? (
               <div className="sd-bundle-editSection-wrappper">
-                {customOption == "Design" && props.bundleOption == "bundle" && props.bundleOption == "buyXandGetY" ? (
+                {customOption == "Design" ? (
                   <Design
                     bundleOption={props.bundleOption}
                     data={props.data}

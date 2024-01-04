@@ -14,8 +14,8 @@ import ContactUs from '../components/contactUs'
 import LogoHeader from '../components/logoHeader'
 const Analytics = () => {
 
-const {currencyCode} = useAPI()
-const [spinner,setSpinner] = useState(false) 
+  const {currencyCode} = useAPI()
+  const [spinner,setSpinner] = useState(false) 
 const [analyticsData,setAnalyticsData] = useState([])
 const [salesValue,setSalesValue] = useState(0)
 const [soldBundle,setSoldBundle] = useState(0)

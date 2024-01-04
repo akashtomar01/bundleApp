@@ -23,12 +23,14 @@ const BundleCustomization = () => {
     collection:defaultData["collectionMixMatch"],
     popUp:defaultData["popUp"],
     buyXgetY:defaultData["buyXgetY"],
-    productMixMatch:defaultData["productMixMatch"]
+    productMixMatch:defaultData["productMixMatch"],
+    frequentlyBoughtTogether:defaultData["frequentlyBoughtTogether"]
     });
 
     async function getCustomizationData(){
       setSpinner(true)
       const response = await postApi("/api/admin/getCustomization",{},app)
+      console.log('get api call',response);
       if(response.data.status == 200){
         setSpinner(false)
         
@@ -37,7 +39,8 @@ const BundleCustomization = () => {
                    collection:response.data.response.collectionMixMatch,
                    buyXgetY:response.data.response.buyXgetY,
                    productMixMatch:defaultData['productMixMatch'],
-                  popUp:response.data.response.popUp
+                  popUp:response.data.response.popUp,
+                  frequentlyBoughtTogether:response.data.response.frequentlyBoughtTogether,
                 })
       }
     }

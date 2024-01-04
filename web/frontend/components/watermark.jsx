@@ -1,6 +1,8 @@
 import React from 'react'
 
 const Watermark = () => {
+  // let currentYear = new Date().getFullYear();
+  // console.log('check current year date',currentYear);
   return (
     <div className='sd-watermark'>
       <div className='sd-logo'>
@@ -12,6 +14,7 @@ const Watermark = () => {
       <span>Powered by</span>
       <div className='sd-logo-text'>SHINE DEZIGN INFONET</div>
       <p>Copyright © 2023 Shine Dezign infonet. All Rights Reserved</p>
+      {/* <p>Copyright © {currentYear} Shine Dezign infonet. All Rights Reserved</p> */}
     </div>
   )
 }

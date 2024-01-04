@@ -20,6 +20,12 @@ const customizationSchema = new mongoose.Schema({
   },
   buyXgetY:{
     type:Object
+  },
+  frequentlyBoughtTogether:{
+    type:Object
+  },
+  design:{
+    type:String
   }
 
 },{

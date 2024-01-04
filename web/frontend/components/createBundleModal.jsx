@@ -2,6 +2,7 @@ import React from "react";
 import { ResourcePicker } from "@shopify/app-bridge-react";
 
 function CreateBundleModal(props) {
+
   const handleCancel = () => {
     
     if (props.searchValue) {
@@ -16,7 +17,9 @@ function CreateBundleModal(props) {
 
     if (page == "productBundle") {
       let x = {};
+      
       props?.data.bundleDetail.products.map((item) => {
+        console.log("item for checking:",item)
         x[item.id] = item.minimumOrder ? item.minimumOrder : 0;
       });
       const result1 = e.selection.filter(({ id: id1 }) =>
@@ -25,6 +28,8 @@ function CreateBundleModal(props) {
       let update = result1.map((item) => {
         if (x[item.id] || x[item.id] == 0) {
           item.minimumOrder = x[item.id];
+          item.required= false;
+          item.multiItemSelect= false;
           return item;
         }
       });
@@ -33,10 +38,13 @@ function CreateBundleModal(props) {
         ({ id: id1 }) =>
           !props.data.bundleDetail.products.some(({ id: id2 }) => id2 === id1)
       );
-
+     
+    // console.log("result2", result2, "update",update)
       let arr = [];
       result2.map((item, index) => {
         item.minimumOrder = 1;
+        item.required= false;
+        item.multiItemSelect= false;
         arr.push(item.id);
 
         if (index + 1 == result2.length) {
@@ -45,7 +53,6 @@ function CreateBundleModal(props) {
             bundleDetail: {
               ...props.data.bundleDetail,
               products: [...update, ...result2],
-              offerProducts: [...update1,...result3],
               display:
                 props.data.bundleDetail.display.productPages == true
                   ? {
@@ -169,10 +176,7 @@ function CreateBundleModal(props) {
   {
     props.setSearchValue("");
     } 
-    
    };
-
-   
 
   return (
     <>

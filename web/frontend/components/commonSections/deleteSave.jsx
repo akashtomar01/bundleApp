@@ -6,9 +6,9 @@ import { useAppBridge } from "@shopify/app-bridge-react";
 import toastNotification from "./Toast";
 import { Popconfirm } from "antd";
 const DeleteSave=(props)=>{
-const app = useAppBridge()
-const param = useParams()
-const navigate = useNavigate()
+  const app = useAppBridge()
+ const param = useParams()
+ const navigate = useNavigate()
 
 
 const handleDelete =async () =>{

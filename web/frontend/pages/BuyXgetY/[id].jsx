@@ -22,13 +22,13 @@ const BuyXgetY = () => {
   const param = useParams();
   const app = useAppBridge();
 
-  let headerkey = "Create Buy X get Y"
+    let headerkey = "Create Buy X get Y"
   const { shop, timeZone, currencyCode } = useAPI();
   const [errorArray, setErrorArray] = useState([]);
   const [endPrice, setEndPrice] = useState(0);
   const [showPrice, setShowPrice] = useState({});
   const [mrp, setMrp] = useState(0);
-  const [spinner,setSpinner] = useState(false);
+  const [spinner,setSpinner] = useState(false)
 
     const [data,setData] = useState({
         shop: shop,
