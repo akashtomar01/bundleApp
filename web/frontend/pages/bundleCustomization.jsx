@@ -44,9 +44,9 @@ const BundleCustomization = () => {
                 })
       }
     }
-useEffect(()=>{
-getCustomizationData()
-},[])
+    useEffect(()=>{
+    getCustomizationData()
+    },[])
 
 useEffect(() => {
   if(params.pathname == "/bundleCustomization"){

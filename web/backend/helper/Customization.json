@@ -240,42 +240,7 @@
       }
     },
     "frequentlyBoughtTogether": {
-      "theme": "light",
-      "box": {
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#e5e5e5",
-        "borderRadius": 14
-      },
-      "button": {
-        "backgroundColor": "#000000",
-        "color": "#FFFFFF",
-        "fontSize": 15,
-        "text_others": "Add to cart ",
-        "text_noDiscount": "Add to cart ",
-        "position": "bottom"
-      },
-      "title": { "color": "#000000", "fontSize": 18, "alignment": "left" },
-      "productDetails": {
-        "title": { "color": "#000000", "fontSize": 18 },
-        "price": { "color": "#000000", "fontSize": 18 },
-        "image": { "borderColor": "#FFFFFF", "borderRadius": 5 },
-        "quantities": { "color": "#000000", "backgroundColor": "#FFFFFF" },
-        "variantSelector": {
-          "color": "#000000",
-          "backgroundColor": "#FFFFFF"
-        },
-        "plusColor": "#5e5e5e",
-        "plusBackgroundColor" :"#ffffff"
-      },
-  
-      "totalSection": {
-        "backgroundColor": "#FFFFFF",
-        "color": "#000000",
-        "fontSize": 18,
-        "text": "Total",
-        "originalPrice": { "color": "#FF0000", "fontSize": 18 },
-        "finalPrice": { "color": "#008061", "fontSize": 18 }
-      }
+      "design": "modern"
     }
       }
   

@@ -16,6 +16,7 @@ import postApi from '../../components/postApi';
 import { useAppBridge } from "@shopify/app-bridge-react";
 import toastNotification from '../../components/commonSections/Toast';
 import { Spin } from 'antd';
+import FBTBundlePreview from '../../components/preview/fbtBundlePreview';
 
 const FrequentlyBoughtTogether = () => {
   const navigate = useNavigate();
@@ -28,12 +29,22 @@ const FrequentlyBoughtTogether = () => {
   const [endPrice, setEndPrice] = useState(0);
   const [showPrice, setShowPrice] = useState({});
   const [mrp, setMrp] = useState(0);
-  const [spinner,setSpinner] = useState(false)
+  const [spinner,setSpinner] = useState(false);
   const [priceData, setPriceData] = useState([]);
   const [sumData, setSumData] = useState([]);
   const [endPriceData, setEndPriceData] = useState([]);
   
   let [mainProductLength, setMainProductLength] = useState(0);
+  let [customizeData,setCustomizeData] =useState([]);
+
+  let getCustomizeData = async() =>{
+    const response = await postApi("/api/admin/getCustomization",{},app)
+    setCustomizeData(response.data.response.frequentlyBoughtTogether);
+  }
+
+  useEffect(()=>{
+    getCustomizeData();
+  },[])
 
     const [data,setData] = useState({
         shop: shop,
@@ -61,7 +72,6 @@ const FrequentlyBoughtTogether = () => {
         customization: [defaultData] ,
         timeZone:timeZone
     })
-    console.log("main",data);
 
     useEffect(()=>{
       setMainProductLength(data.bundleDetail.mainProducts.length)
@@ -226,16 +236,17 @@ const FrequentlyBoughtTogether = () => {
         </div>
         <div className="sd-bundle-productBundle-rightSection Polaris-Layout__Section Polaris-Layout__Section--secondary">
             <BundleStatus data={data} setData={setData} />
-            {/* <BxgyBundlePreviewData
-             data={data}
-             currency={currencyCode}
-             mrp={mrp}
-             endPrice={endPrice}
-             showPrice={showPrice}
-            //  handleVariantChoice={handleVariantChoice}
-             bundleType={"productBundle"}
-             errorArray={errorArray}
-             /> */}
+             <FBTBundlePreview 
+              data={data}
+              currency={currencyCode}
+              mrp={mrp}
+              endPrice={endPrice}
+              showPrice={showPrice}
+              // bundleType={"productBundle"}
+              errorArray={errorArray}
+              customizeData = {customizeData}
+              // handleVariantChoice={handleVariantChoice}
+             />
         </div>
         </div>
         <div className='sd-bundle-wrapper-common'>

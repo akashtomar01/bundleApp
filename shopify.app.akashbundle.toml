@@ -2,7 +2,7 @@
 
 name = "akashbundle"
 client_id = "d2a22c5ede7eb9ed65436e4d5b3d85fb"
-application_url = "https://jd-norman-lose-vendor.trycloudflare.com"
+application_url = "https://brian-amp-mandate-nr.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,write_price_rules,write_discounts,read_content,write_co
 
 [auth]
 redirect_urls = [
-  "https://jd-norman-lose-vendor.trycloudflare.com/auth/callback",
-  "https://jd-norman-lose-vendor.trycloudflare.com/auth/shopify/callback",
-  "https://jd-norman-lose-vendor.trycloudflare.com/api/auth/callback",
-  "https://jd-norman-lose-vendor.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://brian-amp-mandate-nr.trycloudflare.com/auth/callback",
+  "https://brian-amp-mandate-nr.trycloudflare.com/auth/shopify/callback",
+  "https://brian-amp-mandate-nr.trycloudflare.com/api/auth/callback",
+  "https://brian-amp-mandate-nr.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]
