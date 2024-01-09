@@ -207,7 +207,7 @@ function CreateBundle() {
     setCheckedIds,
     setVariantData,
   };
-
+  // console.log('hello test array====>',showPrice);
   useEffect(() => {
     let dummyArray = [];
     data.bundleDetail.products.map((item, mainindex) => {
@@ -219,9 +219,9 @@ function CreateBundle() {
       );
     });
     setArr(dummyArray);
-    setShowPrice({});
+// console.log("check arr data of bundle------->",dummyArray);
+setShowPrice({});
   }, [data.bundleDetail.products]);
-
   const setCancel = () => {
     setVariantData([]);
     setCheckedIds([]);

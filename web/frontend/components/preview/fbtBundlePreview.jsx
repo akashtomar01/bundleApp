@@ -5,7 +5,8 @@ import {
 } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 import { useEffect, useState } from "react";
-const FBTBundlePreview = ({data,customizeData}) =>{
+import { showAmountWithCurrency } from "../showCurrencyFormat";
+const FBTBundlePreview = ({data,customizeData,mrp,endPrice,currency}) =>{
 
   let [allProducts,setAllProducts] = useState([]);
   let designOption = customizeData.design;
@@ -13,6 +14,7 @@ const FBTBundlePreview = ({data,customizeData}) =>{
   useEffect(()=>{
     setAllProducts([...data.bundleDetail.mainProducts,...data.bundleDetail.offeredProducts])
   },[data]);
+  // console.log('preview data****',data);
 
   return(
     <>
@@ -36,7 +38,7 @@ const FBTBundlePreview = ({data,customizeData}) =>{
                           <select disabled>
                             <option>Select Variant</option>
                           </select>
-                          <p>Rs. {item.variants[0].price}</p>
+                          <p>{showAmountWithCurrency(item.variants[0]?.price,currency)}</p>
                         </div>
                         {index !== allProducts.length-1 ?
                           <div className="designPreviewPlusIcon">
@@ -47,9 +49,21 @@ const FBTBundlePreview = ({data,customizeData}) =>{
                     )
                   })}
                   <div className="designChildDiv">
-                    <p>Total <del>Rs.2000</del></p>
-                    <p>Rs. 1115</p>
-                    <Button disabled>Add selected to cart</Button>
+                    <p>Total</p>
+                    {data.bundleDetail.discountType === "freeShipping" || data.bundleDetail.discountType === "noDiscount"?
+                      <>                    
+                        <p>{showAmountWithCurrency(endPrice,currency)}</p>
+                        <Button disabled>Add selected to cart</Button>
+                      </>
+                      :
+                      <>
+                      {allProducts.length>1 && 
+                        <del>{showAmountWithCurrency(mrp,currency)}</del>
+                      }
+                      <p>{showAmountWithCurrency(endPrice,currency)}</p>
+                      <Button disabled>Add selected to cart</Button>
+                      </>
+                    }
                   </div>
                 </div>          
               </div>
@@ -83,9 +97,22 @@ const FBTBundlePreview = ({data,customizeData}) =>{
                   )
                 })}
                 <div className="designChildDiv">
-                  <p>Total <del>Rs.2000</del></p>
-                  <p>Rs. 1115</p>
-                  <Button disabled>Add selected to cart</Button>
+                <p>Total</p>
+                {data.bundleDetail.discountType === "freeShipping" || data.bundleDetail.discountType === "noDiscount"?
+                    <>                    
+                      <p>{showAmountWithCurrency(endPrice,currency)}</p>
+                      <Button disabled>Add selected to cart</Button>
+                    </>
+                    :
+                    <>
+                    {allProducts.length>1 && 
+                      <del>{showAmountWithCurrency(mrp,currency)}</del>
+                    }
+                    <p>{showAmountWithCurrency(endPrice,currency)}</p>
+                    <Button disabled>Add selected to cart</Button>
+                    </>
+
+                  }
                 </div>
               </div>          
             </div>
@@ -101,7 +128,7 @@ const FBTBundlePreview = ({data,customizeData}) =>{
                       <option>Select Variant</option>
                     </select>
                   </div>
-                  <div><u>Rs. {item.variants[0].price}</u></div>
+                  <div><u>{showAmountWithCurrency(item.variants[0]?.price,currency)}</u></div>
                 </div>
               )
             })}

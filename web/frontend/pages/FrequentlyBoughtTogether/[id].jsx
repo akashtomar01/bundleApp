@@ -33,8 +33,36 @@ const FrequentlyBoughtTogether = () => {
   const [priceData, setPriceData] = useState([]);
   const [sumData, setSumData] = useState([]);
   const [endPriceData, setEndPriceData] = useState([]);
+  const [arr, setArr] = useState([]);
+  const [data,setData] = useState({
+      shop: shop,
+      type: "fbt",
+      name: "",
+      title: "Bundle title",
+      description:"Bundle description",
+      status: "active",
+      startdate: "",
+      endDate: "",
+      currencyCode: currencyCode,
+      bundleDetail: {
+        discountedProductType: "specific_product",
+        discountType: "percent",
+        discountValue: 5,
+        mainProducts: [],
+        offeredProducts: [],
+        display: {
+          productPages: true,
+          popUp: false,
+          bundle: false,
+          productPagesList: [],
+        },
+      },
+      customization: [defaultData] ,
+      timeZone:timeZone
+  })
   
   let [mainProductLength, setMainProductLength] = useState(0);
+  let [selectedProducts,setSelectedProducts] = useState([]);
   let [customizeData,setCustomizeData] =useState([]);
 
   let getCustomizeData = async() =>{
@@ -43,143 +71,200 @@ const FrequentlyBoughtTogether = () => {
   }
 
   useEffect(()=>{
+    setSelectedProducts([...data.bundleDetail.mainProducts,...data.bundleDetail.offeredProducts])
+  },[data]);
+
+  useEffect(()=>{
     getCustomizeData();
-  },[])
+  },[]);
+  // [item.variants[0].price]
+  useEffect(()=>{
+    let newArray = [];
+    if(selectedProducts.length>0){
+      selectedProducts.map((item,index)=>{
+        newArray.push(Array.from(
+          { length: item.minimumOrder },
+          (x, itemIndex) => item.variants[0].price
+        ));
+      });
+      // console.log('hello test ====>',newArray);
+      setArr(newArray);
+    }else{
+      setArr([]);
+    }
+  },[selectedProducts]);
 
-    const [data,setData] = useState({
-        shop: shop,
-        type: "fbt",
-        name: "",
-        title: "Bundle title",
-        description:"Bundle description",
-        status: "active",
-        startdate: "",
-        endDate: "",
-        currencyCode: currencyCode,
-        bundleDetail: {
-          discountedProductType: "specific_product",
-          discountType: "percent",
-          discountValue: 5,
-          mainProducts: [],
-          offeredProducts: [],
-          display: {
-            productPages: true,
-            popUp: false,
-            bundle: false,
-            productPagesList: [],
-          },
-        },
-        customization: [defaultData] ,
-        timeZone:timeZone
-    })
+  // console.log('hello test array====>',showPrice);
 
-    useEffect(()=>{
-      setMainProductLength(data.bundleDetail.mainProducts.length)
-    },[data.bundleDetail.mainProducts])
+  useEffect(()=>{
+    setMainProductLength(data.bundleDetail.mainProducts.length)
+  },[data.bundleDetail.mainProducts])
 
-    const handleDiscountProductType = (e) => {
-      console.log('eeeeee',e);
-      if (e.target.value == "all_products") {
-        // setShowPrice({});
-        setData({
-          ...data,
-          bundleDetail: {
-            ...data.bundleDetail,
-            discountedProductType: "all_products",
-            display: { productPages: true },
-            products: [],
-          },
-        });
-  
-      }else if (e.target.value == "specific_product") {
-        setData({
-          ...data,
-          bundleDetail: {
-            ...data.bundleDetail,
-            discountedProductType: "specific_product",
-            display: { productPages: false, bundle: false, id: "" },
-            products: [],
-          },
-        });
-      }
-    };
-
-    const handleDiscountType = (e) => {
+  const handleDiscountProductType = (e) => {
+    // console.log('eeeeee',e);
+    if (e.target.value == "all_products") {
+      // setShowPrice({});
       setData({
         ...data,
         bundleDetail: {
           ...data.bundleDetail,
-          discountType: e.target.value,
+          discountedProductType: "all_products",
+          display: { productPages: true },
+          products: [],
         },
       });
-    };
 
-    const handleDiscountValue = (newvalue) => {
-      if (newvalue == "" || newvalue < 0) {
-        setData({
-          ...data,
-          bundleDetail: {
-            ...data.bundleDetail,
-            discountValue: 0,
-          },
-        });
-      } else {
-        newvalue = String(newvalue);
-        // if (String(newvalue).length > 1) {
-        newvalue = newvalue.replace(/^0/, "");
-        // }
+    }else if (e.target.value == "specific_product") {
+      setData({
+        ...data,
+        bundleDetail: {
+          ...data.bundleDetail,
+          discountedProductType: "specific_product",
+          display: { productPages: false, bundle: false, id: "" },
+          products: [],
+        },
+      });
+    }
+  };
 
-        setData({
-          ...data,
-          bundleDetail: {
-            ...data.bundleDetail,
-            discountValue: newvalue,
-          },
-        });
-      }
-    };
-    const getBundleData = async () => {
-      let body = { id: param.id };
-      setSpinner(true);
-      const response = await postApi("/api/admin/editBundle", body, app);
-      if (response.status === 200) {
-        
-        setData(response.data.response);
-        setSpinner(false);
-      }
-    };
-    useEffect(() => {
-      if (param.id !== "create") {
-        getBundleData();
-      }else{
-        console.log("else")
-      }
-    }, []);
-    const handleSave = async () => {
+  const handleDiscountType = (e) => {
+    setData({
+      ...data,
+      bundleDetail: {
+        ...data.bundleDetail,
+        discountType: e.target.value,
+      },
+    });
+  };
+
+  const handleDiscountValue = (newvalue) => {
+    if (newvalue == "" || newvalue < 0) {
+      setData({
+        ...data,
+        bundleDetail: {
+          ...data.bundleDetail,
+          discountValue: 0,
+        },
+      });
+    } else {
+      newvalue = String(newvalue);
+      // if (String(newvalue).length > 1) {
+      newvalue = newvalue.replace(/^0/, "");
+      // }
+
+      setData({
+        ...data,
+        bundleDetail: {
+          ...data.bundleDetail,
+          discountValue: newvalue,
+        },
+      });
+    }
+  };
+
+  const getBundleData = async () => {
+    let body = { id: param.id };
+    setSpinner(true);
+    const response = await postApi("/api/admin/editBundle", body, app);
+    if (response.status === 200) {
       
-    if (param.id == "create") {
-          const response = await postApi("/api/admin/createBundle", data, app);
-          if (response.data.status === 200) {
-            return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
-          } else {
-            return alertCommon(
-              setAlert,
-              ["Something went wrong"],
-              "warning",
-              false
-            );
-          }
-        } else {
-          const response = await postApi("/api/admin/updateBundle", data, app);
-          if (response.data.status === 200) {
-            return (
-              toastNotification("success", "Update successfully", "bottom"),
-              navigate("/bundle")
-            );
-          }
-        }
+      setData(response.data.response);
+      setSpinner(false);
+    }
+  };
 
-    };
+  useEffect(() => {
+    if (param.id !== "create") {
+      getBundleData();
+    }else{
+      // console.log("else")
+    }
+  }, []);
+  
+  const handleSave = async () => {
+    
+  if (param.id == "create") {
+        const response = await postApi("/api/admin/createBundle", data, app);
+        if (response.data.status === 200) {
+          return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
+        } else {
+          return alertCommon(
+            setAlert,
+            ["Something went wrong"],
+            "warning",
+            false
+          );
+        }
+      } else {
+        const response = await postApi("/api/admin/updateBundle", data, app);
+        if (response.data.status === 200) {
+          return (
+            toastNotification("success", "Update successfully", "bottom"),
+            navigate("/bundle")
+          );
+        }
+      }
+
+  };
+
+  function calculateFinalPrice() {
+    let finalPrice = 0;
+
+    if (selectedProducts.length < 2) {
+      finalPrice = calculateMrp();
+    } else {
+      if (data.bundleDetail.discountType == "percent") {
+        if (data.bundleDetail.discountValue > 100) {
+          finalPrice = 0;
+        } else {
+          finalPrice =
+            calculateMrp() -
+            calculateMrp() * (data.bundleDetail.discountValue / 100);
+        }
+      } else
+       if (data.bundleDetail.discountType == "fixed") {
+        if (parseFloat(data.bundleDetail.discountValue) > calculateMrp()) {
+          finalPrice = 0;
+        } else {
+          finalPrice = calculateMrp() - data.bundleDetail.discountValue;
+        }
+      } else if (data.bundleDetail.discountType == "price") {
+        if (data.bundleDetail.discountValue > calculateMrp()) {
+          finalPrice = calculateMrp();
+        } else {
+          finalPrice = data.bundleDetail.discountValue;
+        }
+      } else if (
+        data.bundleDetail.discountType == "freeShipping" ||
+        data.bundleDetail.discountType == "noDiscount"
+      ) {
+        finalPrice = calculateMrp();
+      }
+    }
+    // console.log('hello check final price****',finalPrice);
+    return finalPrice;
+  }
+
+  function calculateMrp() {
+    // console.log("check array length",arr.length);
+    if(arr.length>0){
+      let sum = 0;
+      arr?.map((item) => {
+        item.map((sub) => {
+          sum += parseFloat(sub);
+        });
+      });
+      setMrp(parseFloat(sum).toFixed(2));
+      return parseFloat(sum.toFixed(2));
+    }
+  }
+
+  // console.log("hello check mrp =====>",mrp);
+  useEffect(() => {
+    calculateMrp();
+    setEndPrice(parseFloat(calculateFinalPrice()).toFixed(2));
+  }, [arr]);
+
   return (
     <Spin spinning={spinner}>
     <div className="Polaris-Page Polaris-Page--fullWidth">
