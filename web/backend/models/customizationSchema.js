@@ -24,8 +24,8 @@ const customizationSchema = new mongoose.Schema({
   frequentlyBoughtTogether:{
     type:Object
   },
-  design:{
-    type:String
+  productMixMatch:{
+    type:Object
   }
 
 },{

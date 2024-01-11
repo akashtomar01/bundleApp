@@ -3045,3 +3045,18 @@ nav.Polaris-Navigation {
 .designPreviewPlusIcon{
     margin-top: 22px;
 }
+.productMixMatchBorder{
+    border: 1px solid rgb(141, 138, 138);
+    background-color: #fafafa;
+}
+.productMixMatchBGColor{
+    background-color: #fafafa;
+}
+.productMixMatchHeadBorder{
+    border: 1px solid rgb(141, 138, 138);
+    border-radius: 10px;
+    background-color: #bde6c6;
+}
+.centerIntem{
+    text-align: center;
+}

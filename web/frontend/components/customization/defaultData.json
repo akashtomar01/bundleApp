@@ -173,7 +173,8 @@
     "box": {
       "backgroundColor": "#FFFFFF",
       "borderColor": "#e5e5e5",
-      "borderRadius": 14
+      "borderRadius": 14,
+      "thickness" : 1
     },
     "button": {
       "backgroundColor": "#000000",
@@ -183,7 +184,14 @@
       "text_noDiscount": "Add to cart ",
       "position": "bottom"
     },
-    "title": { "color": "#000000", "fontSize": 18, "alignment": "left" },
+    "title": { "color": "#000000", 
+      "fontSize": 18, 
+      "alignment": "left",
+      "titleBold":"300", 
+      "descriptionColor" : "#000000", 
+      "descriptionFontSize" : 12 ,
+      "descriptionBold":"300"
+    },
     "productDetails": {
       "title": { "color": "#000000", "fontSize": 18 },
       "price": { "color": "#000000", "fontSize": 18 },
@@ -194,7 +202,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "plusColor": "#5e5e5e",
-      "plusBackgroundColor" :"#ffffff"
+      "plusBackgroundColor" :"#ffffff",
+      "plusfontSize": 15
     },
 
     "totalSection": {

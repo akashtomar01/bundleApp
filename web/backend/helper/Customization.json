@@ -194,7 +194,8 @@
           "backgroundColor": "#FFFFFF"
         },
         "plusColor": "#5e5e5e",
-        "plusBackgroundColor" :"#ffffff"
+        "plusBackgroundColor" :"#ffffff",
+        "plusfontSize": 15
       },
   
       "totalSection": {

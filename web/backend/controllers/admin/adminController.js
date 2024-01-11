@@ -390,6 +390,7 @@ return res.status(503).send({message:"something went wrong",status:503})
   export async function updateBundleCustomization (req,res){
     const session = res.locals.shopify.session;
     let shop = session.shop;
+    // let body={product:"njdhjwhdkdkdkk"}
  
     const response = await customizationModel.findOneAndUpdate({shop:shop},{shop:shop,
                                                                             bundle:req.body.bundle,
@@ -397,12 +398,15 @@ return res.status(503).send({message:"something went wrong",status:503})
                                                                             volume:req.body.volume,
                                                                             buyXgetY:req.body.buyXgetY,
                                                                             frequentlyBoughtTogether:req.body.frequentlyBoughtTogether,
-                                                                          popUp:req.body.popUp}
-                                                                          ,{upsert:true})
+                                                                            productMixMatch:req.body.productMixMatch,
+                                                                            popUp:req.body.popUp},
+                                                                            {upsert:true})
+                                                                           
 
                                                                 
   if(response){
     return res.status(200).send({message :"success",status : 200})
+    // console.log("check response from api update======>>>>>>>>><<<<<<<<<<========",req.body);
   }
   return res.status(400).send({message:"BAD_REQUEST",status:400})
   }

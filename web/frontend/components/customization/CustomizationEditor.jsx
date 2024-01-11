@@ -31,6 +31,7 @@ import CustomizationVolumeBundlePreview from "./CustomizationVolumeBundlePreview
 import CustomizationCollectionBundlePreview from "./CustomizationCollectionBundlePreview";
 import CustomizationPopUpPreview from "./CustomizationPopupPreview";
 import defaultData from "./defaultData.json";
+import CustomizationProductMixMatchPreview from "./CustomizationProductMixMatchPreview";
 import postApi from "../postApi";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import BoatLoader from "../BoatLoader";
@@ -384,6 +385,9 @@ const CustomizationEditor = (props) => {
               {props.bundleOption == "frequentlyBoughtTogether" && (
                 <CustomizationFBt data={props.data}/>
               )}
+              {props.bundleOption == "productMixMatch" && (
+                <CustomizationProductMixMatchPreview data={props.data}/>
+              )}
             </div>
           ) : displayOption == "popUp" ? (
             <div className="sd-bundle-centerContent">
@@ -508,7 +512,8 @@ const CustomizationEditor = (props) => {
                 ) : customOption == "productDetails" &&
                   (props.bundleOption == "bundle" ||
                     props.bundleOption == "volume"||
-                    props.bundleOption == "buyXgetY") ? (
+                    props.bundleOption == "buyXgetY" ||
+                    props.bundleOption == "productMixMatch") ? (
                   <ProductDetails
                     bundleOption={props.bundleOption}
                     data={props.data}
@@ -526,7 +531,8 @@ const CustomizationEditor = (props) => {
                 ) : customOption == "Total_section" &&
                   (props.bundleOption == "bundle" ||
                     props.bundleOption == "volume" ||
-                    props.bundleOption == "buyXgetY") ? (
+                    props.bundleOption == "buyXgetY" ||
+                    props.bundleOption == "productMixMatch") ? (
                   <TotalSection
                     bundleOption={props.bundleOption}
                     data={props.data}
