@@ -20,6 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import postApi from "../../components/postApi";
 import { alertCommon } from "../../components/helperFunctions";
 import General from "../../components/bxgy/General";
+import ProductMixMatchPreview from "../../components/preview/ProductMixMatchPreview";
 
 
 const ProductMixMatch = () => {
@@ -176,7 +177,7 @@ const ProductMixMatch = () => {
   };
 
   const handleSave = async () => {
-    console.log("enter in save function")
+    // console.log("enter in save function")
     let alertText = [];
     let flag = true;
 
@@ -195,7 +196,7 @@ const ProductMixMatch = () => {
       );
     }
 
-    console.log(search2, "search2")
+    // console.log(search2, "search2")
     if (data.name == "") {
       if (!errorArray.includes("bundleName")) {
         setErrorArray((prev) => [...prev, "bundleName"]);
@@ -205,7 +206,7 @@ const ProductMixMatch = () => {
       alertText.push("Please provide name of bundle");
     }
 
-    console.log("errorArray", errorArray, data)
+    // console.log("errorArray", errorArray, data)
     if (data.title == "") {
       if (!errorArray.includes("bundleTitle")) {
         setErrorArray((prev) => [...prev, "bundleTitle"]);
@@ -243,7 +244,7 @@ const ProductMixMatch = () => {
           );
         }
       }catch(err){
-        console.log(err)
+        // console.log(err)
        }
       } else {
         const response = await postApi("/api/admin/updateBundle", data, app);
@@ -263,51 +264,69 @@ const ProductMixMatch = () => {
       }
     }
   };
-  function calculateFinalPrice(index, sumArray) {
+  function calculateFinalPrice() {
     let finalPrice = 0;
+    // console.log("enter in ******-----------***************");
 
-    if (data.bundleDetail.discountOptions[index].type == "percent") {
-      if (data.bundleDetail.discountOptions[index].value > 100) {
-        finalPrice = 0;
-      } else {
-        finalPrice =  parseFloat(sumArray[index]) -parseFloat(sumArray[index]) * (data.bundleDetail.discountOptions[index].value / 100);
-      }
-    } else if (data.bundleDetail.discountOptions[index].type == "fixed") {
-      if (parseFloat(data.bundleDetail.discountValue) > sumArray[index]) {
-        finalPrice = 0;
-      } else {
-        finalPrice =
-          parseFloat(sumArray[index]) -
-          data.bundleDetail.discountOptions[index].value;
-      }
-    } else if (data.bundleDetail.discountOptions[index].type == "price") {
-      if (
-        data.bundleDetail.discountOptions[index].value >
-        parseFloat(sumArray[index])
+    if (data.bundleDetail.products.length < 2) {
+      // console.log("enter in ******check updated***************");
+
+      finalPrice = calculateMrp();
+    } else {
+      // console.log("enter in ******-----------***************");
+
+      if (data.bundleDetail.discountOptions[0].type == "percent") {
+        if (data.bundleDetail.discountOptions[0].value > 100) {
+          // console.log("enter in *******************");
+          finalPrice = 0;
+        } else {
+
+          finalPrice =
+            calculateMrp() -
+            calculateMrp() * (data.bundleDetail.discountOptions[0].value / 100);
+            // console.log("enter in ******-----------***************",typeof(calculateMrp()));
+            // console.log('check ***********',finalPrice)
+        }
+      } else
+       if (data.bundleDetail.discountOptions[0].type == "fixed") {
+        if (parseFloat(data.bundleDetail.discountOptions[0].value) > calculateMrp()) {
+          finalPrice = 0;
+        } else {
+          finalPrice = calculateMrp() - data.bundleDetail.discountOptions[0].value;
+        }
+      } else if (data.bundleDetail.discountOptions[0].type == "price") {
+        if (data.bundleDetail.discountOptions[0].value > calculateMrp()) {
+          finalPrice = calculateMrp();
+        } else {
+          finalPrice = data.bundleDetail.discountOptions[0].value;
+        }
+      } else if (
+        data.bundleDetail.discountOptions[0].type == "freeShipping" ||
+        data.bundleDetail.discountOptions[0].type == "noDiscount"
       ) {
-        finalPrice = parseFloat(sumArray[index]);
-      } else {
-        finalPrice = parseFloat(data.bundleDetail.discountOptions[index].value);
+        finalPrice = calculateMrp();
       }
-    } else if (
-      data.bundleDetail.discountOptions[index].discountType == "freeShipping" ||
-      data.bundleDetail.discountOptions[index].discountType == "noDiscount"
-    ) {
-      finalPrice = parseFloat(sumArray[index]);
     }
-    return finalPrice.toFixed(2);
+    // console.log('*************************hello check final price****',finalPrice);
+    return finalPrice;
   }
-  const handleVariantChoice = (e, main, index) => {
-    let newArr = [...arr];
 
-    // let getIndex = Number(e.target.value.split("/")[0]);
-    // let getPrice = e.target.value.split("/")[1];
+  useEffect(()=>{
+    let newArray = [];
+    if(data.bundleDetail.products.length>0){
+      data.bundleDetail.products.map((item,index)=>{
+        newArray.push(Array.from(
+          { length: item.minimumOrder },
+          (x, itemIndex) => item.variants[0].price
+        ));
+      });
+      // console.log('hello test ====>',newArray);
+      setArr(newArray);
+    }else{
+      setArr([]);
+    }
+  },[data]);
 
-    setShowPrice({ ...showPrice, [main]: e.target.value });
-    newArr[main].splice(index, 1, e.target.value);
-
-    setArr(newArr);
-  };
 
   const handleDeleteDiscountOption = (index) => {
     let update = { ...data };
@@ -415,7 +434,7 @@ const ProductMixMatch = () => {
      }
    };
 
-   const handleDiscountType = (value, index) => {
+  const handleDiscountType = (value, index) => {
     let update = { ...data };
     update.bundleDetail.discountOptions[index].type = value;
     setData(update);
@@ -454,11 +473,29 @@ const ProductMixMatch = () => {
     }
   };
 
-  // const handleDiscountDescription = (e, index) => {
-  //   let update = { ...data };
-  //   update.bundleDetail.discountOptions[index].description = e.target.value;
-  //   setData(update);
-  // };
+  const handleDiscountDescription = (e, index) => {
+    let update = { ...data };
+    update.bundleDetail.discountOptions[index].description = e.target.value;
+    setData(update);
+  };
+  function calculateMrp() {
+    if(arr.length>0){
+      let sum = 0;
+      arr?.map((item) => {
+        item.map((sub) => {
+          sum += parseFloat(sub);
+        });
+      });
+      setMrp(parseFloat(sum).toFixed(2));
+      return parseFloat(sum.toFixed(2));
+    // }else{
+    //   setMrp(parseFloat(sum).toFixed(2));
+    //   return parseFloat(sum.toFixed(2));
+    }
+  }
+
+    // console.log("check array ennnnddddprice length*************************************************************************",calculateFinalPrice());
+
   const handleAddDiscountOption = () => {
     let update = { ...data };
     update.bundleDetail.discountOptions.push({
@@ -555,47 +592,53 @@ const ProductMixMatch = () => {
       let update={...data}
       update.bundleDetail[`${e.target.id}`].enable=e.target.checked
        setData(update)
-       console.log("datat=", data.bundleDetail.requiredItem, data.bundleDetail.multiItemSelection, data)
+      //  console.log("datat=", data.bundleDetail.requiredItem, data.bundleDetail.multiItemSelection, data)
     }
 
-    const handleRequiredProducts=(e, item)=>{
-       console.log(e.target.checked, item.required, data.bundleDetail.products)
+  const handleRequiredProducts=(e, item)=>{
+      // console.log(e.target.checked, item.required, data.bundleDetail.products)
 
-      let key= "products"
-      let bundleProduct=data.bundleDetail.products
-      let index=bundleProduct.findIndex(e => e.id === item.id)
-      if(e.target.checked){
-        bundleProduct[index]= {...bundleProduct[index], required: true}
-        setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
-      }else{
-        bundleProduct[index]= {... bundleProduct[index], required: false}
-        setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
-      }
-      console.log("requiredProducts finally", "bundle product", data.bundleDetail.products)
+    let key= "products"
+    let bundleProduct=data.bundleDetail.products
+    let index=bundleProduct.findIndex(e => e.id === item.id)
+    if(e.target.checked){
+      bundleProduct[index]= {...bundleProduct[index], required: true}
+      setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
+    }else{
+      bundleProduct[index]= {... bundleProduct[index], required: false}
+      setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
     }
+    // console.log("requiredProducts finally", "bundle product", data.bundleDetail.products)
+  }
 
 
-    const handleMultiProductsSelection=(e, item)=>{
-      // console.log(e.target.checked, item.id, data.bundleDetail.products)
-      let key= "products"
-      let bundleProduct=data.bundleDetail.products
-      let index=bundleProduct.findIndex(e => e.id === item.id)
-      if(e.target.checked){
-        bundleProduct[index]= {...bundleProduct[index], multiItemSelect: true}
-        setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
-      }else{
-        bundleProduct[index]= {... bundleProduct[index], multiItemSelect: false}
-        setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
-      }
-      console.log("multiProductsSelectionProducts finally", "bundle product", data.bundleDetail.products)
+  const handleMultiProductsSelection=(e, item)=>{
+    // console.log(e.target.checked, item.id, data.bundleDetail.products)
+    let key= "products"
+    let bundleProduct=data.bundleDetail.products
+    let index=bundleProduct.findIndex(e => e.id === item.id)
+    if(e.target.checked){
+      bundleProduct[index]= {...bundleProduct[index], multiItemSelect: true}
+      setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
+    }else{
+      bundleProduct[index]= {... bundleProduct[index], multiItemSelect: false}
+      setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
     }
+    // console.log("multiProductsSelectionProducts finally", "bundle product", data.bundleDetail.products)
+  }
 
+  useEffect(() => {
+    calculateMrp();
+    
+    setEndPrice(parseFloat(calculateFinalPrice()).toFixed(2));
+  }, [arr]);
+  // console.log('chckekekkjdskjfkjsdgfgdsh0',endPrice);
 
-    useEffect(() => {
-      if (param.id !== "create") {
-        getBundleData();
-      }
-    }, []);
+  useEffect(() => {
+    if (param.id !== "create") {
+      getBundleData();
+    }
+  }, []);
    
   return (
     <Spin spinning={spinner}
@@ -723,14 +766,14 @@ const ProductMixMatch = () => {
                             value: "percent",
                             label: "Percentage Discount",
                           },
-                          {
-                            value: "price",
-                            label: "Set Price",
-                          },
                           // {
-                          //   value: "freeShipping",
-                          //   label: "Free Shipping",
+                          //   value: "price",
+                          //   label: "Set Price",
                           // },
+                          {
+                            value: "freeShipping",
+                            label: "Free Shipping",
+                          },
                           {
                             value: "noDiscount",
                             label: "No Discount",
@@ -739,6 +782,8 @@ const ProductMixMatch = () => {
                       />
                     </div>
                   </Col>
+                  {(data.bundleDetail.discountOptions[0].type === "percent" || data.bundleDetail.discountOptions[0].type === "fixed") && 
+                  
                   <Col className="gutter-row" span={8}>
                     <div>
                       <p>Discount value</p>
@@ -756,6 +801,7 @@ const ProductMixMatch = () => {
                       
                     </div>
                   </Col>
+                  }
                 </Row>
                 <br />
                
@@ -887,18 +933,17 @@ const ProductMixMatch = () => {
 
           <div className="sd-bundle-productBundle-rightSection Polaris-Layout__Section Polaris-Layout__Section--secondary">
             <BundleStatus data={data} setData={setData} />
-
-           
-            {/* <ProductBundlePreview
+            <ProductMixMatchPreview
               data={data}
               currency={currencyCode}
               mrp={mrp}
               endPrice={endPrice}
               showPrice={showPrice}
-              handleVariantChoice={handleVariantChoice}
-              bundleType={"productBundle"}
+              // handleVariantChoice={handleVariantChoice}
+              bundleType={"productMixMatch"}
               errorArray={errorArray}
-            /> */}
+            />
+            
           </div>
         </div> 
 

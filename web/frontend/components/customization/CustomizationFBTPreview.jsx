@@ -1,4 +1,4 @@
-import { Button, Checkbox } from "antd";
+import { Button } from "antd";
 import pic from "../../assets/image2.png";
 import {
   PlusOutlined
@@ -6,7 +6,6 @@ import {
 import Title from "antd/es/typography/Title";
 
 const CustomizationFBt = ({data}) =>{
-  console.log('CustomizationFBt******************************************',data);
    
   return(
     <div>

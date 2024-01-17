@@ -14,7 +14,7 @@ const FBTBundlePreview = ({data,customizeData,mrp,endPrice,currency}) =>{
   useEffect(()=>{
     setAllProducts([...data.bundleDetail.mainProducts,...data.bundleDetail.offeredProducts])
   },[data]);
-  // console.log('preview data****',data);
+  // console.log('preview data****',allProducts);
 
   return(
     <>
@@ -99,7 +99,7 @@ const FBTBundlePreview = ({data,customizeData,mrp,endPrice,currency}) =>{
                 <div className="designChildDiv">
                 <p>Total</p>
                 {data.bundleDetail.discountType === "freeShipping" || data.bundleDetail.discountType === "noDiscount"?
-                    <>                    
+                    <>
                       <p>{showAmountWithCurrency(endPrice,currency)}</p>
                       <Button disabled>Add selected to cart</Button>
                     </>

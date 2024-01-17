@@ -38,7 +38,8 @@ const BundleCustomization = () => {
                   volume:response.data.response.volume,
                   collection:response.data.response.collectionMixMatch,
                   buyXgetY:defaultData['buyXgetY'],
-                  productMixMatch:defaultData['productMixMatch'],
+                  // productMixMatch:defaultData['productMixMatch'],
+                  productMixMatch:data.response.productMixMatch,
                   popUp:response.data.response.popUp,
                   frequentlyBoughtTogether:response.data.response.frequentlyBoughtTogether,
                 })

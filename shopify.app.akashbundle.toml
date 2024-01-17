@@ -2,7 +2,7 @@
 
 name = "akashbundle"
 client_id = "d2a22c5ede7eb9ed65436e4d5b3d85fb"
-application_url = "https://literature-gloves-analyses-imaging.trycloudflare.com"
+application_url = "https://vessel-candles-dimensions-circular.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,write_price_rules,write_discounts,read_content,write_co
 
 [auth]
 redirect_urls = [
-  "https://literature-gloves-analyses-imaging.trycloudflare.com/auth/callback",
-  "https://literature-gloves-analyses-imaging.trycloudflare.com/auth/shopify/callback",
-  "https://literature-gloves-analyses-imaging.trycloudflare.com/api/auth/callback",
-  "https://literature-gloves-analyses-imaging.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://vessel-candles-dimensions-circular.trycloudflare.com/auth/callback",
+  "https://vessel-candles-dimensions-circular.trycloudflare.com/auth/shopify/callback",
+  "https://vessel-candles-dimensions-circular.trycloudflare.com/api/auth/callback",
+  "https://vessel-candles-dimensions-circular.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]

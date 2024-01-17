@@ -71,7 +71,7 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
             </div>
           </div>
 
-          <div  className="productMixMatchBorder">
+          <div  className=" productMixMatchBorder sd-preview-wrapper-common sd-productBundle-preview-specific">
             <div className="design">
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
@@ -115,12 +115,6 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
                 </select>
                 </div>
               </div>
-              {/* <div>
-                <select disabled>
-                  <option>Select Variant</option>
-                </select>
-              </div> */}
-                
             </div>
             <hr/>
             <div>
@@ -144,21 +138,18 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
                       "fontSize":data.productMixMatch.productDetails.price.fontSize +"px"}}
                     >Rs. 560.00</p>
                   </div>
-                  <select style={{"backgroundColor":data.productMixMatch.productDetails.variantSelector.backgroundColor,
-                    "color":data.productMixMatch.productDetails.variantSelector.color,
-                    "borderColor":data.productMixMatch.productDetails.variantSelector.borderColor}}
-                    disabled
-                  >
-                  <option>Select Variant</option>
-                </select>
+                  
                 </div>
               </div>
-              {/* <div>
-                <select disabled>
-                  <option>Select Variant</option>
-                </select>
-              </div> */}
-                
+            </div>
+            <div className="designChildDiv">
+              <select style={{"backgroundColor":data.productMixMatch.productDetails.variantSelector.backgroundColor,
+                "color":data.productMixMatch.productDetails.variantSelector.color,
+                "borderColor":data.productMixMatch.productDetails.variantSelector.borderColor}}
+                disabled
+              >
+              <option>Select Variant</option>
+              </select>
             </div>
           </div>
             <div className="design productMixMatchBGColor" 
