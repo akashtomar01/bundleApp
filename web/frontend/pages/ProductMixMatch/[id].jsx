@@ -87,6 +87,7 @@ const ProductMixMatch = () => {
   const [pickerError, setPickerError] = useState([]);
   const [myModal, setMyModal] = useState(false);
   const app = useAppBridge();
+  const [selectedDiscountIndex,setSelectedDiscountIndex] = useState(0);
   const temp = {
     setPid,
     setAntModal,
@@ -94,10 +95,33 @@ const ProductMixMatch = () => {
     setCheckedIds,
     setVariantData,
   };
+  const [disableAddOptions,setDisableAddOptions] = useState(false);
 
   // useEffect(()=>{
   //   console.log("data",data)
   // },[data])
+  useEffect(()=>{
+    data.bundleDetail.discountOptions.map((item,index)=>{
+      {item.type==="freeShipping"?
+        <>
+          {((item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)) && setSelectedDiscountIndex(index)}
+        </>
+      :item.type === "fixed"?
+        <>
+          {((item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)) && setSelectedDiscountIndex(index)}
+        </>
+      :item.type === "noDiscount" ?
+        <>
+          {((item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)) && setSelectedDiscountIndex(index)}
+        </>
+      :
+        <>
+          {((item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)) && setSelectedDiscountIndex(index)}
+        </>
+      }
+    })
+  },[data]);
+  
   const removeProductFromList = (item, index) => {
     let update = [...data.bundleDetail.products];
     update.splice(update.indexOf(item), 1);
@@ -266,48 +290,39 @@ const ProductMixMatch = () => {
   };
   function calculateFinalPrice() {
     let finalPrice = 0;
-    // console.log("enter in ******-----------***************");
 
     if (data.bundleDetail.products.length < 2) {
-      // console.log("enter in ******check updated***************");
-
       finalPrice = calculateMrp();
     } else {
-      // console.log("enter in ******-----------***************");
-
-      if (data.bundleDetail.discountOptions[0].type == "percent") {
-        if (data.bundleDetail.discountOptions[0].value > 100) {
-          // console.log("enter in *******************");
+      if (data.bundleDetail.discountOptions[selectedDiscountIndex].type == "percent") {
+        if (data.bundleDetail.discountOptions[selectedDiscountIndex].value > 100) {
           finalPrice = 0;
         } else {
 
           finalPrice =
             calculateMrp() -
-            calculateMrp() * (data.bundleDetail.discountOptions[0].value / 100);
-            // console.log("enter in ******-----------***************",typeof(calculateMrp()));
-            // console.log('check ***********',finalPrice)
+            calculateMrp() * (data.bundleDetail.discountOptions[selectedDiscountIndex].value / 100);
         }
       } else
-       if (data.bundleDetail.discountOptions[0].type == "fixed") {
-        if (parseFloat(data.bundleDetail.discountOptions[0].value) > calculateMrp()) {
-          finalPrice = 0;
+       if (data.bundleDetail.discountOptions[selectedDiscountIndex].type == "fixed") {
+        if (parseFloat(data.bundleDetail.discountOptions[selectedDiscountIndex].value) > calculateMrp()) {
+          finalPrice = selectedDiscountIndex;
         } else {
-          finalPrice = calculateMrp() - data.bundleDetail.discountOptions[0].value;
+          finalPrice = calculateMrp() - data.bundleDetail.discountOptions[selectedDiscountIndex].value;
         }
-      } else if (data.bundleDetail.discountOptions[0].type == "price") {
-        if (data.bundleDetail.discountOptions[0].value > calculateMrp()) {
+      } else if (data.bundleDetail.discountOptions[selectedDiscountIndex].type == "price") {
+        if (data.bundleDetail.discountOptions[selectedDiscountIndex].value > calculateMrp()) {
           finalPrice = calculateMrp();
         } else {
-          finalPrice = data.bundleDetail.discountOptions[0].value;
+          finalPrice = data.bundleDetail.discountOptions[selectedDiscountIndex].value;
         }
       } else if (
-        data.bundleDetail.discountOptions[0].type == "freeShipping" ||
-        data.bundleDetail.discountOptions[0].type == "noDiscount"
+        data.bundleDetail.discountOptions[selectedDiscountIndex].type == "freeShipping" ||
+        data.bundleDetail.discountOptions[selectedDiscountIndex].type == "noDiscount"
       ) {
         finalPrice = calculateMrp();
       }
     }
-    // console.log('*************************hello check final price****',finalPrice);
     return finalPrice;
   }
 
@@ -330,10 +345,12 @@ const ProductMixMatch = () => {
 
   const handleDeleteDiscountOption = (index) => {
     let update = { ...data };
+    if(update.bundleDetail.discountOptions.length<=2){
+      setDisableAddOptions(false)
+    }
     update.bundleDetail.discountOptions.splice(index, 1);
     setData(update);
-
-   setErrorArray([])
+    setErrorArray([])
     
 
     let update2 = [...priceData];
@@ -498,6 +515,9 @@ const ProductMixMatch = () => {
 
   const handleAddDiscountOption = () => {
     let update = { ...data };
+    if(update.bundleDetail.discountOptions.length>=2){
+      setDisableAddOptions(true)
+    }
     update.bundleDetail.discountOptions.push({
       quantity:
         parseInt(
@@ -737,6 +757,7 @@ const ProductMixMatch = () => {
                           handleDiscountQuantity(newvalue, index)
                         }
                         value={item.quantity}
+                        // min={item.quantity}
                         autoComplete="off"
                         // min={2}
                       />
@@ -782,7 +803,7 @@ const ProductMixMatch = () => {
                       />
                     </div>
                   </Col>
-                  {(data.bundleDetail.discountOptions[0].type === "percent" || data.bundleDetail.discountOptions[0].type === "fixed") && 
+                  {(data.bundleDetail.discountOptions[index].type === "percent" || data.bundleDetail.discountOptions[index].type === "fixed") && 
                   
                   <Col className="gutter-row" span={8}>
                     <div>
@@ -828,7 +849,7 @@ const ProductMixMatch = () => {
                 <Divider />
               </div>
             ))}
-            <Button size="large" onClick={handleAddDiscountOption}>
+            <Button size="large" disabled={disableAddOptions} onClick={handleAddDiscountOption}>
               Add Another Option
             </Button>
           </div>
@@ -942,6 +963,7 @@ const ProductMixMatch = () => {
               // handleVariantChoice={handleVariantChoice}
               bundleType={"productMixMatch"}
               errorArray={errorArray}
+              discountIndex={selectedDiscountIndex}
             />
             
           </div>

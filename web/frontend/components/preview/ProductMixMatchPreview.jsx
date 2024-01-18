@@ -1,63 +1,166 @@
 import { useEffect, useState } from "react";
 import { showAmountWithCurrency } from "../showCurrencyFormat";
+import {
+  PlusOutlined
+} from "@ant-design/icons";
 
-const ProductMixMatchPreview = ({data,mrp,endPrice,currency}) =>{
-  // console.log('product mix match data******************************************',data);
+const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
+  console.log('product mix match data******************************************',data);
   let freeShipping = "Free Shipping";
-
+  // console.log('hello check the values ',data.bundleDetail.discountOptions.length);
   return(
 
     <div className="sd-bundle-bundleSection-common sd-bundle-productBundle-statusSection">
       <div className="sd-bundle-bundleSection-heading-common">
         <div>Bundle Preview</div>
         {data.bundleDetail.products.length <= 0 ?
-          <>
+          <div className="sd-preview-wrapper-common sd-productBundle-preview-specific">
             Please select products
-          </>
+          </div>
           :
-          <div  className="sd-preview-wrapper-common sd-productBundle-preview-specific"
+          <div className="sd-preview-wrapper-common sd-productBundle-preview-specific"
             style={{"backgroundColor":data.customization[0].productMixMatch.box.backgroundColor,
             "borderColor": data.customization[0].productMixMatch.box.borderColor,
             "borderRadius":data.customization[0].productMixMatch.box.borderRadius+"px",
             "border":data.customization[0].productMixMatch.box.thickness +"px solid"+data.customization[0].productMixMatch.box.borderColor}}
           >
-          {/* {data.productMixMatch.button.position=="top" && 
-          <button
-            disabled  
-            style={{"color":data.productMixMatch.button.color,
-            "fontSize":data.productMixMatch.button.fontSize+"px",
-            "backgroundColor":data.productMixMatch.button.backgroundColor}}
-          >Add selected to cart
-          </button>} */}
+          {data.customization[0].productMixMatch.button.position=="top" && 
+            <button
+              disabled  
+              style={{"color":data.productMixMatch.button.color,
+              "fontSize":data.productMixMatch.button.fontSize+"px",
+              "backgroundColor":data.productMixMatch.button.backgroundColor}}
+            >Add selected to cart
+            </button>
+          }
           <>
-            <div style={{}}
+            <div style={{"color":data.customization[0].productMixMatch.title.color,
+                "fontSize":data.customization[0].productMixMatch.title.fontSize +"px",
+                "textAlign":data.customization[0].productMixMatch.title.alignment,
+                "fontWeight":data.customization[0].productMixMatch.title.titleBold,}}
             >{data.title}</div>
 
-            <div 
+            <div style={{"color":data.customization[0].productMixMatch.title.descriptionColor,
+                "fontSize":data.customization[0].productMixMatch.title.descriptionFontSize +"px",
+                "fontWeight":data.customization[0].productMixMatch.title.descriptionBold,}}
             >{data.description}</div>
           </>
           <hr />
-          {data.bundleDetail.discountOptions[0].type==="freeShipping"?
-          <div className="productMixMatchHeadBorder centerIntem">
-            {data.bundleDetail.discountOptions[0].quantity}+items|{freeShipping}
-          </div>:
-          <div className="productMixMatchHeadBorder centerIntem">
-            {data.bundleDetail.discountOptions[0].quantity}+items|{data.bundleDetail.discountOptions[0].value}% off
-          </div>
+          {data.bundleDetail.discountOptions.map((item,index)=>{
+            return(<div key={index}>
+              {item.type==="freeShipping"?
+                <>
+                  {(item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)? 
+                    <div className="productMixMatchHeadBorder centerIntem">
+                      {item.quantity}{index === data.bundleDetail.discountOptions.length-1 && "+"} items|{freeShipping}
+                    </div>
+                  :
+                    <div className="productMixMatchHeadBorderDisable centerIntem">
+                      {item.quantity}{index === data.bundleDetail.discountOptions.length-1 && "+"} items|{freeShipping}
+                    </div>
+                  }
+                </>
+              :item.type === "fixed"?
+                <>
+                {(item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)? 
+                    <div className="productMixMatchHeadBorder centerIntem">
+                      {item.quantity}{index === data.bundleDetail.discountOptions.length-1 && "+"} items| -{showAmountWithCurrency(item.value,currency)} off
+                    </div>
+                  :
+                    <div className="productMixMatchHeadBorderDisable centerIntem">
+                      {item.quantity}{index === data.bundleDetail.discountOptions.length-1 && "+"} items| -{showAmountWithCurrency(item.value,currency)} off
+                    </div>
+                  }
+                </>
+              :item.type === "noDiscount" ?
+                <> 
+                {(item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)?
+                    <div className="productMixMatchHeadBorder centerIntem">
+                      {item.quantity}{index === data.bundleDetail.discountOptions.length-1 && "+"} items|off
+                    </div>
+                  :
+                    <div className="productMixMatchHeadBorderDisable centerIntem">
+                      {item.quantity}{index === data.bundleDetail.discountOptions.length-1 && "+"} items|off
+                    </div>
+                  }
+                </>
+              :
+                <>
+                {(item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)?
+                    <div className="productMixMatchHeadBorder centerIntem">
+                      {item.quantity}{index === data.bundleDetail.discountOptions.length-1 && "+"} items|{item.value}% off
+                    </div>
+                  :
+                    <div className="productMixMatchHeadBorderDisable centerIntem">
+                      {item.quantity}{index === data.bundleDetail.discountOptions.length-1 && "+"} items|{item.value}% off
+                    </div>
+                  }
+                </>
+              }
+            </div>)
+          })
           }
+         
           
           {data?.bundleDetail?.products?.length >= data.bundleDetail.discountOptions[0].quantity ? 
             <div>
               <p>You have selected {data?.bundleDetail?.products?.length} items</p>
-              {data.bundleDetail.discountOptions[0].type==="freeShipping"?
-                <p>100% {freeShipping} discount is applied on the selected products.</p>:
-
-              <p>{data?.bundleDetail?.discountOptions[0]?.value}% discount is applied on the selected products.</p>
+              {/* <>
+                {data.bundleDetail.discountOptions.map((item,index)=>{
+                  return(
+                    <div key={index}>
+                      {item.type==="freeShipping"?
+                        <>
+                          {(item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)? 
+                            <p>100% {freeShipping} discount is applied on the selected products.</p>
+                          : 
+                            ""
+                          }
+                        </>
+                      :item.type==="fixed"?
+                        <>
+                          {(item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)?
+                            <p>-{showAmountWithCurrency(item.value,currency)} discount is applied on the selected products.</p>
+                          :
+                            ""  
+                          }
+                        </>
+                      :item.type === "noDiscount" ?
+                        <>
+                          {(item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)?
+                            <p>discount is applied on the selected products.</p>
+                          :
+                            ""
+                          }
+                        </>
+                      :
+                        <>
+                          {(item.quantity == data.bundleDetail.products.length)  || (index === data.bundleDetail.discountOptions.length-1 && data.bundleDetail.products.length >= item.quantity)?
+                            <p>{item?.value}% discount is applied on the selected products.</p>
+                          :
+                            ""
+                          }
+                        </>
+                      }
+                    </div>
+                  )
+                }
+                )}
+              </> */}
+              {data.bundleDetail.discountOptions[discountIndex].type==="freeShipping"?
+                <p>100% {freeShipping} discount is applied on the selected products.</p>
+              :data.bundleDetail.discountOptions[discountIndex].type==="fixed"?
+                <p>-{showAmountWithCurrency(data.bundleDetail.discountOptions[discountIndex].value,currency)} discount is applied on the selected products.</p>
+              :data.bundleDetail.discountOptions[discountIndex].type === "noDiscount" ?
+                <p>discount is applied on the selected products.</p>
+              :
+                <p>{data?.bundleDetail?.discountOptions[discountIndex]?.value}% discount is applied on the selected products.</p>
               }
-            </div>:
+            </div>
+          :
             <div>
               <p>You have selected {data?.bundleDetail?.products?.length} items</p>
-              <p>Select at least {data.bundleDetail.discountOptions[0].quantity} items to apply the discount.</p>
+              <p>Select at least {data.bundleDetail.discountOptions[discountIndex].quantity} items to apply the discount.</p>
             </div>
           }
           
@@ -69,9 +172,19 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency}) =>{
             data?.bundleDetail?.products?.map((item,index)=>{
                 {/* console.log("check data from map",item.title) */}
                 return(
-                  <div className="designChildDiv">
-                    <img src={item?.images[0]?.originalSrc} width={50}/>
-                  </div>
+                  <>
+                    <div className="designChildDiv">
+                      <img src={item?.images[0]?.originalSrc} width={50}/>
+                    </div>
+                    {index !== data?.bundleDetail?.products?.length-1 ?
+                      <div className="designPreviewPlusIcon">
+                        <PlusOutlined/>
+                      </div>
+                    :
+                      ''
+                    }
+                  </>
+                  
                 )
               })
             }
@@ -142,24 +255,26 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency}) =>{
                     //   "fontSize":data.productMixMatch.totalSection.fontSize +"px"}}
                   >Total</div>
                   <div className="design designChildDiv">
-                  {data.bundleDetail.discountOptions[0].type === "freeShipping" || data.bundleDetail.discountOptions[0].type === "noDiscount"?
-                  <div 
-                    // style={{"color":data.productMixMatch.totalSection.finalPrice.color,
-                    //   "fontSize":data.productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
-                      ><p>{showAmountWithCurrency(endPrice,currency)}</p></div>
-                      :
-                      <>
-                        <div 
-                      //  style={{"color":data.productMixMatch.totalSection.originalPrice.color,
-                      //   "fontSize":data.productMixMatch.totalSection.originalPrice.fontSize +"px"}} 
+                  {data.bundleDetail.discountOptions[discountIndex].type === "freeShipping" || data.bundleDetail.discountOptions[discountIndex].type === "noDiscount" || data.bundleDetail.products.length<2 ?
+                    <div
+                      // style={{"color":data.productMixMatch.totalSection.finalPrice.color,
+                      //   "fontSize":data.productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
                         >
-                          <del>{showAmountWithCurrency(mrp,currency)}</del>
-                        </div>
-                        <div 
-                        // style={{"color":data.productMixMatch.totalSection.finalPrice.color,
-                        //   "fontSize":data.productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
-                          ><p>{showAmountWithCurrency(endPrice,currency)}</p></div>
-                      </>
+                          <p>{showAmountWithCurrency(endPrice,currency)}</p>
+                    </div>
+                    :
+                    <>
+                      <div 
+                    //  style={{"color":data.productMixMatch.totalSection.originalPrice.color,
+                    //   "fontSize":data.productMixMatch.totalSection.originalPrice.fontSize +"px"}} 
+                      >
+                        <del>{showAmountWithCurrency(mrp,currency)}</del>
+                      </div>
+                      <div 
+                      // style={{"color":data.productMixMatch.totalSection.finalPrice.color,
+                      //   "fontSize":data.productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
+                        ><p>{showAmountWithCurrency(endPrice,currency)}</p></div>
+                    </>
                   }
                     
                   </div>
