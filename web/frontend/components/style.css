@@ -112,7 +112,7 @@
 .sd-bundle-bundleSection-common {
     background: #fff;
     border-radius: 4px;
-    width: 100%;
+    width: 40%;
     padding: 13px 20px;
     font-size: 14px;
     margin: 25px 0px 0px 0px;
@@ -1050,6 +1050,7 @@ input[type="radio"] {
 .sd-productCustom-preview {
     padding: 10px;
     width: 40%;
+    margin: 0 20px;
 }
 
 .sd-collection-discount-badge {
@@ -3030,11 +3031,15 @@ nav.Polaris-Navigation {
     z-index: 9;
     left: 50%;
 }
-.design{
+.design {
     display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .designChildDiv{
-    margin: 10px; 
+    /* margin: 10px;  */
+    gap:10px;
+    position: relative;
 }
 .designChilDevPlusIcon{
     margin-top: 50px;
@@ -3052,11 +3057,126 @@ nav.Polaris-Navigation {
 .productMixMatchBGColor{
     background-color: #fafafa;
 }
-.productMixMatchHeadBorder{
+.productMixMatchHeadBorder {
     border: 1px solid rgb(141, 138, 138);
     border-radius: 10px;
     background-color: #bde6c6;
+    padding: 7px;
+    margin: 10px 0;
 }
 .centerIntem{
     text-align: center;
+}
+
+/*************  18 jan 23 *************/
+
+.sd-bundlematch_heading {
+    margin-bottom: 10px;
+}
+.sd_bundle_thumbnailImg {
+    margin: 0;
+    height: 50px;
+    width: 60px;
+    background: #cfcfcf;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.sd_bundle_thumbnailImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.sd_bundle_producQuantity, .productMixMatchBGColor p {
+    justify-content: space-between;
+    align-items: center;
+}
+.sd_bundle_producQuantity .sd-bundle-showQuantity {
+    margin-top: 0;
+}
+.designChildDiv select, .sd_selectd_vertical select {
+    width: 100%;
+    padding: 10px;
+}
+
+.add_select_cartbtn{
+    width: 100%;
+    padding:10px;
+    cursor: pointer;
+}
+.design.productMixMatchBGColor {
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.sd_frequency_moderndesign .designChildDivImg img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.sd_frequency_moderndesign .designChildDivImg {
+    width: 170px;
+    height: 140px;
+    background: #e9e9e9;
+    border-radius: 5px;
+}
+
+.design.sd_frequency_mdesignInner {
+    flex-wrap: wrap;
+    align-items: normal;
+}
+.sd_frequency_moderndesign input {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.sd_frequency_moderndesign_mainColumn {
+    background: #fff;
+    border-radius: 4px;
+    overflow-y: auto;
+    max-height: 800px;
+}
+.sd_horizontal_preview_top, .sd_frequency_moderndesign, .designChildDiv_main_row {
+    padding: 20px;
+}
+
+.sd_inputButton {
+    min-height: 43px;
+    border-radius: 0;
+    width: 100%;
+}
+.sd_frequency_moderndesign select, .sd_frequency_moderndesign p, .designChildDivInner p {
+    margin-top: 10px;
+}
+.sd_horizontal_preview_top h5, .sd-productCustom-previewBottom p     {
+    margin: 0;
+}
+
+.sd-productCustom-preview p,.sd-productCustom-previewBottom, .sd_selectd_vertical, .designChildDiv_main {
+    margin-bottom: 10px;
+}
+.sd-preview-wrapper-common.sd-productCustom-preview {
+    margin-bottom: 2rem;
+}
+.designLastDiv p {
+    margin-top: 0;
+}
+.designChildDiv_mainInner_child {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.designChildDivInner {
+    width: 100%;
+}
+.designChildDiv .productMixMatchBGColor {
+    margin-top: 10px;
+}
+.sd_bundle_thumbnailImg_multiple .sd-bundle-svg-common {
+    margin: 0;
+}
+.sd_bundle_thumbnailImg_multiple {
+    justify-content: center;
 }
