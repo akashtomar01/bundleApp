@@ -49,7 +49,7 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
           <p>50% discount is applied on the selected products.</p>
         </div>
       <hr/>
-        <div>
+        <div> 
           <div className="design sd_bundle_ sd_bundle_thumbnailImg_multiple">
             <div className="designChildDiv sd_bundle_thumbnailImg">
             <img style={{"border":"1px solid white",

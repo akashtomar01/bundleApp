@@ -15,7 +15,7 @@ const CustomizationFBt = ({data}) =>{
           <Title level={5}>Horizontal Preview</Title>
           <p>Frequently bought together</p>
         </div>
-        <div className="sd_frequency_moderndesign">
+        <div className="sd_frequency_moderndesign"> 
           <div className="design sd_frequency_mdesignInner">
             <div className="designChildDiv">
             <div className="designChildDivImg">
