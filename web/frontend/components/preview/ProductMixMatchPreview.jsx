@@ -279,7 +279,7 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
                         "fontSize":data.customization[0].productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
                         ><p>{showAmountWithCurrency(endPrice,currency)}</p></div>
                     </>
-                  }
+                  } 
                     
                   </div>
                 </div>
