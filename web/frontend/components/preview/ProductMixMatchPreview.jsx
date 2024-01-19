@@ -26,7 +26,7 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
           >
           {data.customization[0].productMixMatch.button.position=="top" && 
             <button
-              disabled  
+              disabled
               style={{"color":data.productMixMatch.button.color,
               "fontSize":data.productMixMatch.button.fontSize+"px",
               "backgroundColor":data.productMixMatch.button.backgroundColor}}
@@ -46,6 +46,7 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
             >{data.description}</div>
           </>
           <hr />
+
           {data.bundleDetail.discountOptions.map((item,index)=>{
             return(<div key={index}>
               {item.type==="freeShipping"?
@@ -101,7 +102,6 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
           })
           }
          
-          
           {data?.bundleDetail?.products?.length >= data.bundleDetail.discountOptions[0].quantity ? 
             <div>
               <p>You have selected {data?.bundleDetail?.products?.length} items</p>
@@ -173,18 +173,22 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
                 {/* console.log("check data from map",item.title) */}
                 return(
                   <>
-                    <div className="designChildDiv">
+                    <div style={{"border":"1px solid white",
+                        "borderColor":data.customization[0].productMixMatch.productDetails.image.borderColor,
+                        "borderRadius":data.customization[0].productMixMatch.productDetails.image.borderRadius +"px"}}
+                        className="designChildDiv"
+                    >
                       <img src={item?.images[0]?.originalSrc} width={50}/>
                     </div>
-                    {index !== data?.bundleDetail?.products?.length-1 ?
-                      <div className="designPreviewPlusIcon">
-                        <PlusOutlined/>
+                    {index !== data?.bundleDetail?.products?.length-1 &&
+                      <div className=" sd-bundle-svg-common" 
+                          style={{background:data.customization[0].productMixMatch.productDetails.plusBackgroundColor,
+                          "fontSize": data.customization[0].productMixMatch.productDetails.plusfontSize +"px"}}
+                      >
+                        <PlusOutlined style={{"color": data.customization[0].productMixMatch.productDetails.plusColor}}/>
                       </div>
-                    :
-                      ''
                     }
-                  </>
-                  
+                  </> 
                 )
               })
             }
@@ -194,10 +198,10 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
               <div className=" designChildDiv">
                 <input type="checkbox" checked/> <label>All products</label>
               </div>
-              <div className="sd-bundle-showQuantity  designChildDiv" 
-                  // style={{"color":data.productMixMatch.productDetails.quantities.color,
-                  // "backgroundColor":data.productMixMatch.productDetails.quantities.backgroundColor,
-                  // "borderColor":data.productMixMatch.productDetails.quantities.borderColor}}
+              <div className="sd-bundle-showQuantity" 
+                style={{"color":data.customization[0].productMixMatch.productDetails.quantities.color,
+                "backgroundColor":data.customization[0].productMixMatch.productDetails.quantities.backgroundColor,
+                "borderColor":data.customization[0].productMixMatch.productDetails.quantities.borderColor}}
                 >{data?.bundleDetail?.products?.length}X </div>
               </div>
               <hr/>
@@ -213,20 +217,20 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
                         <div className="design">
                           <div className="designChildDiv">
                             <img
-                            // style={{"border":"1px solid white",
-                            //   "borderColor":data.productMixMatch.productDetails.image.borderColor,
-                            //   "borderRadius":data.productMixMatch.productDetails.image.borderRadius +"px"}}
+                                style={{"border":"1px solid white",
+                                "borderColor":data.customization[0].productMixMatch.productDetails.image.borderColor,
+                                "borderRadius":data.customization[0].productMixMatch.productDetails.image.borderRadius +"px"}}
                             src={item?.images[0]?.originalSrc} width={50}/>
                           </div>
                           <div className="designChildDiv">
                             <p 
-                            // style={{"color":data.productMixMatch.productDetails.title.color,
-                            //   "fontSize":data.productMixMatch.productDetails.title.fontSize +"px"}}
+                              style={{"color":data.customization[0].productMixMatch.productDetails.title.color,
+                              "fontSize":data.customization[0].productMixMatch.productDetails.title.fontSize +"px"}}
                             >{item?.title}</p>
 
-                            <p 
-                            // style={{"color":data.productMixMatch.productDetails.price.color,
-                            //   "fontSize":data.productMixMatch.productDetails.price.fontSize +"px"}}
+                            <p
+                              style={{"color":data.customization[0].productMixMatch.productDetails.price.color,
+                              "fontSize":data.customization[0].productMixMatch.productDetails.price.fontSize +"px"}}
                             >{showAmountWithCurrency(item?.variants[0]?.price,currency)}</p>
 
                           </div>
@@ -234,9 +238,9 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
                       </div>
                       <div className="designChildDiv">
                           <select
-                          // style={{"backgroundColor":data.productMixMatch.productDetails.variantSelector.backgroundColor,
-                          //   "color":data.productMixMatch.productDetails.variantSelector.color,
-                          //   "borderColor":data.productMixMatch.productDetails.variantSelector.borderColor}}
+                            style={{"backgroundColor":data.customization[0].productMixMatch.productDetails.variantSelector.backgroundColor,
+                            "color":data.customization[0].productMixMatch.productDetails.variantSelector.color,
+                            "borderColor":data.customization[0].productMixMatch.productDetails.variantSelector.borderColor}}
                             disabled
                           >
                           <option>Select Variant</option>
@@ -248,31 +252,31 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
               }
             </div>
               <div className="design productMixMatchBGColor" 
-                  // style={{"backgroundColor":data.productMixMatch.totalSection.backgroundColor}}
+                  style={{"backgroundColor":data.customization[0].productMixMatch.totalSection.backgroundColor}}
                   >
                   <div className="designChildDiv"
-                    // style={{"color":data.productMixMatch.totalSection.color,
-                    //   "fontSize":data.productMixMatch.totalSection.fontSize +"px"}}
+                    style={{"color":data.customization[0].productMixMatch.totalSection.color,
+                      "fontSize":data.customization[0].productMixMatch.totalSection.fontSize +"px"}}
                   >Total</div>
                   <div className="design designChildDiv">
                   {data.bundleDetail.discountOptions[discountIndex].type === "freeShipping" || data.bundleDetail.discountOptions[discountIndex].type === "noDiscount" || data.bundleDetail.products.length<2 ?
                     <div
-                      // style={{"color":data.productMixMatch.totalSection.finalPrice.color,
-                      //   "fontSize":data.productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
+                      style={{"color":data.customization[0].productMixMatch.totalSection.finalPrice.color,
+                        "fontSize":data.customization[0].productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
                         >
                           <p>{showAmountWithCurrency(endPrice,currency)}</p>
                     </div>
                     :
                     <>
                       <div 
-                    //  style={{"color":data.productMixMatch.totalSection.originalPrice.color,
-                    //   "fontSize":data.productMixMatch.totalSection.originalPrice.fontSize +"px"}} 
+                     style={{"color":data.customization[0].productMixMatch.totalSection.originalPrice.color,
+                      "fontSize":data.customization[0].productMixMatch.totalSection.originalPrice.fontSize +"px"}} 
                       >
                         <del>{showAmountWithCurrency(mrp,currency)}</del>
                       </div>
                       <div 
-                      // style={{"color":data.productMixMatch.totalSection.finalPrice.color,
-                      //   "fontSize":data.productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
+                      style={{"color":data.customization[0].productMixMatch.totalSection.finalPrice.color,
+                        "fontSize":data.customization[0].productMixMatch.totalSection.finalPrice.fontSize +"px"}}  
                         ><p>{showAmountWithCurrency(endPrice,currency)}</p></div>
                     </>
                   }
@@ -280,11 +284,11 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
                   </div>
                 </div>
               <div>
-                {/* {data.productMixMatch.button.position=="bottom" && */}
+                {data.customization[0].productMixMatch.button.position=="bottom" &&
                   <button disabled  
-                  // style={{"color":data.productMixMatch.button.color,"fontSize":data.productMixMatch.button.fontSize+"px","backgroundColor":data.productMixMatch.button.backgroundColor}}
+                  style={{"color":data.customization[0].productMixMatch.button.color,"fontSize":data.customization[0].productMixMatch.button.fontSize+"px","backgroundColor":data.customization[0].productMixMatch.button.backgroundColor}}
                   >Add selected to cart</button>
-                {/* } */}
+                }
               </div>
           </div>
         }

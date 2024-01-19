@@ -7,7 +7,7 @@ import {
 const CustomizationProductMixMatchPreview = ({data}) =>{
   console.log("check data ****",data);
   return(
-    <div>
+  
       <div 
       className="sd-bundle-bundleSection-common sd-bundle-productBundle-preview" 
       style={{"backgroundColor":data.productMixMatch.box.backgroundColor,
@@ -25,12 +25,14 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
         >Add selected to cart
         </button>}
 
-        <div
+        <div className="sd-bundlematch_heading"
           style={{"color":data.productMixMatch.title.color,
           "fontSize":data.productMixMatch.title.fontSize +"px",
           "textAlign":data.productMixMatch.title.alignment,
           "fontWeight":data.productMixMatch.title.titleBold,}}
-        >new product mix and match test test
+        >
+         <h2>new product mix and match test test</h2>
+
         </div>
 
         <div style={{"color":data.productMixMatch.title.descriptionColor,
@@ -47,23 +49,23 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
           <p>50% discount is applied on the selected products.</p>
         </div>
       <hr/>
-        <div>
-          <div className="design">
-            <div className="designChildDiv">
+        <div> 
+          <div className="design sd_bundle_ sd_bundle_thumbnailImg_multiple">
+            <div className="designChildDiv sd_bundle_thumbnailImg">
             <img style={{"border":"1px solid white",
               "borderColor":data.productMixMatch.productDetails.image.borderColor,
               "borderRadius":data.productMixMatch.productDetails.image.borderRadius +"px"}}
               src={pic} width={50}/>
             </div>
             <div className=" sd-bundle-svg-common" 
-              style={{background:data.productMixMatch.productDetails.plusBackgroundColor,
+                style={{background:data.productMixMatch.productDetails.plusBackgroundColor,
                 "fontSize": data.productMixMatch.productDetails.plusfontSize +"px"}}
             >
                 <PlusOutlined style={{"color": data.productMixMatch.productDetails.plusColor,
-                  }}
+                }}
                 /> 
             </div>
-            <div className="designChildDiv">
+            <div className="designChildDiv sd_bundle_thumbnailImg">
               <img style={{"border":"1px solid white",
                 "borderColor":data.productMixMatch.productDetails.image.borderColor,
                 "borderRadius":data.productMixMatch.productDetails.image.borderRadius +"px"}}
@@ -72,7 +74,7 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
           </div>
 
           <div  className=" productMixMatchBorder sd-preview-wrapper-common sd-productBundle-preview-specific">
-            <div className="design">
+            <div className="design sd_bundle_producQuantity">
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
                 <label>All products</label>
@@ -85,12 +87,12 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
             </div>
             <hr/>
             <div>
-              <div className="design designChildDiv">
+              <div className="design designChildDiv designChildDiv_main">
                 <div>
                   <input type="checkbox" checked/>
                 </div>
                 <div className="design">
-                  <div className="designChildDiv">
+                  <div className="designChildDiv sd_bundle_thumbnailImg">
                     <img style={{"border":"1px solid white",
                       "borderColor":data.productMixMatch.productDetails.image.borderColor,
                       "borderRadius":data.productMixMatch.productDetails.image.borderRadius +"px"}}
@@ -106,7 +108,11 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
                     >Rs. 550.00</p>
 
                   </div>
-                  <select style={{"backgroundColor":data.productMixMatch.productDetails.variantSelector.backgroundColor,
+                </div>
+              </div>
+            </div>
+            <div className="designChildDiv">
+            <select style={{"backgroundColor":data.productMixMatch.productDetails.variantSelector.backgroundColor,
                     "color":data.productMixMatch.productDetails.variantSelector.color,
                     "borderColor":data.productMixMatch.productDetails.variantSelector.borderColor}}
                     disabled
@@ -114,16 +120,14 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
                   <option>Select Variant</option>
                 </select>
                 </div>
-              </div>
-            </div>
             <hr/>
             <div>
-              <div className="design designChildDiv">
+              <div className="design designChildDiv designChildDiv_main">
                 <div>
                   <input type="checkbox" checked/>
                 </div>
                 <div className="design">
-                  <div className="designChildDiv">
+                  <div className="designChildDiv sd_bundle_thumbnailImg">
                     <img style={{"border":"1px solid white",
                       "borderColor":data.productMixMatch.productDetails.image.borderColor,
                       "borderRadius":data.productMixMatch.productDetails.image.borderRadius +"px"}}
@@ -138,7 +142,6 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
                       "fontSize":data.productMixMatch.productDetails.price.fontSize +"px"}}
                     >Rs. 560.00</p>
                   </div>
-                  
                 </div>
               </div>
             </div>
@@ -152,7 +155,7 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
               </select>
             </div>
           </div>
-            <div className="design productMixMatchBGColor" 
+            <div className="design productMixMatchBGColor " 
               style={{"backgroundColor":data.productMixMatch.totalSection.backgroundColor}}>
               <div className="designChildDiv"
                 style={{"color":data.productMixMatch.totalSection.color,
@@ -169,13 +172,13 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
               </div>
             </div>
             <div>
-              {data.productMixMatch.button.position=="bottom" && <button disabled  style={{"color":data.productMixMatch.button.color,"fontSize":data.productMixMatch.button.fontSize+"px","backgroundColor":data.productMixMatch.button.backgroundColor}}>Add selected to cart</button>}
+              {data.productMixMatch.button.position=="bottom" && <button className="add_select_cartbtn" disabled  style={{"color":data.productMixMatch.button.color,"fontSize":data.productMixMatch.button.fontSize+"px","backgroundColor":data.productMixMatch.button.backgroundColor}}>Add selected to cart</button>}
             </div>
         </div>
       </div>
       
       
-    </div>
+
   )
 }
 export default CustomizationProductMixMatchPreview;

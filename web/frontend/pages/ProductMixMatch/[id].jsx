@@ -88,6 +88,7 @@ const ProductMixMatch = () => {
   const [myModal, setMyModal] = useState(false);
   const app = useAppBridge();
   const [selectedDiscountIndex,setSelectedDiscountIndex] = useState(0);
+  const [selectedPlacement,setSelectedPlacement] = useState("productPage");
   const temp = {
     setPid,
     setAntModal,
@@ -631,7 +632,6 @@ const ProductMixMatch = () => {
     // console.log("requiredProducts finally", "bundle product", data.bundleDetail.products)
   }
 
-
   const handleMultiProductsSelection=(e, item)=>{
     // console.log(e.target.checked, item.id, data.bundleDetail.products)
     let key= "products"
@@ -645,6 +645,10 @@ const ProductMixMatch = () => {
       setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
     }
     // console.log("multiProductsSelectionProducts finally", "bundle product", data.bundleDetail.products)
+  }
+
+  const handlePlacementsSelection = (e, type) =>{
+    console.log("handlePlacementsSelection work ===================>",type);
   }
 
   useEffect(() => {
@@ -859,6 +863,33 @@ const ProductMixMatch = () => {
               setData={setData}
               errorArray={errorArray}
             />
+
+            <div className="sd-bundle-bundleSection-common sd-bundle-createBundleNamingSection">
+              <div className="sd-bundle-bundleSection-heading-common">
+                Placements
+              </div>
+              <div className="sd-bundle-plainText-common">
+                Choose where to display this bundle and preview the options to see which one you prefer.
+              </div>
+              <div>
+                <div>
+                  <input 
+                    type="checkbox" 
+                    onChange={(e)=>{handlePlacementsSelection(e,"productPage")}}
+                    checked={selectedPlacement==="productPage"}
+                  />
+                  <label>Included products page</label>
+                </div>
+                <div>
+                  <input 
+                    type="checkbox" 
+                    onChange={(e)=>{handlePlacementsSelection(e,"bundlePage")}}
+                    checked={selectedPlacement==="bundlePage"}
+                  />
+                  <label>Bundles page</label>
+                </div>
+              </div>
+            </div>
 
             {/* <DiscountOptions
               discountType={data.bundleDetail.discountType}

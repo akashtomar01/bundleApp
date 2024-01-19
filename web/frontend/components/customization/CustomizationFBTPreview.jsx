@@ -8,19 +8,19 @@ import Title from "antd/es/typography/Title";
 const CustomizationFBt = ({data}) =>{
    
   return(
-    <div>
+    <div className="sd_frequency_moderndesign_mainColumn">
     {data.frequentlyBoughtTogether.design === "classic"?
       <div>
-        <div>
-          <Title level={5}><u>Horizontal Preview</u></Title>
-        </div>
-        <div>
+        <div className="sd_horizontal_preview_top">
+          <Title level={5}>Horizontal Preview</Title>
           <p>Frequently bought together</p>
         </div>
-        <div>
-          <div className="design">
+        <div className="sd_frequency_moderndesign"> 
+          <div className="design sd_frequency_mdesignInner">
             <div className="designChildDiv">
-              <img src={pic} width={140}/>
+            <div className="designChildDivImg">
+              <img src={pic} />
+              </div>
             </div> 
 
             <div className="designChilDevPlusIcon">
@@ -28,7 +28,9 @@ const CustomizationFBt = ({data}) =>{
             </div>
 
             <div className="designChildDiv">
-              <img src={pic} width={140}/>
+            <div className="designChildDivImg">
+              <img src={pic} />
+              </div>
             </div>
 
             <div className="designChilDevPlusIcon">
@@ -36,16 +38,20 @@ const CustomizationFBt = ({data}) =>{
             </div>
 
             <div className="designChildDiv">
-              <img src={pic} width={140}/>
+            <div className="designChildDivImg">
+              <img src={pic} />
+              </div>
             </div>
             <div className="designChilDevPlusIcon">
               <PlusOutlined/> 
             </div>
             <div className="designChildDiv">
-              <img src={pic} width={140}/>
+            <div className="designChildDivImg">
+              <img src={pic} />
+              </div>
             </div>
 
-            <div className="designChildDiv">
+            <div className="designChildDiv designLastDiv">
               <p>Total <del>Rs.2000</del></p>
               <p>Rs. 1115</p>
               <Button disabled>Add selected to cart</Button>
@@ -54,63 +60,72 @@ const CustomizationFBt = ({data}) =>{
           </div>          
         </div>
 
-        <div>
-          <div className="designChildDiv">
+        <div className="designChildDiv_main_row">
+          <div className="designChildDiv designChildDiv_main">
+            <div className="designChildDiv_mainInner_child">
             <input type="checkbox" checked/>
-            <u>This item : Daisy Dress</u>
+            <p>This item : Daisy Dress</p>
+            </div>
             <select disabled><option>Select Variant</option></select>
-            <u>Rs.****</u>
+            <span>Rs.****</span>
           </div>
-          <div className="designChildDiv">
+          <div className="designChildDiv designChildDiv_main">
+          <div className="designChildDiv_mainInner_child">
             <input type="checkbox" checked/>
-            <u>Adia Skirt</u>
+            <p>This item : Daisy Dress</p>
+            </div>
             <select disabled><option>Select Variant</option></select>
-            <u>Rs.****</u>
+            <span>Rs.****</span>
           </div>
-          <div className="designChildDiv">
+          <div className="designChildDiv designChildDiv_main">
+          <div className="designChildDiv_mainInner_child">
             <input type="checkbox" checked/>
-            <u>Ekna Skirt</u>
+            <p>This item : Daisy Dress</p>
+            </div>
             <select disabled><option>Select Variant</option></select>
-            <u>Rs.****</u>
+            <span>Rs.****</span>
           </div>
-          <div className="designChildDiv">
+          <div className="designChildDiv designChildDiv_main">
+          <div className="designChildDiv_mainInner_child">
             <input type="checkbox" checked/>
-            <u>Eysan Skirt</u>
+            <p>This item : Daisy Dress</p>
+            </div>
             <select disabled><option>Select Variant</option></select>
-            <u>Rs.****</u>
+            <span>Rs.****</span>
           </div>
         </div>
-        <div>
+        <div className="sd_horizontal_preview_top">
           <Title level={5}><u>Vertical Preview</u></Title>
         </div>
         <div className="sd-preview-wrapper-common sd-productCustom-preview">
           <div className="design">
-            <div className="designChildDiv">
-              <img src={pic} width={50}/>
+            <div className="designChildDiv sd_bundle_thumbnailImg">
+              
+              <img src={pic}/>
             </div> 
 
             <div className="iconDesign">
               <PlusOutlined/> 
             </div>
 
-            <div className="designChildDiv">
-              <img src={pic} width={50}/>
+            <div className="designChildDiv sd_bundle_thumbnailImg">
+              <img src={pic}/>
             </div>
 
             <div className="iconDesign">
               <PlusOutlined/> 
             </div>
 
-            <div className="designChildDiv">
-              <img src={pic} width={50}/>
+            <div className="designChildDiv sd_bundle_thumbnailImg">
+              <img src={pic}/>
             </div>
 
             <div className="iconDesign">
               <PlusOutlined/> 
             </div>
 
-            <div className="designChildDiv">
-              <img src={pic} width={50}/>
+            <div className="designChildDiv sd_bundle_thumbnailImg">
+              <img src={pic}/>
             </div>
           </div>
 
@@ -119,11 +134,13 @@ const CustomizationFBt = ({data}) =>{
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
               </div>
-              <div>
+              <div className="designChildDivInner">
                 <p>Adia Skirt</p>
+                <div class="sd_selectd_vertical">
                 <select disabled>
                   <option>Select Variant</option>
                 </select>
+                </div>
                 <p>Rs.****</p>
               </div>
             </div>
@@ -132,11 +149,13 @@ const CustomizationFBt = ({data}) =>{
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
               </div>
-              <div>
+              <div className="designChildDivInner">
                 <p>Adia Skirt</p>
+                <div class="sd_selectd_vertical">
                 <select disabled>
                   <option>Select Variant</option>
                 </select>
+                </div>
                 <p>Rs.****</p>
               </div>
             </div>
@@ -145,11 +164,13 @@ const CustomizationFBt = ({data}) =>{
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
               </div>
-              <div>
+              <div className="designChildDivInner">
                 <p>Adia Skirt</p>
+                <div class="sd_selectd_vertical">
                 <select disabled>
                   <option>Select Variant</option>
                 </select>
+                </div>
                 <p>Rs.****</p>
               </div>
             </div>
@@ -158,33 +179,40 @@ const CustomizationFBt = ({data}) =>{
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
               </div>
-              <div>
+              <div className="designChildDivInner">
                 <p>Adia Skirt</p>
+                <div class="sd_selectd_vertical">
                 <select disabled>
                   <option>Select Variant</option>
                 </select>
+                </div>
                 <p>Rs.****</p>
               </div>
             </div>
 
           </div>
           <div className="designChildDiv">
-            <p>Total: Rs. 1,055.00 <del>Rs. 2,110.00</del></p>
-            <Button disabled>Add selected to cart</Button>
+          <div className="productMixMatchBGColor">
+              <p>Total: Rs.
+              <span>1,055.00 <del>Rs. 2,110.00</del> </span>
+              </p>
+              </div>
+            <Button className="sd_inputButton" disabled>Add selected to cart</Button>
           </div>
         </div>
       </div>
       :
       <div>
-        <div>
-          <Title level={5}><u>Horizontal Preview</u></Title>
-        </div>
-        <div>
+          <div className="sd_horizontal_preview_top">
+          <Title level={5}>Horizontal Preview</Title>
           <p>Frequently bought together</p>
         </div>
-        <div className="design">
+        <div className="sd_frequency_moderndesign">
+        <div className="design sd_frequency_mdesignInner">
           <div className="designChildDiv">
-            <img src={pic} width={140}/> 
+          <div className="designChildDivImg">
+            <img src={pic}/> 
+            </div>
             <input type="checkbox" checked/>
             <p>This item:Daisy Dress</p>
             <p>Rs.****</p>
@@ -198,7 +226,9 @@ const CustomizationFBt = ({data}) =>{
           </div>
 
           <div className="designChildDiv">
-            <img src={pic} width={140}/> 
+          <div className="designChildDivImg">
+            <img src={pic}/> 
+            </div>
             <input type="checkbox" checked/>
             <p>Adia Skirt</p>
             <p>Rs.****</p>
@@ -212,7 +242,9 @@ const CustomizationFBt = ({data}) =>{
           </div>
 
           <div className="designChildDiv">
-            <img src={pic} width={140}/>
+          <div className="designChildDivImg">
+            <img src={pic}/>
+            </div>
             <input type="checkbox" checked/>
             <p>Ekna Skirt</p>
             <p>Rs.****</p>
@@ -226,7 +258,9 @@ const CustomizationFBt = ({data}) =>{
           </div>
 
           <div className="designChildDiv">
-            <img src={pic} width={140}/>
+          <div className="designChildDivImg">
+            <img src={pic}/>
+            </div>
             <input type="checkbox" checked/>
             <p>Eysan Skirt</p>
             <p>Rs.****</p>
@@ -235,85 +269,99 @@ const CustomizationFBt = ({data}) =>{
             </select>
           </div>
           
-          <div className="designChildDiv">
+          <div className="designChildDiv designLastDiv">
             <p>Total <del>Rs.2000</del></p>
             <p>Rs. 1115</p>
-            <Button disabled>Add selected to cart</Button>
+            <Button className="sd_inputButton" disabled>Add selected to cart</Button>
           </div>
         </div>
-
-        <div>
+        </div>
+        <div class="sd_horizontal_preview_top">
           <Title level={5}><u>Vertical Preview</u></Title>
         </div>
         <div className="sd-preview-wrapper-common sd-productCustom-preview">
           <p>Frequently bought together</p>
           <div>
-            <div className="design designChildDiv">
+            <div className="design designChildDiv sd-productCustom-previewBottom">
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
               </div>
-              <div>
+              <div class="designChildDiv sd_bundle_thumbnailImg">
                 <img src={pic} width={95}/>
               </div>
               <div>
                 <p>This item : Daisy Dress</p>
                 <p>Rs.****</p>
-                <select disabled>
+              </div>
+             </div>
+             <div className="sd_selectd_vertical">
+              <select disabled>
                   <option>Select Variant</option>
                 </select>
-              </div>
-            </div>
-
-            <div className="design designChildDiv">
+                </div>
+            <div className="design designChildDiv sd-productCustom-previewBottom">
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
               </div>
-              <div>
+              <div class="designChildDiv sd_bundle_thumbnailImg">
                 <img src={pic} width={95}/>
               </div>
               <div>
                 <p>Adia Skirt</p>
                 <p>Rs.****</p>
-                <select disabled>
-                  <option>Select Variant</option>
-                </select>
+             
               </div>
             </div>
+            <div className="sd_selectd_vertical">
+              <select disabled>
+                  <option>Select Variant</option>
+                </select>
+                </div>
 
-            <div className="design designChildDiv">
+            <div className="design designChildDiv sd-productCustom-previewBottom">
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
               </div>
-              <div>
+              <div class="designChildDiv sd_bundle_thumbnailImg">
                 <img src={pic} width={95}/>
               </div>
               <div>
                 <p>Ekna Skirt</p>
                 <p>Rs.****</p>
-                <select disabled>
-                  <option>Select Variant</option>
-                </select>
+               
               </div>
             </div>
+            <div className="sd_selectd_vertical">
+              <select disabled>
+                  <option>Select Variant</option>
+                </select>
+                </div>
 
-            <div className="design designChildDiv">
+            <div className="design designChildDiv sd-productCustom-previewBottom">
               <div className="designChildDiv">
                 <input type="checkbox" checked/>
               </div>
-              <div>
+              <div class="designChildDiv sd_bundle_thumbnailImg">
                 <img src={pic} width={95}/>
               </div>
               <div>
                 <p>Eysan Skirt</p>
                 <p>Rs.****</p>
-                <select disabled>
-                  <option>Select Variant</option>
-                </select>
+              
               </div>
             </div>
+            <div className="sd_selectd_vertical">
+              <select disabled>
+                  <option>Select Variant</option>
+                </select>
+                </div>
             <div className="designChildDiv">
-              <p>Total: Rs. 1,055.00 <del>Rs. 2,110.00</del></p>
-              <Button disabled>Add selected to cart</Button>
+              <div className="productMixMatchBGColor">
+              <p>Total: Rs.
+              <span>1,055.00 <del>Rs. 2,110.00</del> </span>
+              </p>
+              </div>
+              <Button className="sd_inputButton" disabled>Add selected to cart</Button>
             </div>
           </div>
         </div>
