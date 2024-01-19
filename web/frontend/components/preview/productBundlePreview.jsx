@@ -81,7 +81,7 @@ const ProductBundlePreview = ({
   };
 
   return (
-    <div className="sd-bundle-bundleSection-common sd-bundle-productBundle-preview">
+    <div className="sd-bundle-bundleSection-common sd-bundle-productBundle-preview first-previewCard">
       <div className="sd-bundle-bundleSection-heading-common">Preview</div>
       <div className="sd-preview-displaySelect">
         <select value={display} onChange={(e) => setDisplay(e.target.value)}>
