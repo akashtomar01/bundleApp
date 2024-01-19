@@ -88,7 +88,10 @@ const ProductMixMatch = () => {
   const [myModal, setMyModal] = useState(false);
   const app = useAppBridge();
   const [selectedDiscountIndex,setSelectedDiscountIndex] = useState(0);
-  const [selectedPlacement,setSelectedPlacement] = useState("productPage");
+  const [selectedPlacement,setSelectedPlacement] = useState({
+    productPage:true,
+    bundlePage:false
+  });
   const temp = {
     setPid,
     setAntModal,
@@ -648,8 +651,13 @@ const ProductMixMatch = () => {
   }
 
   const handlePlacementsSelection = (e, type) =>{
-    console.log("handlePlacementsSelection work ===================>",type);
+      // if(type==="productPage"){
+      //   setSelectedPlacement(selectedPlacement.productPage===e.target.checked);
+      // }else{
+      //   setSelectedPlacement(selectedPlacement.bundlePage===e.target.checked);
+      // } 
   }
+  console.log("handlePlacementsSelection work ===================>",selectedPlacement.bundlePage);
 
   useEffect(() => {
     calculateMrp();
@@ -876,7 +884,7 @@ const ProductMixMatch = () => {
                   <input 
                     type="checkbox" 
                     onChange={(e)=>{handlePlacementsSelection(e,"productPage")}}
-                    checked={selectedPlacement==="productPage"}
+                    // checked={selectedPlacement.productPage===true}
                   />
                   <label>Included products page</label>
                 </div>
@@ -884,7 +892,7 @@ const ProductMixMatch = () => {
                   <input 
                     type="checkbox" 
                     onChange={(e)=>{handlePlacementsSelection(e,"bundlePage")}}
-                    checked={selectedPlacement==="bundlePage"}
+                    // checked={selectedPlacement.bundlePage===true}
                   />
                   <label>Bundles page</label>
                 </div>

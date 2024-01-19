@@ -2,7 +2,7 @@
 
 name = "akashbundle"
 client_id = "d2a22c5ede7eb9ed65436e4d5b3d85fb"
-application_url = "https://console-discounts-spirit-behavioral.trycloudflare.com"
+application_url = "https://interested-lounge-x-transportation.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,write_price_rules,write_discounts,read_content,write_co
 
 [auth]
 redirect_urls = [
-  "https://console-discounts-spirit-behavioral.trycloudflare.com/auth/callback",
-  "https://console-discounts-spirit-behavioral.trycloudflare.com/auth/shopify/callback",
-  "https://console-discounts-spirit-behavioral.trycloudflare.com/api/auth/callback",
-  "https://console-discounts-spirit-behavioral.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://interested-lounge-x-transportation.trycloudflare.com/auth/callback",
+  "https://interested-lounge-x-transportation.trycloudflare.com/auth/shopify/callback",
+  "https://interested-lounge-x-transportation.trycloudflare.com/api/auth/callback",
+  "https://interested-lounge-x-transportation.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]
