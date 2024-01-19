@@ -167,7 +167,7 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
 
           <hr />
 
-          <div className="design">
+          <div className="design sd-productMiatch_div sdproductMixMatch_row">
           {data?.bundleDetail?.products?.length>0 && 
             data?.bundleDetail?.products?.map((item,index)=>{
                 {/* console.log("check data from map",item.title) */}
@@ -176,7 +176,7 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
                     <div style={{"border":"1px solid white",
                         "borderColor":data.customization[0].productMixMatch.productDetails.image.borderColor,
                         "borderRadius":data.customization[0].productMixMatch.productDetails.image.borderRadius +"px"}}
-                        className="designChildDiv"
+                        className="designChildDiv sd_bundle_thumbnailImg"
                     >
                       <img src={item?.images[0]?.originalSrc} width={50}/>
                     </div>
@@ -193,9 +193,9 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
               })
             }
           </div>
-          <div  className="sd-preview-wrapper-common sd-productBundle-preview-specific">
+          <div  className="sd-preview-wrapper-common sd-productBundle-preview-specific sdproductMixMatch_row">
             <div className="design">
-              <div className=" designChildDiv">
+              <div className=" designChildDiv ">
                 <input type="checkbox" checked/> <label>All products</label>
               </div>
               <div className="sd-bundle-showQuantity" 
@@ -209,13 +209,13 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
               {data?.bundleDetail?.products?.length>0 && 
                 data?.bundleDetail?.products?.map((item)=>{
                   return(
-                    <div>
-                      <div className="design designChildDiv">
+                    <div className=" designChildDiv_main">
+                      <div className="design designChildDiv designChildDiv_main">
                         <div>
                           <input type="checkbox" checked/>
                         </div>
                         <div className="design">
-                          <div className="designChildDiv">
+                          <div className="designChildDiv sd_bundle_thumbnailImg">
                             <img
                                 style={{"border":"1px solid white",
                                 "borderColor":data.customization[0].productMixMatch.productDetails.image.borderColor,
@@ -285,7 +285,7 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
                 </div>
               <div>
                 {data.customization[0].productMixMatch.button.position=="bottom" &&
-                  <button disabled  
+                  <button disabled  className="add_select_cartbtn"
                   style={{"color":data.customization[0].productMixMatch.button.color,"fontSize":data.customization[0].productMixMatch.button.fontSize+"px","backgroundColor":data.customization[0].productMixMatch.button.backgroundColor}}
                   >Add selected to cart</button>
                 }

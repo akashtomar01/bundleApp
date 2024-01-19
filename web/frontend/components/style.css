@@ -370,7 +370,6 @@ input[type="radio"] {
 
 .sd-bundle-productBundle-statusSection select {
     width: 100%;
-    max-width: 80%;
     padding: 5px;
     border: 1px solid #afb4b9;
     border-radius: 4px;
@@ -2821,12 +2820,16 @@ nav.Polaris-Navigation {
     width: 100%;
 }
 .bxgy_product_listingClose {
-    height: 100%;
+    /* height: 100%;     */
     border: 1px solid #ddd;
     border-radius: 50%;
     padding: 7px;
+    width: 35px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
 .bxgy_productsListing_main {
     border: 1px solid #ddd;
     padding: 10px;
@@ -3082,6 +3085,7 @@ nav.Polaris-Navigation {
     background: #cfcfcf;
     overflow: hidden;
     border-radius: 5px;
+    flex: 0 0 60px
 }
 .sd_bundle_thumbnailImg img {
     width: 100%;
@@ -3176,9 +3180,10 @@ nav.Polaris-Navigation {
 .designChildDiv .productMixMatchBGColor {
     margin-top: 10px;
 }
-.sd_bundle_thumbnailImg_multiple .sd-bundle-svg-common {
+.sd_bundle_thumbnailImg_multiple .sd-bundle-svg-common, .sdproductMixMatch_row .sd-bundle-svg-common {
     margin: 0;
 }
+
 .sd_bundle_thumbnailImg_multiple {
     justify-content: center;
 }
@@ -3186,4 +3191,14 @@ nav.Polaris-Navigation {
     border: 1px solid rgb(141, 138, 138);
     border-radius: 10px;
     background-color: #676767;
+}
+.first-previewCard {
+    width: 100%;
+}
+.design.sd-productMiatch_div {
+    flex-wrap: wrap;
+}
+.sdproductMixMatch_row {
+    max-height: 300px;
+    overflow-y: auto;
 }
