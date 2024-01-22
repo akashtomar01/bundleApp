@@ -30,7 +30,7 @@ const DisplayOptions=(props)=>{
           
             <br />
 
-{ props.bundleType == "productBundle" || props.bundleType == "collectionMixMatch" ?
+{ props.bundleType == "productBundle" ||props.bundleType == "prupductMixMatch" || props.bundleType == "collectionMixMatch" ?
             <div className={props.products.length > 0 ? "sd-bundle-productPage-selection" : null}>
               {props?.products.map((item,ind) => {
                 return (

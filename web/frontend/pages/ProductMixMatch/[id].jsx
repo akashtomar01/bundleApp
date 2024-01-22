@@ -21,6 +21,7 @@ import postApi from "../../components/postApi";
 import { alertCommon } from "../../components/helperFunctions";
 import General from "../../components/bxgy/General";
 import ProductMixMatchPreview from "../../components/preview/ProductMixMatchPreview";
+import DisplayOptions from "../../components/commonSections/displayOptions";
 
 
 const ProductMixMatch = () => {
@@ -650,14 +651,118 @@ const ProductMixMatch = () => {
     // console.log("multiProductsSelectionProducts finally", "bundle product", data.bundleDetail.products)
   }
 
-  const handlePlacementsSelection = (e, type) =>{
-      // if(type==="productPage"){
-      //   setSelectedPlacement(selectedPlacement.productPage===e.target.checked);
-      // }else{
-      //   setSelectedPlacement(selectedPlacement.bundlePage===e.target.checked);
-      // } 
-  }
-  console.log("handlePlacementsSelection work ===================>",selectedPlacement.bundlePage);
+  // const handlePlacementsSelection = (e, type) =>{
+  //     if(type==="productPage"){
+  //       setSelectedPlacement({...selectedPlacement,productPage:e.target.checked});
+  //     }
+  //     if(type==="bundlePage"){
+  //       setSelectedPlacement({...selectedPlacement,bundlePage:e.target.checked});
+  //     } 
+  //   }
+
+    const handleDisplayOptions = (e) => {
+      // console.log("check name of option:::::::::::::::::::::::::::::::>",e.target.name);
+      if (e.target.checked) {
+        if (e.target.name == "productPages") {
+          let arr = [];
+          data.bundleDetail.products.map((item) => {
+            arr.push(item.id);
+          });
+  
+          setData({
+            ...data,
+            bundleDetail: {
+              ...data.bundleDetail,
+              display: {
+                ...data.bundleDetail.display,
+                productPages: true,
+                productPagesList: [...arr],
+              },
+            },
+          });
+        } else {
+          setData({
+            ...data,
+            bundleDetail: {
+              ...data.bundleDetail,
+              display: { ...data.bundleDetail.display, [e.target.name]: true },
+            },
+          });
+        }
+      } else {
+        if (e.target.name == "productPages") {
+          setData({
+            ...data,
+            bundleDetail: {
+              ...data.bundleDetail,
+              display: {
+                ...data.bundleDetail.display,
+                productPages: false,
+                productPagesList: [],
+              },
+            },
+          });
+        } else {
+          setData({
+            ...data,
+            bundleDetail: {
+              ...data.bundleDetail,
+              display: { ...data.bundleDetail.display, [e.target.name]: false },
+            },
+          });
+        }
+      }
+    };
+
+    const handleDisplayPageOptions = (e) => {
+      if (e.target.checked) {
+        // setData([...data,e.target.value])
+        let update = { ...data };
+  
+        if (update.bundleDetail.display?.productPagesList.length < 1) {
+          update.bundleDetail.display = {
+            ...update.bundleDetail.display,
+            productPages: true,
+            productPagesList: [e.target.value],
+          };
+  
+          setData(update);
+        } else {
+          update.bundleDetail.display.productPagesList = [
+            ...update.bundleDetail.display.productPagesList,
+            e.target.value,
+          ];
+          setData(update);
+        }
+      } else {
+        let update = { ...data };
+        let temp = update.bundleDetail.display.productPagesList.filter((item) => {
+          return item !== e.target.value;
+        });
+  
+        if (temp.length > 0) {
+          setData({
+            ...data,
+            bundleDetail: {
+              ...data.bundleDetail,
+              display: { ...data.bundleDetail.display, productPagesList: temp },
+            },
+          });
+        } else {
+          setData({
+            ...data,
+            bundleDetail: {
+              ...data.bundleDetail,
+              display: {
+                ...update.bundleDetail.display,
+                productPages: false,
+                productPagesList: temp,
+              },
+            },
+          });
+        }
+      }
+    };
 
   useEffect(() => {
     calculateMrp();
@@ -872,7 +977,7 @@ const ProductMixMatch = () => {
               errorArray={errorArray}
             />
 
-            <div className="sd-bundle-bundleSection-common sd-bundle-createBundleNamingSection">
+            {/* <div className="sd-bundle-bundleSection-common sd-bundle-createBundleNamingSection">
               <div className="sd-bundle-bundleSection-heading-common">
                 Placements
               </div>
@@ -884,7 +989,7 @@ const ProductMixMatch = () => {
                   <input 
                     type="checkbox" 
                     onChange={(e)=>{handlePlacementsSelection(e,"productPage")}}
-                    // checked={selectedPlacement.productPage===true}
+                    checked={selectedPlacement.productPage===true}
                   />
                   <label>Included products page</label>
                 </div>
@@ -892,12 +997,25 @@ const ProductMixMatch = () => {
                   <input 
                     type="checkbox" 
                     onChange={(e)=>{handlePlacementsSelection(e,"bundlePage")}}
-                    // checked={selectedPlacement.bundlePage===true}
+                    checked={selectedPlacement.bundlePage===true}
                   />
                   <label>Bundles page</label>
                 </div>
               </div>
-            </div>
+              {selectedPlacement.productPage===true && 
+                <div>
+                  <hr/>
+                  <div>Included products page</div>
+                  <div>Select the included products page on which the bundle will be displayed.</div>
+                  {data?.bundleDetail?.products?.map((item,index)=>{
+                    return(
+                      <div><input type="checkbox" />{item.title}</div>
+                    )
+                  })
+                  }
+                </div>
+              }
+            </div> */}
 
             {/* <DiscountOptions
               discountType={data.bundleDetail.discountType}
@@ -936,7 +1054,7 @@ const ProductMixMatch = () => {
                                <div className="sd-bundle-title">{item.title}</div>
                              </div>
                            </div>
-                      </div>
+                          </div>
                       
                              {index !== data.bundleDetail.products.length-1  ? <Divider /> : ""}
                        </>
@@ -970,8 +1088,7 @@ const ProductMixMatch = () => {
                                      size="small"
                                    />
                              </div>
-                                       
-                         
+                              
                              <div key={index} className="sd-bundle-title-section">
                                <div className="sd-bundle-title">{item.title}</div>
                              </div>
@@ -987,12 +1104,21 @@ const ProductMixMatch = () => {
             </div>
             </div>
             <DateTime data={data} setData={setData} errorArray={errorArray} />
-
             <DeleteSave handleSave={handleSave} />
           </div>
 
           <div className="sd-bundle-productBundle-rightSection Polaris-Layout__Section Polaris-Layout__Section--secondary">
             <BundleStatus data={data} setData={setData} />
+
+            <DisplayOptions
+              bundleType="prupductMixMatch"
+              display={data.bundleDetail.display}
+              handleDisplayOptions={handleDisplayOptions}
+              displayPageOptions={data.bundleDetail.display.productPages}
+              handleDisplayPageOptions={handleDisplayPageOptions}
+              products={data.bundleDetail.products}
+            />
+
             <ProductMixMatchPreview
               data={data}
               currency={currencyCode}

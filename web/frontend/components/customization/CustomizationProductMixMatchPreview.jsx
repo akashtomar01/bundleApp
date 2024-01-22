@@ -73,7 +73,7 @@ const CustomizationProductMixMatchPreview = ({data}) =>{
             </div>
           </div>
 
-          <div  className=" productMixMatchBorder sd-preview-wrapper-common sd-productBundle-preview-specific">
+          <div  className="sd-preview-wrapper-common sd-productBundle-preview-specific">
             <div className="design sd_bundle_producQuantity">
               <div className="designChildDiv">
                 <input type="checkbox" checked/>

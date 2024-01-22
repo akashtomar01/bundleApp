@@ -167,44 +167,52 @@ const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
 
           <hr />
 
-          <div className="design sd-productMiatch_div sdproductMixMatch_row">
+          <div className="design sd-productMiatch_div sdproductMixMatch_row design sd_bundle_ sd_bundle_thumbnailImg_multiple">
           {data?.bundleDetail?.products?.length>0 && 
             data?.bundleDetail?.products?.map((item,index)=>{
                 {/* console.log("check data from map",item.title) */}
                 return(
                   <>
-                    <div style={{"border":"1px solid white",
-                        "borderColor":data.customization[0].productMixMatch.productDetails.image.borderColor,
-                        "borderRadius":data.customization[0].productMixMatch.productDetails.image.borderRadius +"px"}}
-                        className="designChildDiv sd_bundle_thumbnailImg"
-                    >
-                      <img src={item?.images[0]?.originalSrc} width={50}/>
-                    </div>
-                    {index !== data?.bundleDetail?.products?.length-1 &&
-                      <div className=" sd-bundle-svg-common" 
-                          style={{background:data.customization[0].productMixMatch.productDetails.plusBackgroundColor,
-                          "fontSize": data.customization[0].productMixMatch.productDetails.plusfontSize +"px"}}
-                      >
-                        <PlusOutlined style={{"color": data.customization[0].productMixMatch.productDetails.plusColor}}/>
-                      </div>
+                    {data?.bundleDetail?.products.length >1 ? 
+                      <>
+                        <div className="designChildDiv sd_bundle_thumbnailImg">
+                        <img 
+                          style={{"border":"1px solid white",
+                          "borderColor":data.customization[0].productMixMatch.productDetails.image.borderColor,
+                          "borderRadius":data.customization[0].productMixMatch.productDetails.image.borderRadius +"px"}}
+                          src={item?.images[0]?.originalSrc} width={50}/>
+                        </div>
+                        {index !== data?.bundleDetail?.products?.length-1 &&
+                          <div className=" sd-bundle-svg-common" 
+                              style={{background:data.customization[0].productMixMatch.productDetails.plusBackgroundColor,
+                              "fontSize": data.customization[0].productMixMatch.productDetails.plusfontSize +"px"}}
+                          >
+                            <PlusOutlined style={{"color": data.customization[0].productMixMatch.productDetails.plusColor}}/>
+                          </div>
+                        }
+                      </>
+                      : 
+                      ""
                     }
+                    
                   </> 
                 )
               })
             }
           </div>
           <div  className="sd-preview-wrapper-common sd-productBundle-preview-specific sdproductMixMatch_row">
-            <div className="design">
+            <div className="design sd_bundle_producQuantity">
               <div className=" designChildDiv ">
                 <input type="checkbox" checked/> <label>All products</label>
               </div>
               <div className="sd-bundle-showQuantity" 
-                style={{"color":data.customization[0].productMixMatch.productDetails.quantities.color,
-                "backgroundColor":data.customization[0].productMixMatch.productDetails.quantities.backgroundColor,
-                "borderColor":data.customization[0].productMixMatch.productDetails.quantities.borderColor}}
-                >{data?.bundleDetail?.products?.length}X </div>
+                  style={{"color":data.customization[0].productMixMatch.productDetails.quantities.color,
+                  "backgroundColor":data.customization[0].productMixMatch.productDetails.quantities.backgroundColor,
+                  "borderColor":data.customization[0].productMixMatch.productDetails.quantities.borderColor}}
+                >{data?.bundleDetail?.products?.length}X
               </div>
-              <hr/>
+            </div>
+            <hr/>
 
               {data?.bundleDetail?.products?.length>0 && 
                 data?.bundleDetail?.products?.map((item)=>{
