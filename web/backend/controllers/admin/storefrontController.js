@@ -11,7 +11,7 @@ export async function getBundleData(req, res) {
     let shop = req.body.shop;
     let pId = `gid://shopify/Product/${req.body.id}`;
     let collId = req.body.collId;
-    console.log(collId);
+    console.log("**********************",pId);
     const response = await bundleModel.aggregate([
       {
         $match: {
@@ -131,6 +131,42 @@ export async function getBundleData(req, res) {
                 },
               ],
             },
+            {
+              $and: [
+                { type: "productMixMatch" },
+                {
+                  $or: [
+                    { "bundleDetail.display.productPages": false },
+                    {
+                      $and: [
+                        { "bundleDetail.display.productPages": true },
+                        {
+                          "bundleDetail.display.productPagesList": pId,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              $and: [
+                { type: "fbt" },
+                {
+                  $or: [
+                    { "bundleDetail.display.productPages": false },
+                    {
+                      $and: [
+                        { "bundleDetail.display.productPages": true },
+                        {
+                          "bundleDetail.display.productPagesList": pId,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            }
           ],
         },
       },
@@ -189,6 +225,8 @@ export async function getBundleData(req, res) {
     ]);
 
     if (response) {
+    console.log("check response :::::::::=====::::::::::::::::::::::>>",response);
+
       return res
         .status(200)
         .send({ message: "success", response: response, status: 200 });

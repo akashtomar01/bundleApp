@@ -43,7 +43,7 @@ const ProductMixMatch = () => {
  
   const [data, setData] = useState({
     shop: shop,
-    type: "productMixMatchBundle",
+    type: "productMixMatch",
     name: "",
     title: "",
     status: "active",

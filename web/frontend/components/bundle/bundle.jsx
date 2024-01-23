@@ -125,7 +125,7 @@ const CreateBundle = () => {
       navigate(`/buyxgety/${id}`);
     }else if(type==='fbt'){
       navigate(`/FrequentlyBoughtTogether/${id}`);
-    } else if(type == "productMixMatchBundle"){
+    } else if(type == "productMixMatch"){
       navigate(`/ProductMixMatch/${id}`);
 
     } else{
@@ -381,7 +381,7 @@ return check;
           : null
         : item.type == "volumeBundle"
         ? `${item.bundleDetail.discountOptions.length} Options`
-        : item.type == "productMixMatchBundle"
+        : item.type == "productMixMatch"
         ? `${item.bundleDetail.discountOptions.length} Options`
         : item.type == "collectionMixMatch"
         ? item.bundleDetail.discountType == "percent"

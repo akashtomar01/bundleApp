@@ -2,7 +2,7 @@
 
 name = "akashbundle"
 client_id = "d2a22c5ede7eb9ed65436e4d5b3d85fb"
-application_url = "https://dresses-experiment-dow-roster.trycloudflare.com"
+application_url = "https://dollar-portfolio-twisted-happen.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,write_price_rules,write_discounts,read_content,write_co
 
 [auth]
 redirect_urls = [
-  "https://dresses-experiment-dow-roster.trycloudflare.com/auth/callback",
-  "https://dresses-experiment-dow-roster.trycloudflare.com/auth/shopify/callback",
-  "https://dresses-experiment-dow-roster.trycloudflare.com/api/auth/callback",
-  "https://dresses-experiment-dow-roster.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://dollar-portfolio-twisted-happen.trycloudflare.com/auth/callback",
+  "https://dollar-portfolio-twisted-happen.trycloudflare.com/auth/shopify/callback",
+  "https://dollar-portfolio-twisted-happen.trycloudflare.com/api/auth/callback",
+  "https://dollar-portfolio-twisted-happen.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]
@@ -25,4 +25,4 @@ embedded = false
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = "playgroundstoree.myshopify.com"
+dev_store_url = "robins-store1.myshopify.com"
