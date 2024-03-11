@@ -199,6 +199,7 @@ const ProductMixMatch = () => {
     setSpinner(true);
     const response = await postApi("/api/admin/editBundle", body, app);
     if (response.status === 200) {
+      console.log("check data from api******",response);
       
       setData(response.data.response);
       setSpinner(false);
@@ -349,6 +350,7 @@ const ProductMixMatch = () => {
 
 
   const handleDeleteDiscountOption = (index) => {
+    console.log("check delete handler--------",index)
     let update = { ...data };
     if(update.bundleDetail.discountOptions.length<=2){
       setDisableAddOptions(false)
@@ -356,19 +358,24 @@ const ProductMixMatch = () => {
     update.bundleDetail.discountOptions.splice(index, 1);
     setData(update);
     setErrorArray([])
+    console.log("delete data successfully");
     
 
     let update2 = [...priceData];
     update2.splice(index, 1);
     setPriceData(update2);
+    console.log("update priceData successfully");
 
     let update3 = [...sumData];
     update3.splice(index, 1);
     setSumData(update3);
+    console.log("update sumData successfully");
 
     let newUpdate = [...endPriceData];
     newUpdate.splice(index, 1);
     setEndPriceData(newUpdate);
+    console.log("update endPriceData successfully");
+    setSelectedDiscountIndex(data.bundleDetail.discountOptions.length-1);
   };
   const handleDiscountQuantity = (newvalue, index) => {
     if (newvalue != "" ){
@@ -516,10 +523,11 @@ const ProductMixMatch = () => {
     }
   }
 
-    // console.log("check array ennnnddddprice length*************************************************************************",calculateFinalPrice());
+    // console.log("check array ennnnddddprice length*************************************************************************",data);
 
   const handleAddDiscountOption = () => {
     let update = { ...data };
+    console.log("check the control of option button==========>>>>>>>>>>.................",update.bundleDetail.discountOptions.length);
     if(update.bundleDetail.discountOptions.length>=2){
       setDisableAddOptions(true)
     }
@@ -966,9 +974,18 @@ const ProductMixMatch = () => {
                 <Divider />
               </div>
             ))}
-            <Button size="large" disabled={disableAddOptions} onClick={handleAddDiscountOption}>
+            {data.bundleDetail.discountOptions.length >=3 ? 
+              <Button size="large" disabled={true} onClick={handleAddDiscountOption}>
+                Add Another Option
+              </Button>
+              :
+              <Button size="large" disabled={false} onClick={handleAddDiscountOption}>
+                Add Another Option
+              </Button>
+            }
+            {/* <Button size="large" disabled={disableAddOptions} onClick={handleAddDiscountOption}>
               Add Another Option
-            </Button>
+            </Button> */}
           </div>
  
             <General 

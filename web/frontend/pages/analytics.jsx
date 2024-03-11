@@ -27,20 +27,22 @@ async function getBundleAnalyticsData(){
   setSpinner(true)
   const response = await postApi("/api/admin/getAnalyticsData", {}, app);
  if(response.data.status == 200){
-  setSpinner(false)
-  let data = response.data.response
-  bundleclickSum(data)
-  bundleViewSum(data)
-  bundleSalesSum(data)
-  bundleSoldSum(data)
-  setAnalyticsData(data)
- 
- }else if(response.data.status == 500){
-  setSpinner(false)
-
- }
-
+   setSpinner(false)
+   let data = response.data.response
+   bundleclickSum(data)
+   bundleViewSum(data)
+   bundleSalesSum(data)
+   bundleSoldSum(data)
+   setAnalyticsData(data)
+   
+  }else if(response.data.status == 500){
+    console.log('enter in else response not found');
+    setSpinner(false)
+    
+  }
+  
 }
+
 function bundleSoldSum(data){
   let sum = 0;
   data.forEach((number) => {
@@ -84,8 +86,29 @@ const handleAnalyticsReload = ()=>{
       const data = analyticsData.map((item, index) => ({
         
         bundle:( <div key={index} className="sd-bundle-dashboard-img-box">
+        {console.log("check response of analytic get api...................................................",item)}
         {item.type == "bxgy" ?
         item.bundleDetail?.xproducts?.slice(0,3).map((ele,index) => {
+          return (
+            <div key={index} className="sd-bundle-dashboard-img">
+              {/* <img src={ele?.images ? ele.images[0].originalSrc : ele?.image ? ele.image.originalSrc:""} alt="" /> */}
+              <Thumbnail
+                source={
+                  ele.images
+                    ? ele?.images[0]?.originalSrc !== "" ? ele?.images[0]?.originalSrc : noProductImg
+                    : ele?.image 
+                    ? ele?.image?.originalSrc !== "" ? ele?.image?.originalSrc : noProductImg 
+                    : noProductImg
+                }
+                size="small"
+                alt="products thumbnails"
+              />
+             
+            </div>
+          );
+        }):
+        item.type == "fbt" ?
+        item.bundleDetail?.mainProducts?.slice(0,3).map((ele,index) => {
           return (
             <div key={index} className="sd-bundle-dashboard-img">
               {/* <img src={ele?.images ? ele.images[0].originalSrc : ele?.image ? ele.image.originalSrc:""} alt="" /> */}

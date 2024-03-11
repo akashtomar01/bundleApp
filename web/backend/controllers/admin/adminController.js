@@ -20,7 +20,7 @@ export async function createBundle(req,res){
     const session = res.locals.shopify.session;
     let shop = session.shop;
    const {type,name,title,description,status,bundleDetail,customization,startdate,endDate,display,currencyCode,timeZone} = req.body
-
+   console.log("check customization===========>",customization);
    const response = await bundleModel.create({
     shop:shop ,
       type:type,
@@ -156,7 +156,7 @@ const response = await bundleModel.aggregate([
 ])
 
 if(response){
-
+console.log("chedjedeeje///////////////////////////////////////////////////////////////=>",response);
 return res.status(200).send({message:"success",response:response[0],status:200})
 
 }

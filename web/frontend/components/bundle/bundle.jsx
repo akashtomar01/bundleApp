@@ -127,7 +127,6 @@ const CreateBundle = () => {
       navigate(`/FrequentlyBoughtTogether/${id}`);
     } else if(type == "productMixMatch"){
       navigate(`/ProductMixMatch/${id}`);
-
     } else{
       navigate(`/CollectionMixMatch/${id}`);
     }
@@ -434,7 +433,7 @@ return check;
     // </div>,
 
     // type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatchBundle" ? "Product Mix & Match" :item.type == "fbt"? "Frequently Baught Together" :"",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" :item.type == "fbt"? "Frequently Baught Together" :"",
     performance: item.analytics.bundleSold+" " +"Sold" ,
   }));
 
@@ -547,6 +546,8 @@ return check;
       : null
     : item.type == "volumeBundle"
     ? `${item.bundleDetail.discountOptions.length} Options`
+    : item.type == "productMixMatch"
+    ? `${item.bundleDetail.discountOptions.length} Options`
     : item.type == "collectionMixMatch"
     ? item.bundleDetail.discountType == "percent"
       ? `${item.bundleDetail.discountValue}% off`
@@ -581,7 +582,7 @@ return check;
         />
       </div>
     ),
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : item.type == "fbt"? "Frequently Baught Together" :"",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" : item.type == "fbt"? "Frequently Baught Together" :"",
     performance: item.analytics.bundleSold +" "+ "Sold",
   }));
 
@@ -694,6 +695,8 @@ return check;
       : null
     : item.type == "volumeBundle"
     ? `${item.bundleDetail.discountOptions.length} Options`
+    : item.type == "productMixMatch"
+    ? `${item.bundleDetail.discountOptions.length} Options`
     : item.type == "collectionMixMatch"
     ? item.bundleDetail.discountType == "percent"
       ? `${item.bundleDetail.discountValue}% off`
@@ -716,7 +719,7 @@ return check;
         />
       </div>
     ),
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" :item.type == "productMixMatch" ? "Product Mix & Match" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
     performance: item.analytics.bundleSold +" "+ "Sold",
   }));
 

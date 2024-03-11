@@ -5,6 +5,7 @@ let retries = 0;
 
 
 export async function createRule(req,res){
+  
 
   try{
     const shop = req.body.shop;
@@ -18,7 +19,7 @@ export async function createRule(req,res){
     const totalPrice = req.body.totalPrice
     const discountId = req.body.discountCreateId
     let quantityItem = variantsId.length
-    console.log(req.body)
+    console.log('check data of create rule========>>>>>>>>>',discountValue)
     const shopInfo = await shopInfoModel.findOne({shop})
     const client = new shopify.api.clients.Graphql({ session:  {
       shop:shop,
@@ -27,7 +28,10 @@ export async function createRule(req,res){
     const uniqueSet = new Set(variantsId);
     const mergedArray = Array.from(uniqueSet);
     let productVariantsId = []
-    if(discountId){ 
+    console.log("discountId>>>>>>>",discountId);
+    if(discountId.length > 0){ 
+
+      console.log("enter in ===>>>>>if discountId.length > 0")
       let getDiscountquery =`query {
         codeDiscountNode(id:"${discountId}") {
           id
@@ -62,8 +66,9 @@ export async function createRule(req,res){
      
 
       if(response.body.data.codeDiscountNode == null){
+        console.log("enter in ===>>>>>if response.body.data.codeDiscountNode == null")
         if(bundleType == "freeShipping"){
-               
+          console.log("enter in ===>>>>>if bundleType == freeShipping")
           let Input ={
             "freeShippingCodeDiscount": {
               "startsAt": startDate,
@@ -239,8 +244,9 @@ export async function createRule(req,res){
         }
        
       }else{
+        console.log("enter else");
         if(bundleType == "freeShipping"){
-
+          console.log("enter first if else bundleType == freeShipping");
           let bundleDiscountId = response.body.data.codeDiscountNode.id
          let input=  {
          
@@ -313,6 +319,7 @@ return  res.status(200).json({message:"SUCCESS!",response:bundleShoppingDiscount
 
 
         }else{
+          console.log("enter in second else")
           let getDiscountProductArr = response.body.data.codeDiscountNode.codeDiscount.customerGets?.items.productVariants.edges ;
           getDiscountProductArr?.forEach((e)=>{
             productVariantsId.push(e.node.id)
@@ -420,6 +427,7 @@ return  res.status(200).json({message:"SUCCESS!",response:bundleShoppingDiscount
       }
     }else{
       if(bundleType == "freeShipping"){
+        console.log("enter in second else")
         let Input ={
           "freeShippingCodeDiscount": {
             "startsAt": "2022-06-22T21:12:07.000Z",
@@ -500,7 +508,7 @@ return  res.status(200).json({message:"SUCCESS!",response:bundleShoppingDiscount
      return  res.status(200).json({message:"SUCCESS!",response:bundleDiscountId,status:200})
       
       }else{
-
+console.log("dddd");
         let Input ={
           "basicCodeDiscount": {
             "appliesOncePerCustomer": false,
@@ -587,8 +595,9 @@ return  res.status(200).json({message:"SUCCESS!",response:bundleShoppingDiscount
                     variables: Input,
                   },
                 });
-     
-          let bundleDiscountId = response.body.data.discountCodeBasicCreate.codeDiscountNode.id
+                console.log("********kkkkkkk",response.body.data.discountCodeBasicCreate.userErrors);
+                let bundleDiscountId = response.body.data.discountCodeBasicCreate.codeDiscountNode.id
+                console.log("********hello");
               
               return  res.status(200).json({message:"SUCCESS!",response:bundleDiscountId,status:200})
               
