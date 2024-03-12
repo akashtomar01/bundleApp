@@ -9,7 +9,7 @@ const BxgyBundlePreviewData = ({ data,currency,mrp,endPrice,showPrice,handleVari
     <div className="sd-bundle-bundleSection-common sd-bundle-productBundle-preview">
       <div className="sd-bundle-bundleSection-heading-common">Preview</div>
       
-  { data.bundleDetail.xproducts.length && data.bundleDetail.yproducts.length > 0 ? <div class="sd-preview-wrapper-common sd-productBundle-preview-specific" style={{"backgroundColor":data.customization[0].buyXgetY.boxndex.backgroundColor,"border":data.customization[0].buyXgetY.box.thickness+"px solid"+ data.customization[0].buyXgetY.box.borderColor,"borderRadius":data.customization[0].buyXgetY.box.borderRadius+"px"}}>
+  { data.bundleDetail.xproducts.length && data.bundleDetail.yproducts.length > 0 ? <div class="sd-preview-wrapper-common sd-productBundle-preview-specific" style={{"backgroundColor":data.customization[0].buyXgetY.box.backgroundColor,"border":data.customization[0].buyXgetY.box.thickness+"px solid"+ data.customization[0].buyXgetY.box.borderColor,"borderRadius":data.customization[0].buyXgetY.box.borderRadius+"px"}}>
 {data.customization[0].buyXgetY.button.position=="top" &&
         <div class="bxgy_productT_Cart-bottom">
             <button style={{"color":data.customization[0].buyXgetY.button.color,"fontSize":data.customization[0].buyXgetY.button.fontSize+"px","backgroundColor":data.customization[0].buyXgetY.button.backgroundColor}}>Add to Cart</button>

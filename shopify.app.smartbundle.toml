@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "smartbundle"
+client_id = "11761b803e44d6736642f04c9ae01976"
+application_url = "https://classifieds-africa-mins-houston.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,write_price_rules,write_discounts,read_content,write_content,write_orders,read_themes"
+
+[auth]
+redirect_urls = [
+  "https://classifieds-africa-mins-houston.trycloudflare.com/auth/callback",
+  "https://classifieds-africa-mins-houston.trycloudflare.com/auth/shopify/callback",
+  "https://classifieds-africa-mins-houston.trycloudflare.com/api/auth/callback",
+  "https://classifieds-africa-mins-houston.trycloudflare.com/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-01"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "sahil-shine.myshopify.com"
