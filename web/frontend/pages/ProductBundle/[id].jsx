@@ -71,7 +71,7 @@ function CreateBundle() {
   });
 
   const app = useAppBridge();
-
+console.log("check error array**************************",pickerError);
   const getBundleData = async () => {
     let body = { id: param.id };
     setSpinner(true);
@@ -146,9 +146,12 @@ function CreateBundle() {
   // }
 
   //   };
-
+  
+console.log("hellloooo******check******error*******s",pickerError);
   const removeProductFromList = (item, index) => {
+    // console.log("check-****-*****-*****",index);
     let update = [...data.bundleDetail.products];
+    console.log("nbnbnbnnnnbbbnbbn*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-",index,item);
     update.splice(update.indexOf(item), 1);
     let copy = [...data.bundleDetail.display.productPagesList];
 
@@ -190,14 +193,21 @@ function CreateBundle() {
         },
       });
     }
-    let copyErrorArray = [...pickerError];
-    let copyArray = [];
-    copyErrorArray.map((item2) => {
-      if (item2 >= index) {
-        copyArray.push(item2 - 1);
-      }
-    });
-    setPickerError(copyArray);
+    if(pickerError.length == 1){
+      setPickerError([]);
+    }else{
+      let copyErrorArray = [...pickerError];
+      let copyArray = [];
+      copyErrorArray.map((item2) => {
+        if(item2 < index){
+          copyArray.push(item2);
+        }
+        if (item2 > index) {
+          copyArray.push(item2 - 1);
+        }
+      });
+      setPickerError(copyArray);
+    }
   };
 
   const temp = {
@@ -507,13 +517,13 @@ setShowPrice({});
       alertText.push("Please provide title of bundle");
     }
     
-    if (data.startdate == "") {
-      if (!errorArray.includes("startdate")) {
-        setErrorArray((prev) => [...prev, "startdate"]);
-      }
-      flag = false;
-      alertText.push("Please select start date & time");
-    }
+    // if (data.startdate == "") {
+    //   if (!errorArray.includes("startdate")) {
+    //     setErrorArray((prev) => [...prev, "startdate"]);
+    //   }
+    //   flag = false;
+    //   alertText.push("Please select start date & time");
+    // }
     if (flag == false) {
       alertCommon(setAlert, alertText, "critical", false);
     }
@@ -558,8 +568,6 @@ setShowPrice({});
       }
     }
   };
-
- 
 
   return (
     <Spin spinning={spinner}
@@ -607,6 +615,8 @@ setShowPrice({});
                 data={data}
                 setData={setData}
                 temp={temp}
+                setPickerError={setPickerError}
+                // index={index}
                 errorArray={pickerError}
                 removeProductFromList={removeProductFromList}
               />
@@ -639,7 +649,7 @@ setShowPrice({});
               currency={currencyCode}
             />
 
-            <DateTime data={data} setData={setData} errorArray={errorArray} />
+            {/* <DateTime data={data} setData={setData} errorArray={errorArray} /> */}
 
             <DeleteSave handleSave={handleSave} />
           </div>

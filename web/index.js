@@ -52,7 +52,7 @@ app.get(
     console.log(session, "session")
   
     const customizationData =  await customizationModel.findOneAndUpdate({shop : session.shop}, {shop : session.shop, bundle:Customizations['bundle'],collectionMixMatch :Customizations['collectionMixMatch'],popUp :Customizations["popUp"],
-       volume:Customizations["volume"],bxgy:Customizations["buyXgetY"],frequentlyBoughtTogether:Customizations["frequentlyBoughtTogether"]}, {upsert:true, new : true},)
+       volume:Customizations["volume"],bxgy:Customizations["buyXgetY"],productMixMatch:Customizations["productMixMatch"],frequentlyBoughtTogether:Customizations["frequentlyBoughtTogether"]}, {upsert:true, new : true},)
        if(customizationData){
         console.log("customization data saved successfully !!!")
        }
@@ -77,7 +77,13 @@ app.get(
       addItemToSaveMore :"Add {{item}} items to save more",
       addToCartButton :"Add to cart",
       goToBundleBuilder : "Go To Bundle Builder",
-      grabTheDeal :"Grab the deal !"
+      grabTheDeal :"Grab the deal !",
+      youHavenotSelectedanyItemsYet : "You have not selected any items yet",
+      youHaveSelectedItems: "You have selected {{item}} items",
+      noDiscountIsApplied : "No discount is applied on the selected products",
+      discountIsApplied : "discount is applied on the selected products",
+      selectAtLeastItemsToApplyTheDiscount : "Select at least {{item}} items to apply the discount",
+      allProducts : "ALL PRODUCTS",
      } 
      const translation = await translationModel.findOneAndUpdate({shop:session.shop},{translation:translationData},{upsert:true,new:true})
      if(translation){

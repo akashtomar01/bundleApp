@@ -82,7 +82,6 @@ const VolumeBundle = () => {
     timeZone:timeZone
   });
 
-
   const getVolumeBundleData = async()=>{
     let body = {id :param.id}
    
@@ -108,93 +107,85 @@ if(param.id !== "create"){
 }
 }, [])
 
+  function getPreviewData(data){
+    // let priceArray = [];
+    //   let sumArray = [];
+    //   let endPriceArray = [];
+    //   let temp;
+    //   response.data.response.bundleDetail.discountOptions.map((item, index) => {
+    //      temp = Array.from({ length: item.quantity }, (x, itemIndex) =>
+    //     response.data.response.bundleDetail.discountedProductType == "specific_product"
+    //         ? response.data.response.bundleDetail.products[0].variants[0].price
+    //         : 50
+    //     );
+    //     priceArray.push(temp);
+    //     sumArray.push(calculateMrp(temp));
+    //     endPriceArray.push(calculateFinalPrice(index, sumArray));
+    //     return
+    //   });
 
+    //   setPriceData(priceArray);
+    //   setSumData(sumArray);
+    //   setEndPriceData(endPriceArray);
+    let priceArray =[];
+    let sumArray = [];
+    let endPriceArray = [];
 
-function getPreviewData(data){
-  // let priceArray = [];
-  //   let sumArray = [];
-  //   let endPriceArray = [];
-  //   let temp;
-  //   response.data.response.bundleDetail.discountOptions.map((item, index) => {
-  //      temp = Array.from({ length: item.quantity }, (x, itemIndex) =>
-  //     response.data.response.bundleDetail.discountedProductType == "specific_product"
-  //         ? response.data.response.bundleDetail.products[0].variants[0].price
-  //         : 50
-  //     );
-  //     priceArray.push(temp);
-  //     sumArray.push(calculateMrp(temp));
-  //     endPriceArray.push(calculateFinalPrice(index, sumArray));
-  //     return
-  //   });
+  data.bundleDetail.discountOptions.map((item,index)=>{
+    
+      let temp = Array.from({ length: item.quantity }, (x, itemIndex) =>
+        data.bundleDetail.discountedProductType == "specific_product"
+              ? data.bundleDetail.products[0]?.variants[0].price
+              : 50
+          );
+          priceArray.push(temp);
+          sumArray.push(calculateMrp(temp))
+          let finalPrice = 0;
 
-  //   setPriceData(priceArray);
-  //   setSumData(sumArray);
-  //   setEndPriceData(endPriceArray);
-  let priceArray =[];
-  let sumArray = [];
-  let endPriceArray = [];
-
- data.bundleDetail.discountOptions.map((item,index)=>{
-  
-    let temp = Array.from({ length: item.quantity }, (x, itemIndex) =>
-       data.bundleDetail.discountedProductType == "specific_product"
-            ? data.bundleDetail.products[0]?.variants[0].price
-            : 50
-        );
-        priceArray.push(temp);
-        sumArray.push(calculateMrp(temp))
-        let finalPrice = 0;
-
-        if (data.bundleDetail.discountOptions[index].type == "percent") {
-          if (data.bundleDetail.discountOptions[index].value > 100) {
-            finalPrice = 0;
-          } else {
-           let discountedPrice =  parseFloat(sumArray[index]) -parseFloat(sumArray[index]) * (data.bundleDetail.discountOptions[index].value / 100);
-            finalPrice = discountedPrice ;
-          }
-        }else if (data.bundleDetail.discountOptions[index]?.type == "fixed") {
-          if (parseFloat(data.bundleDetail.discountValue) > sumArray[index]) {
-            finalPrice = 0;
-          } else {
-            finalPrice =
-              parseFloat(sumArray[index]) -
-              data.bundleDetail.discountOptions[index].value;
-          }
-        } else if (data.bundleDetail.discountOptions[index]?.type == "price") {
-      
-          if (
-            data.bundleDetail.discountOptions[index].value >
-            parseFloat(sumArray[index])
+          if (data.bundleDetail.discountOptions[index].type == "percent") {
+            if (data.bundleDetail.discountOptions[index].value > 100) {
+              finalPrice = 0;
+            } else {
+            let discountedPrice =  parseFloat(sumArray[index]) -parseFloat(sumArray[index]) * (data.bundleDetail.discountOptions[index].value / 100);
+              finalPrice = discountedPrice;
+            }
+          }else if (data.bundleDetail.discountOptions[index]?.type == "fixed") {
+            if (parseFloat(data.bundleDetail.discountValue) > sumArray[index]) {
+              finalPrice = 0;
+            } else {
+              finalPrice =
+                parseFloat(sumArray[index]) -
+                data.bundleDetail.discountOptions[index].value;
+            }
+          } else if (data.bundleDetail.discountOptions[index]?.type == "price") {
+        
+            if (
+              data.bundleDetail.discountOptions[index].value >
+              parseFloat(sumArray[index])
+            ) {
+          
+              finalPrice = parseFloat(sumArray[index]);
+            } else {
+        
+              finalPrice = parseFloat(data.bundleDetail.discountOptions[index].value);
+            }
+          } else if (
+            data.bundleDetail.discountOptions[index]?.discountType == "freeShipping" ||
+            data.bundleDetail.discountOptions[index]?.discountType == "noDiscount"
           ) {
-         
             finalPrice = parseFloat(sumArray[index]);
-          } else {
-       
-            finalPrice = parseFloat(data.bundleDetail.discountOptions[index].value);
           }
-        } else if (
-          data.bundleDetail.discountOptions[index]?.discountType == "freeShipping" ||
-          data.bundleDetail.discountOptions[index]?.discountType == "noDiscount"
-        ) {
-          finalPrice = parseFloat(sumArray[index]);
-        }
-        endPriceArray.push(finalPrice)
-      })
- 
-      setPriceData(priceArray)
-      setSumData(sumArray)
-    setEndPriceData(endPriceArray);
+          endPriceArray.push(finalPrice)
+        })
+        setPriceData(priceArray)
+        setSumData(sumArray)
+      setEndPriceData(endPriceArray);
 
-} 
-
-
-
+  } 
 
   const handleDiscountProductType = (e) => {
-
     if (e.target.value == "all_products") {
       // setShowPrice({});
-
       setData({
         ...data,
         bundleDetail: {
@@ -244,7 +235,6 @@ function getPreviewData(data){
     }
   };
 
-
   const handleSearchInput = (e) => {
     setSearchValue(e.target.value);
     setModal(true);
@@ -255,7 +245,6 @@ function getPreviewData(data){
   };
 
   const setOk = () => {
-    
     let getData = variantData.data.filter(
       (item) => checkedIds.indexOf(item.id) != -1
     );
@@ -296,53 +285,110 @@ function getPreviewData(data){
     setAntModal(false);
   };
 
+  const removeValidationHandler = (newvalue,update,currentIndex) =>{
+    let copy = [...errorArray];
+    let duplicates = [];
+    let array = [];
+
+    update.map((items,updateIndex)=>{
+      array.push(items.quantity);
+    })
+    array.forEach(function (value, index, array) {
+      if (array.indexOf(value, index + 1) !== -1
+          && duplicates.indexOf(value) === -1) {
+          duplicates.push(value);
+      }
+    });
+    update.map((item,updateIndex)=>{
+        if(duplicates.length == 0){
+          if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
+            copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
+          }
+          if (errorArray.includes(`increasingOrder${currentIndex}`)==true) {
+            copy.splice(copy.indexOf(`increasingOrder${currentIndex}`), 1);
+          }
+          setErrorArray(copy);
+        }
+    })
+  };
+
   const handleDiscountQuantity = (newvalue, index) => {
    if (newvalue != "" ){
-    if (parseInt(newvalue) < 2){
-      if(errorArray.includes(`minimumQuantity${index}`)==false) {
+    let update = { ...data };
+    update.bundleDetail.discountOptions[index].quantity = parseInt(newvalue);
 
+    if(parseInt(newvalue) >= 2){
       let copy = [...errorArray];
-      if (errorArray.includes(`increasingOrder${index}`)) {
-        copy.splice(copy.indexOf[`increasingOrder${index}`], 1);
+      if (errorArray.includes(`minimumQuantity${index}`) == true) {
+        let i = copy.indexOf(`minimumQuantity${index}`)
+        errorArray.splice(i, 1);
       }
-      setErrorArray([...copy, `minimumQuantity${index}`]);    
-    } 
-  }
-    else if (
-      (data.bundleDetail?.discountOptions[index + 1] &&
-        parseInt(newvalue) >= parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) 
-    ) {
-      if(errorArray.includes(`increasingOrder${index}`)==false && parseInt(newvalue) >= 2){
-        let copy = [...errorArray];
-      if (errorArray.includes(`minimumQuantity${index}`)) {
-        copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
+      setErrorArray([...errorArray])
+    }
+
+    if (parseInt(newvalue) < 2){
+      let copy = [...errorArray];
+      if(errorArray.includes(`minimumQuantity${index}`)==false) {
+        setErrorArray([...errorArray, `minimumQuantity${index}`]);
       }
-      setErrorArray([...copy, `increasingOrder${index}`]);
-    }
-    }
-    else if( index > 0 && parseInt(newvalue) <= parseInt(data.bundleDetail?.discountOptions[index-1].quantity)){
+    }else if ((data.bundleDetail?.discountOptions[index + 1] && parseInt(newvalue) >= parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) ) {
       if(errorArray.includes(`increasingOrder${index}`)==false){
-      let copy = [...errorArray];
-      if (errorArray.includes(`minimumQuantity${index}`)) {
-        copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
+        setErrorArray([...errorArray, `increasingOrder${index}`]);
       }
-      setErrorArray([...errorArray, `increasingOrder${index}`]);
-       }
+    }else if( index > 0 && parseInt(newvalue) <= parseInt(data.bundleDetail?.discountOptions[index-1].quantity)){
+      if(errorArray.includes(`increasingOrder${index}`)==false){
+        setErrorArray([...errorArray, `increasingOrder${index}`]);
+      }
+    }else if ((data.bundleDetail?.discountOptions[index + 1] && parseInt(newvalue) < parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) ) {
+        removeValidationHandler(newvalue,update.bundleDetail.discountOptions,index);
+    }else if(parseInt(newvalue) > parseInt(data.bundleDetail?.discountOptions[index-1].quantity)){
+        removeValidationHandler(newvalue,update.bundleDetail.discountOptions,index);
     }
-    else if (String(newvalue).includes(".") == false) {
-      let copy = [...errorArray];
-      if (errorArray.includes(`minimumQuantity${index}`)) {
-        copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
-      }
+  //   if (parseInt(newvalue) < 2){
+  //     if(errorArray.includes(`minimumQuantity${index}`)==false) {
+
+  //     let copy = [...errorArray];
+  //     if (errorArray.includes(`increasingOrder${index}`)) {
+  //       copy.splice(copy.indexOf[`increasingOrder${index}`], 1);
+  //     }
+  //     setErrorArray([...copy, `minimumQuantity${index}`]);    
+  //   } 
+  // }
+  //   else if (
+  //     (data.bundleDetail?.discountOptions[index + 1] &&
+  //       parseInt(newvalue) >= parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) 
+  //   ) {
+  //     if(errorArray.includes(`increasingOrder${index}`)==false && parseInt(newvalue) >= 2){
+  //       let copy = [...errorArray];
+  //     if (errorArray.includes(`minimumQuantity${index}`)) {
+  //       copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
+  //     }
+  //     setErrorArray([...copy, `increasingOrder${index}`]);
+  //   }
+  //   }
+  //   else if( index > 0 && parseInt(newvalue) <= parseInt(data.bundleDetail?.discountOptions[index-1].quantity)){
+  //     if(errorArray.includes(`increasingOrder${index}`)==false){
+  //     let copy = [...errorArray];
+  //     if (errorArray.includes(`minimumQuantity${index}`)) {
+  //       copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
+  //     }
+  //     setErrorArray([...errorArray, `increasingOrder${index}`]);
+  //      }
+  //   }
+  //   else if (String(newvalue).includes(".") == false) {
+  //     let copy = [...errorArray];
+  //     if (errorArray.includes(`minimumQuantity${index}`)) {
+  //       copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
+  //     }
   
-      if (errorArray.includes(`increasingOrder${index}`)) {
-        copy.splice(copy.indexOf[`increasingOrder${index}`], 1);
-      }
+  //     if (errorArray.includes(`increasingOrder${index}`)) {
+  //       copy.splice(copy.indexOf[`increasingOrder${index}`], 1);
+  //     }
   
-      setErrorArray(copy);
-    }
-      let update = { ...data };
-      update.bundleDetail.discountOptions[index].quantity = newvalue;
+  //     setErrorArray(copy);
+  //   }
+      // let update = { ...data };
+      // update.bundleDetail.discountOptions[index].quantity = newvalue;
 
       if (
         !(
@@ -381,7 +427,6 @@ function getPreviewData(data){
       setData(update);
     }
   };
-
 
   const handleDiscountType = (value, index) => {
     let update = { ...data };
@@ -422,11 +467,23 @@ function getPreviewData(data){
     }
   };
 
-
   const handleDiscountDescription = (e, index) => {
     let update = { ...data };
     update.bundleDetail.discountOptions[index].description = e.target.value;
     setData(update);
+  };
+
+  const removeOptionErrHanlder = (deletedIndex) =>{
+    let copy = [...errorArray]
+    if (errorArray.includes(`minimumQuantity${deletedIndex}`) == true) {
+      let i = copy.indexOf(`minimumQuantity${deletedIndex}`)
+      errorArray.splice(i, 1);
+      setErrorArray([...errorArray])
+    }
+    if (errorArray.includes(`increasingOrder${deletedIndex}`)==true) {
+      errorArray.splice(copy.indexOf(`increasingOrder${deletedIndex}`), 1);
+      setErrorArray([...errorArray])
+    }
   };
 
   const handleAddDiscountOption = () => {
@@ -480,10 +537,19 @@ function getPreviewData(data){
 
   const handleDeleteDiscountOption = (index) => {
     let update = { ...data };
+    let lengthOfData = update.bundleDetail.discountOptions.length;
     update.bundleDetail.discountOptions.splice(index, 1);
+    if(lengthOfData > 2){
+      removeOptionErrHanlder(lengthOfData-1);
+      if(index > 0){
+        removeValidationHandler(update.bundleDetail.discountOptions[index-1].quantity,update.bundleDetail.discountOptions,index-1);
+      }else if(index == 0){
+        removeValidationHandler(update.bundleDetail.discountOptions[index+1].quantity,update.bundleDetail.discountOptions,index+1);
+      }
+    }else{
+      setErrorArray([]);
+    }
     setData(update);
-
-   setErrorArray([])
     
 
     let update2 = [...priceData];
@@ -521,7 +587,6 @@ function getPreviewData(data){
     });
   };
  
-
   const handleDisplayOptions = (e) => {
     if (e.target.checked) {
       if (
@@ -643,57 +708,74 @@ function getPreviewData(data){
 
   const handleDelete = () => {};
 
-
-  
-
   const handleSave = async() => {
-
+    console.log("enter in handle save");
     let alertText=[]
     let flag=true;
-
 
      if (data.bundleDetail.discountedProductType!="all_products"  && data.bundleDetail.products.length == 0) {
       if(!errorArray.includes("emptyProduct"))
       {
-          setErrorArray((prev)=>[...prev,"emptyProduct"])
+        setErrorArray((prev)=>[...prev,"emptyProduct"])
+      }
+      flag=false
+      let message = `Please add atleast one ${
+        data.bundleDetail.discountedProductType == "specific_product"
+        ? "product"
+      : "collection"
+      }`
+      alertText.push(message)
+    }else{
+      let copy = [...errorArray];
+      console.log("enter in else part of**********--************-*************");
+      if(errorArray.includes("emptyProduct")==true){
+        console.log("enter in else part of**********--************-*************",errorArray.indexOf("emptyProduct"));
 
-     }
-     flag=false
-    let message=   `Please add atleast one ${
-      data.bundleDetail.discountedProductType == "specific_product"
-       ? "product"
-    : "collection"
-     }`
-   alertText.push(message)
+        errorArray.splice(copy.indexOf("emptyProduct"),1);
+        setErrorArray([...errorArray]);
+      }
     }
 
+    // if(data.bundleDetail.products.length > 0){
+      
+    // }
+
     if (data.name == "") {
-     
         if(!errorArray.includes("bundleName"))
         {
-          setErrorArray((prev)=>[...prev,"bundleName"])
+          setErrorArray((prev)=>[...prev,"bundleName"]);
         }
-       
         flag=false
-        alertText.push("Please provide name of bundle")
+        alertText.push("Please provide name of bundle");
+    }else{
+      if (errorArray.includes("bundleName")) {
+        let copy = [...errorArray];
+        errorArray.splice(copy.indexOf("bundleName"),1);
+        setErrorArray([...errorArray]);
+      }
     }
 
     if (data.title == "") {
         if(!errorArray.includes("bundleTitle")){
                setErrorArray((prev)=>[...prev,"bundleTitle"])
       }
-          flag=false
-          alertText .push("Please provide title of bundle")    
+      flag=false
+      alertText .push("Please provide title of bundle")    
+    }else{
+      if (errorArray.includes("bundleTitle")) {
+        let copy = [...errorArray];
+        errorArray.splice(copy.indexOf("bundleTitle"),1);
+        setErrorArray([...errorArray]);
+      }
     }
 
-    if (data.startdate == "") {
-      if(!errorArray.includes("startdate")){
-        setErrorArray((prev)=>[...prev,"startdate"])
-      }
-        flag=false
-        alertText.push("Please select start date & time")
-      
-    }
+    // if (data.startdate == "") {
+    //   if(!errorArray.includes("startdate")){
+    //     setErrorArray((prev)=>[...prev,"startdate"])
+    //   }
+    //   flag=false
+    //   alertText.push("Please select start date & time")
+    // }
 
     if(flag==false ){
       alertCommon(
@@ -703,82 +785,87 @@ function getPreviewData(data){
           false
         );
     }
-   if(flag==true){
-  //   if (param.id == "create") {
-  //   const response  = await postApi("/api/admin/createBundle",data,app)
-  //   if(response.data.status === 200){
-  //     return (
-       
-  //       toastNotification("success","Saved","top"),
-  //       navigate('/')
-  //     )
-  //   }else{
-  //     return alertCommon(setAlert, ["Something went wrong"],"warning",false)
-  //   }
+
+    if(errorArray.length>0){
+      console.log("error length********",errorArray);
+      return false;
+    }else{
+      if(flag==true){
+        setErrorArray([]);
+     //   if (param.id == "create") {
+     //   const response  = await postApi("/api/admin/createBundle",data,app)
+     //   if(response.data.status === 200){
+     //     return (
+          
+     //       toastNotification("success","Saved","top"),
+     //       navigate('/')
+     //     )
+     //   }else{
+     //     return alertCommon(setAlert, ["Something went wrong"],"warning",false)
+     //   }
+      
+     //  }else{
+     //   const response = await postApi("/api/admin/updateBundle", data, app);
+      
+     //   if (response.data.status === 200) {
+     //     return (
+     //       toastNotification("success", "Update successfully", "top"),
+     //       navigate("/")
+     //     );
+     //   } else {
+     //     return alertCommon(
+     //       setAlert,
+     //       ["Something went wrong"],
+     //       "warning",
+     //       false
+     //     );
+     //   }
+     // }
+     console.log("**************************param.id",param.id);
+     if (param.id == "create") {
+       setSpinner(true);
+       const response = await postApi("/api/admin/createBundle", data, app);
+       if (response.data.status === 200) {
+         return(
+           setSpinner(false),
+           toastNotification("success", "Saved", "bottom"), navigate("/bundle")
+         );
+       } else {
+       setSpinner(false)
    
-  //  }else{
-  //   const response = await postApi("/api/admin/updateBundle", data, app);
+         return alertCommon(
+           setAlert,
+           ["Something went wrong"],
+           "warning",
+           false
+         );
+       }
+     } else {
+       setSpinner(true)
    
-  //   if (response.data.status === 200) {
-  //     return (
-  //       toastNotification("success", "Update successfully", "top"),
-  //       navigate("/")
-  //     );
-  //   } else {
-  //     return alertCommon(
-  //       setAlert,
-  //       ["Something went wrong"],
-  //       "warning",
-  //       false
-  //     );
-  //   }
-  // }
-  if (param.id == "create") {
-    setSpinner(true)
-    const response = await postApi("/api/admin/createBundle", data, app);
-    if (response.data.status === 200) {
-      return(
-        setSpinner(false),
-        toastNotification("success", "Saved", "bottom"), navigate("/bundle")
-      );
-    } else {
-    setSpinner(false)
-
-      return alertCommon(
-        setAlert,
-        ["Something went wrong"],
-        "warning",
-        false
-      );
+       const response = await postApi("/api/admin/updateBundle", data, app);
+       if (response.data.status === 200) {
+         return (
+       setSpinner(false),
+           toastNotification("success", "Update successfully", "bottom"),
+           navigate("/bundle")
+         );
+       } else {
+       setSpinner(false)
+         return alertCommon(
+           setAlert,
+           ["Something went wrong"],
+           "warning",
+           false
+         );
+       }
+     }
+   
+    //  }else {
+    //    return alertCommon(setAlert, ["Something went wrong"],"warning",false)
+     }
     }
-  } else {
-    setSpinner(true)
-
-    const response = await postApi("/api/admin/updateBundle", data, app);
-    if (response.data.status === 200) {
-      return (
-    setSpinner(false),
-
-        toastNotification("success", "Update successfully", "bottom"),
-        navigate("/bundle")
-      );
-    } else {
-    setSpinner(false)
-
-      return alertCommon(
-
-        setAlert,
-        ["Something went wrong"],
-        "warning",
-        false
-      );
-    }
-  }
-
-  }else {
-    return alertCommon(setAlert, ["Something went wrong"],"warning",false)
-  }
-  
+    console.log("check the errors and flag",errorArray,flag);
 }
   return (
     <Spin spinning={spinner}
@@ -1040,7 +1127,7 @@ function getPreviewData(data){
             </Button>
           </div>
           <BundleNameTitle data={data} setData={setData} errorArray={errorArray} />
-          <DateTime data={data} setData={setData} errorArray={errorArray} />
+          {/* <DateTime data={data} setData={setData} errorArray={errorArray} /> */}
           <DeleteSave  handleSave={handleSave} />
         </div>
         <div className="sd-bundle-productBundle-rightSection Polaris-Layout__Section Polaris-Layout__Section--secondary">

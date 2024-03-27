@@ -314,14 +314,14 @@ if (data.title == "") {
     flag=false
     alertText .push("Please provide title of bundle")    
 }
-if (data.startdate == "") {
-  if(!errorArray.includes("startdate")){
-    setErrorArray((prev)=>[...prev,"startdate"])
-  }
-    flag=false
-    alertText.push("Please select start date & time")
+// if (data.startdate == "") {
+//   if(!errorArray.includes("startdate")){
+//     setErrorArray((prev)=>[...prev,"startdate"])
+//   }
+//     flag=false
+//     alertText.push("Please select start date & time")
   
-}
+// }
 if(flag==false ){
   alertCommon(
       setAlert,
@@ -489,11 +489,11 @@ type= "collectonMix&Match"
 
 <DiscountOptions page="collectionMixMatch" discountType={data.bundleDetail.discountType} discountValue={data.bundleDetail.discountValue}  handleDiscountType={handleDiscountType}  handleDiscountValue={handleDiscountValue}  errorArray={errorArray}  currency={currencyCode}/>
 
-<DateTime
+{/* <DateTime
             data={data}
             setData={setData}
             errorArray={errorArray}
-          />
+          /> */}
 
 <DeleteSave handleSave={handleSave} />
  

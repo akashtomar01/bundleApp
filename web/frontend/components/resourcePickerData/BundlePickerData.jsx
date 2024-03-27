@@ -5,22 +5,35 @@ import { Divider } from 'antd';
 import { useAPI } from "../shop";
 import pic from "../../assets/image2.png";
 import {Thumbnail} from '@shopify/polaris';
-const BundlePickerData=({page,modalType,data,setData,errorArray,removeProductFromList,temp})=>{
-const {app}=useAPI()
+const BundlePickerData=({page,modalType,data,setData,errorArray,removeProductFromList,setPickerError,temp})=>{
+const {app}=useAPI();
 
-function  showOutOfStockError(item){
-
-  let check ;
-  for (let index = 0; index < item.variants.length; index++) {
-    if(item.variants[index].inventoryQuantity <= 0){
-      check = true;
-      break
+  function  showOutOfStockError(item){
+    let check ;
+    for (let index = 0; index < item.variants.length; index++) {
+      if(item.variants[index].inventoryQuantity <= 0){
+        check = true;
+        break
+      } 
     }
-    
+    return check;
   }
 
-return check;
-}
+  function validationHandler(newvalue,index){
+    let indexIsExist = errorArray.indexOf(index);
+    if(errorArray.length == 1 && index ==indexIsExist){
+      setPickerError([]);
+    }else{
+      let copyErrorArray = [...errorArray];
+      let copyArray = [];
+      copyErrorArray.map((item2) => {
+        if(item2 != index){
+          copyArray.push(item2);
+        }
+      });
+      setPickerError(copyArray);
+    }
+  }
 return(
 <>
   <div className="sd-bundle-ProductListMain">
@@ -46,7 +59,7 @@ return(
                         <div key={index} className="sd-bundle-title-section">
                           <div className="sd-bundle-title">{item.title}</div>
                           {
-                            (page=="productBundle" || (page=="volumeBundle" && modalType=="Product")) && item.hasOnlyDefaultVariant == false && (
+                            (page=="productBundle" || page == "productMixMatch" || (page=="volumeBundle" && modalType=="Product")) && item.hasOnlyDefaultVariant == false && (
                               <div className="sd-bundle-variant">
                                 
                                 <span>
@@ -75,6 +88,9 @@ return(
                           label="Minimum order"
                           onChange={(newvalue) => {
                           
+                            validationHandler(newvalue,index)
+                              // data.bundleDetail.products.map((item, index) => {
+                          
 
                             if (newvalue == "" || newvalue < 0) {
                               let update = [...data.bundleDetail.products];
@@ -82,14 +98,15 @@ return(
 
                               update[update?.indexOf(item)].minimumOrder = 0;
                             
-                              // setSelectedProducts(update);
+                              
+                              // });
+                              setSelectedProducts(update);
                               setData({...data,bundleDetail:{...data.bundleDetail,products:[...update]}});
                               
                             } else {
                               if (String(newvalue).length > 1) {
                                 newvalue = newvalue.replace(/^0/, "");
                               }
-
                               let update = [...data.bundleDetail.products];
                             
 
@@ -97,7 +114,7 @@ return(
                                 newvalue;
 
                               setData({...data,bundleDetail:{...data.bundleDetail,products:[...update]}});
-
+                              {console.log("hello i am clicked",errorArray)}
 
                             }
                           }}
@@ -109,6 +126,7 @@ return(
                   
                       </div>
                     }
+
                       <button
                         className="Polaris-Button Polaris-Button--plain Polaris-Button--iconOnly"
                         type="button"

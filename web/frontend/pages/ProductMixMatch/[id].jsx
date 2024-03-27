@@ -102,9 +102,6 @@ const ProductMixMatch = () => {
   };
   const [disableAddOptions,setDisableAddOptions] = useState(false);
 
-  // useEffect(()=>{
-  //   console.log("data",data)
-  // },[data])
   useEffect(()=>{
     data.bundleDetail.discountOptions.map((item,index)=>{
       {item.type==="freeShipping"?
@@ -199,41 +196,35 @@ const ProductMixMatch = () => {
     setSpinner(true);
     const response = await postApi("/api/admin/editBundle", body, app);
     if (response.status === 200) {
-      console.log("check data from api******",response);
-      
       setData(response.data.response);
       setSpinner(false);
     }
   };
 
   const handleSave = async () => {
-    // console.log("enter in save function")
+    console.log("enter in save function",data)
     let alertText = [];
     let flag = true;
 
-    let search2 = [];
-    data.bundleDetail.products.map((item, index) => {
-      if (item.minimumOrder < 1 || item.minimumOrder == "") {
-        search2.push(index);
-      }
-    });
-
-    if (search2.length > 0 || data.bundleDetail.products.length < 2) {
+    if (data.bundleDetail.products.length < 2) {
       flag = false;
-      setPickerError(search2);
       alertText.push(
-        "Minimum  products for bundle  is 2  & Minimum Order for each product  can not be empty  or less than 1 ."
+        "Minimum  products for bundle  is 2."
       );
     }
 
-    // console.log(search2, "search2")
     if (data.name == "") {
       if (!errorArray.includes("bundleName")) {
         setErrorArray((prev) => [...prev, "bundleName"]);
       }
-
       flag = false;
       alertText.push("Please provide name of bundle");
+    }else{
+      if (errorArray.includes("bundleName")) {
+        let copy = [...errorArray];
+        errorArray.splice(copy.indexOf("bundleName"),1);
+        setErrorArray([...errorArray]);
+      }
     }
 
     // console.log("errorArray", errorArray, data)
@@ -243,53 +234,62 @@ const ProductMixMatch = () => {
       }
       flag = false;
       alertText.push("Please provide title of bundle");
+    }else{
+      if (errorArray.includes("bundleTitle")) {
+        let copy = [...errorArray];
+        errorArray.splice(copy.indexOf("bundleTitle"),1);
+        setErrorArray([...errorArray]);
+      }
     }
     
-    if (data.startdate == "") {
-      if (!errorArray.includes("startdate")) {
-        setErrorArray((prev) => [...prev, "startdate"]);
-      }
-      flag = false;
-      alertText.push("Please select start date & time");
-    }
+    // if (data.startdate == "") {
+    //   if (!errorArray.includes("startdate")) {
+    //     setErrorArray((prev) => [...prev, "startdate"]);
+    //   }
+    //   flag = false;
+    //   alertText.push("Please select start date & time");
+    // }
     if (flag == false) {
       alertCommon(setAlert, alertText, "critical", false);
     }
-
-    if (flag == true) {
-      setSpinner(true);
-      setErrorArray("");
-      setPickerError([]);
-      if (param.id == "create") {
-        try{
-        const response = await postApi("/api/admin/createBundle", data, app);
-        if (response.data.status === 200) {
-          return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
+    if(errorArray.length>0){
+      return false;
+    }else{
+      if (flag == true) {
+        setSpinner(true);
+        setErrorArray("");
+        setPickerError([]);
+        if (param.id == "create") {
+          try{
+          const response = await postApi("/api/admin/createBundle", data, app);
+          if (response.data.status === 200) {
+            return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
+          } else {
+            return alertCommon(
+              setAlert,
+              ["Something went wrong"],
+              "warning",
+              false
+            );
+          }
+        }catch(err){
+          console.log(err)
+         }
         } else {
-          return alertCommon(
-            setAlert,
-            ["Something went wrong"],
-            "warning",
-            false
-          );
-        }
-      }catch(err){
-        // console.log(err)
-       }
-      } else {
-        const response = await postApi("/api/admin/updateBundle", data, app);
-        if (response.data.status === 200) {
-          return (
-            toastNotification("success", "Update successfully", "bottom"),
-            navigate("/bundle")
-          );
-        } else {
-          return alertCommon(
-            setAlert,
-            ["Something went wrong"],
-            "warning",
-            false
-          );
+          const response = await postApi("/api/admin/updateBundle", data, app);
+          if (response.data.status === 200) {
+            return (
+              toastNotification("success", "Update successfully", "bottom"),
+              navigate("/bundle")
+            );
+          } else {
+            return alertCommon(
+              setAlert,
+              ["Something went wrong"],
+              "warning",
+              false
+            );
+          }
         }
       }
     }
@@ -304,13 +304,9 @@ const ProductMixMatch = () => {
         if (data.bundleDetail.discountOptions[selectedDiscountIndex].value > 100) {
           finalPrice = 0;
         } else {
-
-          finalPrice =
-            calculateMrp() -
-            calculateMrp() * (data.bundleDetail.discountOptions[selectedDiscountIndex].value / 100);
+          finalPrice =calculateMrp() - calculateMrp() * (data.bundleDetail.discountOptions[selectedDiscountIndex].value / 100);
         }
-      } else
-       if (data.bundleDetail.discountOptions[selectedDiscountIndex].type == "fixed") {
+      } else if (data.bundleDetail.discountOptions[selectedDiscountIndex].type == "fixed") {
         if (parseFloat(data.bundleDetail.discountOptions[selectedDiscountIndex].value) > calculateMrp()) {
           finalPrice = selectedDiscountIndex;
         } else {
@@ -348,120 +344,155 @@ const ProductMixMatch = () => {
     }
   },[data]);
 
-
   const handleDeleteDiscountOption = (index) => {
-    console.log("check delete handler--------",index)
     let update = { ...data };
     if(update.bundleDetail.discountOptions.length<=2){
       setDisableAddOptions(false)
     }
+    let lengthOfData = update.bundleDetail.discountOptions.length;
     update.bundleDetail.discountOptions.splice(index, 1);
+    if(lengthOfData > 2){
+      removeOptionErrHanlder(lengthOfData-1);
+      if(index > 0){
+        removeValidationHandler(update.bundleDetail.discountOptions[index-1].quantity,update.bundleDetail.discountOptions,index-1);
+      }else if(index == 0){
+        removeValidationHandler(update.bundleDetail.discountOptions[index+1].quantity,update.bundleDetail.discountOptions,index+1);
+      }
+    }else{
+      setErrorArray([]);
+    }
     setData(update);
-    setErrorArray([])
-    console.log("delete data successfully");
-    
+    // console.log("delete data successfully");
 
     let update2 = [...priceData];
     update2.splice(index, 1);
     setPriceData(update2);
-    console.log("update priceData successfully");
+    // console.log("update priceData successfully");
 
     let update3 = [...sumData];
     update3.splice(index, 1);
     setSumData(update3);
-    console.log("update sumData successfully");
+    // console.log("update sumData successfully");
 
     let newUpdate = [...endPriceData];
     newUpdate.splice(index, 1);
     setEndPriceData(newUpdate);
-    console.log("update endPriceData successfully");
+    // console.log("update endPriceData successfully");
     setSelectedDiscountIndex(data.bundleDetail.discountOptions.length-1);
   };
-  const handleDiscountQuantity = (newvalue, index) => {
-    if (newvalue != "" ){
-     if (parseInt(newvalue) < 2){
-       if(errorArray.includes(`minimumQuantity${index}`)==false) {
- 
-       let copy = [...errorArray];
-       if (errorArray.includes(`increasingOrder${index}`)) {
-         copy.splice(copy.indexOf[`increasingOrder${index}`], 1);
-       }
-       setErrorArray([...copy, `minimumQuantity${index}`]);    
-     } 
-   }
-     else if (
-       (data.bundleDetail?.discountOptions[index + 1] &&
-         parseInt(newvalue) >= parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) 
-     ) {
-       if(errorArray.includes(`increasingOrder${index}`)==false && parseInt(newvalue) >= 2){
-         let copy = [...errorArray];
-       if (errorArray.includes(`minimumQuantity${index}`)) {
-         copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
-       }
-       setErrorArray([...copy, `increasingOrder${index}`]);
-     }
-     }
-     else if( index > 0 && parseInt(newvalue) <= parseInt(data.bundleDetail?.discountOptions[index-1].quantity)){
-       if(errorArray.includes(`increasingOrder${index}`)==false){
-       let copy = [...errorArray];
-       if (errorArray.includes(`minimumQuantity${index}`)) {
-         copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
-       }
-       setErrorArray([...errorArray, `increasingOrder${index}`]);
+
+  const removeOptionErrHanlder = (deletedIndex) =>{
+    let copy = [...errorArray]
+    if (errorArray.includes(`minimumQuantity${deletedIndex}`) == true) {
+      let i = copy.indexOf(`minimumQuantity${deletedIndex}`)
+      errorArray.splice(i, 1);
+      setErrorArray([...errorArray])
+    }
+    if (errorArray.includes(`increasingOrder${deletedIndex}`)==true) {
+      errorArray.splice(copy.indexOf(`increasingOrder${deletedIndex}`), 1);
+      setErrorArray([...errorArray])
+    }
+  };
+
+  // const removeValidationHandler = (newvalue,update,currentIndex) =>{
+  //   let copy = [...errorArray];
+  //   let lastIndex = update.length-1;
+  //   update.map((item,updateIndex)=>{
+  //     if(lastIndex == 1){
+  //       console.log("lastindex",lastIndex)
+  //       if(parseInt(newvalue) < parseInt(update[lastIndex].quantity) && currentIndex == 0){
+  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
+  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
+  //         }
+  //         setErrorArray(copy)
+  //       }else if(parseInt(newvalue) > parseInt(update[lastIndex-1].quantity) && currentIndex == 1){
+  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
+  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
+  //         }
+  //         setErrorArray(copy)
+  //       }
+  //     }else if(lastIndex == 2){
+  //       if(parseInt(newvalue) < parseInt(update[lastIndex-1].quantity) && parseInt(update[lastIndex-1].quantity) < parseInt(update[lastIndex].quantity) && currentIndex == 0){
+  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
+  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
+  //         }
+  //         setErrorArray(copy)
+  //       }else if(parseInt(newvalue) > parseInt(update[lastIndex-2].quantity) && parseInt(newvalue) < parseInt(update[lastIndex].quantity) && currentIndex == 1){
+  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
+  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
+  //         }
+  //         setErrorArray(copy)
+  //       }else if(parseInt(newvalue) > parseInt(update[lastIndex-1].quantity) && parseInt(update[lastIndex-1].quantity) > parseInt(update[lastIndex-2].quantity) && currentIndex == 2){
+  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
+  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
+  //         }
+  //         setErrorArray(copy)
+  //       }
+  //     }
+  //   })
+  // };
+  const removeValidationHandler = (newvalue,update,currentIndex) =>{
+    let copy = [...errorArray];
+    let duplicates = [];
+    let array = [];
+
+    update.map((items,updateIndex)=>{
+      array.push(items.quantity);
+    })
+    array.forEach(function (value, index, array) {
+      if (array.indexOf(value, index + 1) !== -1
+          && duplicates.indexOf(value) === -1) {
+          duplicates.push(value);
+      }
+    });
+    update.map((item,updateIndex)=>{
+        if(duplicates.length == 0){
+          if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
+            copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
+          }
+          if (errorArray.includes(`increasingOrder${currentIndex}`)==true) {
+            copy.splice(copy.indexOf(`increasingOrder${currentIndex}`), 1);
+          }
+          setErrorArray(copy);
         }
-     }
-     else if (String(newvalue).includes(".") == false) {
-       let copy = [...errorArray];
-       if (errorArray.includes(`minimumQuantity${index}`)) {
-         copy.splice(copy.indexOf[`minimumQuantity${index}`], 1);
-       }
-   
-       if (errorArray.includes(`increasingOrder${index}`)) {
-         copy.splice(copy.indexOf[`increasingOrder${index}`], 1);
-       }
-   
-       setErrorArray(copy);
-     }
-       let update = { ...data };
-       update.bundleDetail.discountOptions[index].quantity = newvalue;
- 
-       if (
-         !(
-           data.bundleDetail.discountedProductType == "specific_product" &&
-           data.bundleDetail.products.length == 0
-         )
-       ) {
-         let newArr = [...priceData];
-         newArr[index].push(
-           data.bundleDetail.discountedProductType != "specific_product"
-             ? 50
-             : data.bundleDetail.products[0]?.variants[0]?.price
-         );
-         setPriceData(newArr);
- 
-         let update2 = [...sumData];
-         update2.splice(
-           index,
-           1,
-           (
-             parseFloat(update2[index]) +
-             parseFloat(
-               data.bundleDetail.discountedProductType != "specific_product"
-                 ? 50
-                 : data.bundleDetail.products[0]?.variants[0]?.price
-             )
-           ).toFixed(2)
-         );
-         setSumData(update2);
- 
-         let newUpdate = [...endPriceData];
-         newUpdate.splice(index, 1, calculateFinalPrice(index, update2));
-         setEndPriceData(newUpdate);
-       }
- 
-       setData(update);
-     }
-   };
+    })
+  };
+
+  const handleDiscountQuantity = (newvalue, index) => {
+    if (newvalue != ""){
+      let update = { ...data };
+      update.bundleDetail.discountOptions[index].quantity = parseInt(newvalue);
+
+      if(parseInt(newvalue) >= 2){
+        let copy = [...errorArray];
+        if (errorArray.includes(`minimumQuantity${index}`) == true) {
+          let i = copy.indexOf(`minimumQuantity${index}`)
+          errorArray.splice(i, 1);
+        }
+        setErrorArray([...errorArray])
+      }
+
+      if (parseInt(newvalue) < 2){
+        let copy = [...errorArray];
+        if(errorArray.includes(`minimumQuantity${index}`)==false) {
+          setErrorArray([...errorArray, `minimumQuantity${index}`]);
+        }
+      }else if ((data.bundleDetail?.discountOptions[index + 1] && parseInt(newvalue) >= parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) ) {
+        if(errorArray.includes(`increasingOrder${index}`)==false){
+          setErrorArray([...errorArray, `increasingOrder${index}`]);
+        }
+      }else if( index > 0 && parseInt(newvalue) <= parseInt(data.bundleDetail?.discountOptions[index-1].quantity)){
+        if(errorArray.includes(`increasingOrder${index}`)==false){
+          setErrorArray([...errorArray, `increasingOrder${index}`]);
+        }
+      }else if ((data.bundleDetail?.discountOptions[index + 1] && parseInt(newvalue) < parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) ) {
+          removeValidationHandler(newvalue,update.bundleDetail.discountOptions,index);
+      }else if(parseInt(newvalue) > parseInt(data.bundleDetail?.discountOptions[index-1].quantity)){
+          removeValidationHandler(newvalue,update.bundleDetail.discountOptions,index);
+      }
+      setData(update);
+    }
+  };
 
   const handleDiscountType = (value, index) => {
     let update = { ...data };
@@ -487,9 +518,7 @@ const ProductMixMatch = () => {
       setError("");
       if (!(data.bundleDetail.discountOptions[index].type=="percent" &&   newvalue > 100) ) {
         newvalue = String(newvalue);
-        // if (String(newvalue).length > 1) {
         newvalue = newvalue.replace(/^0/, "");
-        // }
         let update = { ...data };
         update.bundleDetail.discountOptions[index].value = newvalue;
 
@@ -521,13 +550,13 @@ const ProductMixMatch = () => {
     //   setMrp(parseFloat(sum).toFixed(2));
     //   return parseFloat(sum.toFixed(2));
     }
-  }
+  };
 
     // console.log("check array ennnnddddprice length*************************************************************************",data);
 
   const handleAddDiscountOption = () => {
     let update = { ...data };
-    console.log("check the control of option button==========>>>>>>>>>>.................",update.bundleDetail.discountOptions.length);
+    // console.log("check the control of option button==========>>>>>>>>>>.................",update.bundleDetail.discountOptions.length);
     if(update.bundleDetail.discountOptions.length>=2){
       setDisableAddOptions(true)
     }
@@ -549,7 +578,7 @@ const ProductMixMatch = () => {
       // } & Save {discount}`,
     });
     setData(update);
-
+    removeValidationHandler(update.bundleDetail.discountOptions[update.bundleDetail.discountOptions.length - 1].quantity,update.bundleDetail.discountOptions,update.bundleDetail.discountOptions.length - 1)
     if (
       data.bundleDetail.products[0] ||
       data.bundleDetail.discountedProductType == "all_products"
@@ -626,7 +655,7 @@ const ProductMixMatch = () => {
       update.bundleDetail[`${e.target.id}`].enable=e.target.checked
        setData(update)
       //  console.log("datat=", data.bundleDetail.requiredItem, data.bundleDetail.multiItemSelection, data)
-    }
+    };
 
   const handleRequiredProducts=(e, item)=>{
       // console.log(e.target.checked, item.required, data.bundleDetail.products)
@@ -642,7 +671,7 @@ const ProductMixMatch = () => {
       setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
     }
     // console.log("requiredProducts finally", "bundle product", data.bundleDetail.products)
-  }
+  };
 
   const handleMultiProductsSelection=(e, item)=>{
     // console.log(e.target.checked, item.id, data.bundleDetail.products)
@@ -657,7 +686,7 @@ const ProductMixMatch = () => {
       setData({...data, bundleDetail:{...data.bundleDetail, [key]:bundleProduct}})
     }
     // console.log("multiProductsSelectionProducts finally", "bundle product", data.bundleDetail.products)
-  }
+  };
 
   // const handlePlacementsSelection = (e, type) =>{
   //     if(type==="productPage"){
@@ -777,7 +806,6 @@ const ProductMixMatch = () => {
     
     setEndPrice(parseFloat(calculateFinalPrice()).toFixed(2));
   }, [arr]);
-  // console.log('chckekekkjdskjfkjsdgfgdsh0',endPrice);
 
   useEffect(() => {
     if (param.id !== "create") {
@@ -803,7 +831,7 @@ const ProductMixMatch = () => {
           <div className="sd-bundle-left-section-common">
             <div className="sd-bundle-bundleSection-common sd-bundle-productBundleSearchSection">
               <div className="sd-bundle-bundleSection-heading-common">
-                Product Bundle{" "}
+                Product Mix & Match Bundle{" "}
               </div>
 
                 <div className="sd-bundle-plainText-common">
@@ -826,7 +854,7 @@ const ProductMixMatch = () => {
                   </button>
                 </div>
                 <BundlePickerData
-                  page="productBundle"
+                  page="productMixMatch"
                   modalType=""
                   data={data}
                   setData={setData}
@@ -842,7 +870,7 @@ const ProductMixMatch = () => {
                 setOpen={setMyModal}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
-                page={"productBundle"}
+                page={"productMixMatch"}
                 modalType="Product"
                 setData={setData}
                 data={data}
@@ -1120,7 +1148,7 @@ const ProductMixMatch = () => {
                 }
             </div>
             </div>
-            <DateTime data={data} setData={setData} errorArray={errorArray} />
+            {/* <DateTime data={data} setData={setData} errorArray={errorArray} /> */}
             <DeleteSave handleSave={handleSave} />
           </div>
 

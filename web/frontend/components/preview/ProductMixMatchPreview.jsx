@@ -5,9 +5,9 @@ import {
 } from "@ant-design/icons";
 
 const ProductMixMatchPreview = ({data,mrp,endPrice,currency,discountIndex}) =>{
-  console.log('product mix match data****************===**************************',data);
+  // console.log('product mix match data****************===**************************',data);
   let freeShipping = "Free Shipping";
-  console.log('hello check the values ',mrp,endPrice,currency,discountIndex);
+  // console.log('hello check the values ',mrp,endPrice,currency,discountIndex);
   return(
 
     <div className="sd-bundle-bundleSection-common sd-bundle-productBundle-statusSection">
