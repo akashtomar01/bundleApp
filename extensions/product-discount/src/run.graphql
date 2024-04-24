@@ -1,0 +1,28 @@
+query RunInput {
+cart{
+lines{
+quantity
+  merchandise {
+        ... on ProductVariant {
+          id
+          sku
+          product {
+            title
+            vendor
+            isGiftCard
+            id
+            hasAnyTag
+            hasTags {
+              tag
+            }
+          }
+        }
+      }
+    }
+  }
+  discountNode {
+    metafield(namespace: "product-discount", key: "function-configuration") {
+      value
+    }
+  }
+}
