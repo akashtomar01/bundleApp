@@ -22,6 +22,8 @@ import { alertCommon } from "../../components/helperFunctions";
 import General from "../../components/bxgy/General";
 import ProductMixMatchPreview from "../../components/preview/ProductMixMatchPreview";
 import DisplayOptions from "../../components/commonSections/displayOptions";
+import e from "cors";
+// import { checkTest } from "../../../backend/controllers/admin/adminController";
 
 
 const ProductMixMatch = () => {
@@ -200,7 +202,6 @@ const ProductMixMatch = () => {
       setSpinner(false);
     }
   };
-
   const handleSave = async () => {
     console.log("enter in save function",data)
     let alertText = [];
@@ -220,14 +221,13 @@ const ProductMixMatch = () => {
       flag = false;
       alertText.push("Please provide name of bundle");
     }else{
-      if (errorArray.includes("bundleName")) {
-        let copy = [...errorArray];
-        errorArray.splice(copy.indexOf("bundleName"),1);
-        setErrorArray([...errorArray]);
-      }
+      let copy = [...errorArray];
+      errorArray.splice(copy.indexOf(`bundleName`), 1);
+      setErrorArray([...errorArray])
+      setAlert([]);
+      // flag = true;
     }
-
-    // console.log("errorArray", errorArray, data)
+    
     if (data.title == "") {
       if (!errorArray.includes("bundleTitle")) {
         setErrorArray((prev) => [...prev, "bundleTitle"]);
@@ -235,65 +235,78 @@ const ProductMixMatch = () => {
       flag = false;
       alertText.push("Please provide title of bundle");
     }else{
-      if (errorArray.includes("bundleTitle")) {
-        let copy = [...errorArray];
-        errorArray.splice(copy.indexOf("bundleTitle"),1);
-        setErrorArray([...errorArray]);
-      }
+      let copy = [...errorArray];
+      errorArray.splice(copy.indexOf(`bundleTitle`), 1);
+      setErrorArray([...errorArray])
+      setAlert([]);
+      // flag = true;
+    }
+
+    if((data.bundleDetail.products.length<data.bundleDetail.discountOptions[data.bundleDetail.discountOptions.length-1].quantity) && data.bundleDetail.multiItemSelection.enable === false){
+      // if (!errorArray.includes("bundleTitle")) {
+      //   setErrorArray((prev) => [...prev, "bundleTitle"]);
+      // }
+      flag = false;
+      alertText.push(`Please select number of products which equal to or greater than ${data.bundleDetail.discountOptions[data.bundleDetail.discountOptions.length-1].quantity} Otherwise enable multi select option`);
+    }else{
+      setAlert([]);
     }
     
     // if (data.startdate == "") {
-    //   if (!errorArray.includes("startdate")) {
-    //     setErrorArray((prev) => [...prev, "startdate"]);
-    //   }
-    //   flag = false;
-    //   alertText.push("Please select start date & time");
-    // }
-    if (flag == false) {
-      alertCommon(setAlert, alertText, "critical", false);
-    }
-    if(errorArray.length>0){
-      return false;
-    }else{
-      if (flag == true) {
-        setSpinner(true);
-        setErrorArray("");
-        setPickerError([]);
-        if (param.id == "create") {
-          try{
-          const response = await postApi("/api/admin/createBundle", data, app);
-          if (response.data.status === 200) {
-            return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
-          } else {
-            return alertCommon(
-              setAlert,
-              ["Something went wrong"],
-              "warning",
-              false
-            );
-          }
-        }catch(err){
-          console.log(err)
-         }
-        } else {
-          const response = await postApi("/api/admin/updateBundle", data, app);
-          if (response.data.status === 200) {
-            return (
-              toastNotification("success", "Update successfully", "bottom"),
-              navigate("/bundle")
-            );
-          } else {
-            return alertCommon(
-              setAlert,
-              ["Something went wrong"],
-              "warning",
-              false
-            );
-          }
+      //   if (!errorArray.includes("startdate")) {
+        //     setErrorArray((prev) => [...prev, "startdate"]);
+        //   }
+        //   flag = false;
+        //   alertText.push("Please select start date & time");
+        // }
+        if (flag == false) {
+          alertCommon(setAlert, alertText, "critical", false);
         }
-      }
-    }
+        if(errorArray.length != 0){
+          console.log("thhis is in working -----?????",errorArray.length);
+          flag = false;
+        }
+    //     else{
+    //       if (flag == true) {
+    //         setSpinner(true);
+    //         setErrorArray("");
+    //         setPickerError([]);
+    //         if (param.id == "create") {
+    //           try{
+    //             const response = await postApi("/api/admin/createBundle", data, app);
+    //             if (response.data.status === 200) {
+    //               return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
+    //             } else {
+    //               return alertCommon(
+    //                 setAlert,
+    //                 ["Something went wrong"],
+    //                 "warning",
+    //                 false
+    //               );
+    //             }
+    //     }catch(err){
+    //       console.log(err)
+    //      }
+    //     } else {
+    //       const response = await postApi("/api/admin/updateBundle", data, app);
+    //       if (response.data.status === 200) {
+    //         return (
+    //           toastNotification("success", "Update successfully", "bottom"),
+    //           navigate("/bundle")
+    //         );
+    //       } else {
+    //         return alertCommon(
+    //           setAlert,
+    //           ["Something went wrong"],
+    //           "warning",
+    //           false
+    //         );
+    //       }
+    //     }
+    //   }
+    // }
   };
+
   function calculateFinalPrice() {
     let finalPrice = 0;
 
@@ -394,43 +407,6 @@ const ProductMixMatch = () => {
     }
   };
 
-  // const removeValidationHandler = (newvalue,update,currentIndex) =>{
-  //   let copy = [...errorArray];
-  //   let lastIndex = update.length-1;
-  //   update.map((item,updateIndex)=>{
-  //     if(lastIndex == 1){
-  //       console.log("lastindex",lastIndex)
-  //       if(parseInt(newvalue) < parseInt(update[lastIndex].quantity) && currentIndex == 0){
-  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
-  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
-  //         }
-  //         setErrorArray(copy)
-  //       }else if(parseInt(newvalue) > parseInt(update[lastIndex-1].quantity) && currentIndex == 1){
-  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
-  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
-  //         }
-  //         setErrorArray(copy)
-  //       }
-  //     }else if(lastIndex == 2){
-  //       if(parseInt(newvalue) < parseInt(update[lastIndex-1].quantity) && parseInt(update[lastIndex-1].quantity) < parseInt(update[lastIndex].quantity) && currentIndex == 0){
-  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
-  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
-  //         }
-  //         setErrorArray(copy)
-  //       }else if(parseInt(newvalue) > parseInt(update[lastIndex-2].quantity) && parseInt(newvalue) < parseInt(update[lastIndex].quantity) && currentIndex == 1){
-  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
-  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
-  //         }
-  //         setErrorArray(copy)
-  //       }else if(parseInt(newvalue) > parseInt(update[lastIndex-1].quantity) && parseInt(update[lastIndex-1].quantity) > parseInt(update[lastIndex-2].quantity) && currentIndex == 2){
-  //         if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
-  //           copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
-  //         }
-  //         setErrorArray(copy)
-  //       }
-  //     }
-  //   })
-  // };
   const removeValidationHandler = (newvalue,update,currentIndex) =>{
     let copy = [...errorArray];
     let duplicates = [];
@@ -446,15 +422,16 @@ const ProductMixMatch = () => {
       }
     });
     update.map((item,updateIndex)=>{
-        if(duplicates.length == 0){
-          if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
-            copy.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
-          }
+      let copy = [...errorArray];
+      if(duplicates.length == 0){
+        if (errorArray.includes(`increasingOrder${updateIndex}`)==true) {
+          errorArray.splice(copy.indexOf(`increasingOrder${updateIndex}`), 1);
           if (errorArray.includes(`increasingOrder${currentIndex}`)==true) {
-            copy.splice(copy.indexOf(`increasingOrder${currentIndex}`), 1);
+            errorArray.splice(copy.indexOf(`increasingOrder${currentIndex}`), 1);
           }
-          setErrorArray(copy);
         }
+        setErrorArray([...errorArray]);
+      }
     })
   };
 
@@ -463,21 +440,22 @@ const ProductMixMatch = () => {
       let update = { ...data };
       update.bundleDetail.discountOptions[index].quantity = parseInt(newvalue);
 
-      if(parseInt(newvalue) >= 2){
-        let copy = [...errorArray];
-        if (errorArray.includes(`minimumQuantity${index}`) == true) {
-          let i = copy.indexOf(`minimumQuantity${index}`)
-          errorArray.splice(i, 1);
-        }
-        setErrorArray([...errorArray])
-      }
+      // if(parseInt(newvalue) >= 2){
+      //   let copy = [...errorArray];
+      //   if (errorArray.includes(`minimumQuantity${index}`) == true) {
+      //     let i = copy.indexOf(`minimumQuantity${index}`)
+      //     errorArray.splice(i, 1);
+      //   }
+      //   setErrorArray([...errorArray])
+      // }
 
-      if (parseInt(newvalue) < 2){
-        let copy = [...errorArray];
-        if(errorArray.includes(`minimumQuantity${index}`)==false) {
-          setErrorArray([...errorArray, `minimumQuantity${index}`]);
-        }
-      }else if ((data.bundleDetail?.discountOptions[index + 1] && parseInt(newvalue) >= parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) ) {
+      // if (parseInt(newvalue) < 2){
+      //   let copy = [...errorArray];
+      //   if(errorArray.includes(`minimumQuantity${index}`)==false) {
+      //     setErrorArray([...copy, `minimumQuantity${index}`]);
+      //   }
+      // }else 
+      if ((data.bundleDetail?.discountOptions[index + 1] && parseInt(newvalue) >= parseInt(data.bundleDetail?.discountOptions[index + 1].quantity)) ) {
         if(errorArray.includes(`increasingOrder${index}`)==false){
           setErrorArray([...errorArray, `increasingOrder${index}`]);
         }
@@ -507,7 +485,7 @@ const ProductMixMatch = () => {
   const handleDiscountValue = (newvalue, index) => {
     if (newvalue == "" || newvalue < 0) {
       let update = { ...data };
-      update.bundleDetail.discountOptions[index].value = 0;
+      update.bundleDetail.discountOptions[index].value = 1;
 
       let newUpdate = [...endPriceData];
       newUpdate.splice(index, 1, calculateFinalPrice(index, sumData));
@@ -536,6 +514,7 @@ const ProductMixMatch = () => {
     update.bundleDetail.discountOptions[index].description = e.target.value;
     setData(update);
   };
+
   function calculateMrp() {
     if(arr.length>0){
       let sum = 0;
@@ -551,8 +530,6 @@ const ProductMixMatch = () => {
     //   return parseFloat(sum.toFixed(2));
     }
   };
-
-    // console.log("check array ennnnddddprice length*************************************************************************",data);
 
   const handleAddDiscountOption = () => {
     let update = { ...data };
@@ -655,7 +632,7 @@ const ProductMixMatch = () => {
       update.bundleDetail[`${e.target.id}`].enable=e.target.checked
        setData(update)
       //  console.log("datat=", data.bundleDetail.requiredItem, data.bundleDetail.multiItemSelection, data)
-    };
+  };
 
   const handleRequiredProducts=(e, item)=>{
       // console.log(e.target.checked, item.required, data.bundleDetail.products)
@@ -696,6 +673,7 @@ const ProductMixMatch = () => {
   //       setSelectedPlacement({...selectedPlacement,bundlePage:e.target.checked});
   //     } 
   //   }
+
 
     const handleDisplayOptions = (e) => {
       // console.log("check name of option:::::::::::::::::::::::::::::::>",e.target.name);
@@ -909,10 +887,11 @@ const ProductMixMatch = () => {
                         onChange={(newvalue) =>
                           handleDiscountQuantity(newvalue, index)
                         }
+                        
                         value={item.quantity}
-                        // min={item.quantity}
+                        //min={item.quantity}
                         autoComplete="off"
-                        // min={2}
+                        min={2}
                       />
                       {errorArray.includes(`minimumQuantity${index}`) && (
                         <InlineError message="Minimum quantity must be 2 " />
@@ -970,7 +949,7 @@ const ProductMixMatch = () => {
                         }
                         value={item.value}
                         autoComplete="off"
-                        min="0"
+                        min="1"
                       />
                       
                     </div>
@@ -1094,7 +1073,6 @@ const ProductMixMatch = () => {
                                    />
                              </div>
                                        
-                         
                              <div key={index} className="sd-bundle-title-section">
                                <div className="sd-bundle-title">{item.title}</div>
                              </div>
@@ -1128,10 +1106,10 @@ const ProductMixMatch = () => {
                              </div>
                              <div>
                                <Thumbnail
-                                     source={ item?.image ? item?.image?.originalSrc : item?.images ? item?.images[0]?.originalSrc : item ?.src ? item ?.src : pic }
-                                     alt=""
-                                     size="small"
-                                   />
+                                source={ item?.image ? item?.image?.originalSrc : item?.images ? item?.images[0]?.originalSrc : item ?.src ? item ?.src : pic }
+                                alt=""
+                                size="small"
+                              />
                              </div>
                               
                              <div key={index} className="sd-bundle-title-section">

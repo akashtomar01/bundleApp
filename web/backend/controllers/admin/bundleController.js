@@ -13,8 +13,8 @@ export async function createRule(req,res){
     const code = req.body.code;
     const discountValue = req.body.discountValue;
     const variantsId = req.body.variantsId;
-    const startDate = req.body.startDate;
-    const endDate = req.body.endDate;
+    // const startDate = req.body.startDate;
+    // const endDate = req.body.endDate;
     const bundleType = req.body.bundleType
     const totalPrice = req.body.totalPrice
     const discountId = req.body.discountCreateId
@@ -71,7 +71,7 @@ export async function createRule(req,res){
           console.log("enter in ===>>>>>if bundleType == freeShipping")
           let Input ={
             "freeShippingCodeDiscount": {
-              "startsAt": startDate,
+              // "startsAt": startDate,
           
               "appliesOncePerCustomer": false,
               "title": code,
@@ -181,7 +181,7 @@ export async function createRule(req,res){
                 }
               },
            
-              "startsAt": startDate,
+              // "startsAt": startDate,
               "title": code,
               "usageLimit": null
             }
@@ -251,7 +251,7 @@ export async function createRule(req,res){
          let input=  {
          
           "freeShippingCodeDiscount": {
-            "startsAt": startDate,
+            // "startsAt": startDate,
         
             "appliesOncePerCustomer": false,
             "title": code,
@@ -360,7 +360,7 @@ return  res.status(200).json({message:"SUCCESS!",response:bundleShoppingDiscount
                 }
               },
            
-              "startsAt": startDate,
+              // "startsAt": startDate,
               "title": code,
               "usageLimit": null
             },
@@ -539,7 +539,7 @@ console.log("dddd");
               }
             },
          
-            "startsAt": startDate,
+            // "startsAt": startDate,
             "title": code,
             "usageLimit": null
           }

@@ -5,6 +5,8 @@ let { restResources } = await import(`@shopify/shopify-api/rest/admin/${LATEST_A
 import dotenv from "dotenv";
 dotenv.config();
 
+console.log("*****************************************************************=====>>>>>************************************",LATEST_API_VERSION);
+
 const DB_PATH = `${process.cwd()}/database.sqlite`;
 let scopes = process.env.SCOPES.split(",");
 // The transactions with Shopify will always be marked as test transactions, unless NODE_ENV is production.

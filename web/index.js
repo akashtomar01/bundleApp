@@ -83,7 +83,7 @@ app.get(
       noDiscountIsApplied : "No discount is applied on the selected products",
       discountIsApplied : "discount is applied on the selected products",
       selectAtLeastItemsToApplyTheDiscount : "Select at least {{item}} items to apply the discount",
-      allProducts : "ALL PRODUCTS",
+      allProducts : "ALL PRODUCTS"
      } 
      const translation = await translationModel.findOneAndUpdate({shop:session.shop},{translation:translationData},{upsert:true,new:true})
      if(translation){

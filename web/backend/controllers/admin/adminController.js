@@ -20,7 +20,7 @@ export async function createBundle(req,res){
     const session = res.locals.shopify.session;
     let shop = session.shop;
    const {type,name,title,description,status,bundleDetail,customization,startdate,endDate,display,currencyCode,timeZone} = req.body
-   console.log("check customization===========>",customization);
+  //  console.log("check customization===========>",customization);
    const response = await bundleModel.create({
     shop:shop ,
       type:type,
@@ -132,6 +132,7 @@ export async function editBundle (req,res){
   
 try {
   const {id}= req.body
+
 const session = res.locals.shopify.session;
 let shop = session.shop;
 const response = await bundleModel.aggregate([
@@ -653,3 +654,73 @@ export async function createAutomaticDiscount(req,res){
   //   console.log(response.body.data.discountAutomaticAppCreate.automaticAppDiscount.discountId)
   //   res.send(response)
 }
+
+// export async function checkTest(req,res){
+//   let session = res.locals.shopify.session
+//   console.log(session,"session")
+//   const client = new shopify.api.clients.Graphql({session});
+//   let queryString = `query {
+//     discountNodes(first: 100) {
+//       edges {
+//         node {
+//           id
+//           discount {
+//             ... on DiscountAutomaticApp {
+//               title
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }`
+
+//   const response = await client.query({
+//     data: {
+//       query: queryString,
+//     },
+//   });
+//   res.status(200).send({msg:response});
+// // console.log("heyyyyyy ***** **** -------**** ******",response);
+//   // return res.send(response);
+// }
+
+
+// export async function testMutation(req,res){
+//   let session = res.locals.shopify.session
+//   console.log(session,"session")
+//   const client = new shopify.api.clients.Graphql({session});
+
+//   let Input = {
+//     id:"gid://shopify/DiscountCodeNode/1333065449707",
+//     namespace:"volume-discount",
+//     key:"8a835d62-e158-4212-a40f-43303f59565a",
+//   }
+//   let queryString = `mutation {
+//     discountAutomaticAppUpdate(
+//       id: ${Input.id},
+//       automaticAppDiscount: {
+//         metafields: [
+//           {
+//             namespace: ${Input.namespace}
+//             key: ${Input.key}
+//             value: "{ \"quantity\": 3, \"percentage\": 15.0 }"
+//             type: "json"
+//           }
+//         ]
+//       }
+//   ) {
+//       userErrors {
+//         field
+//         message
+//       }
+//     }
+//   }`
+
+//   const response = await client.query({
+//     data: {
+//       query: queryString,
+//       variables: Input
+//     },
+//   });
+//   res.status(200).send({msg:response});
+// }

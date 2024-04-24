@@ -21,9 +21,6 @@ import {
   getSetting,
   getThemeId,
   createAutomaticDiscount,
- 
-  
- 
 } from "../controllers/admin/adminController.js";
 import {
   activateRule,
