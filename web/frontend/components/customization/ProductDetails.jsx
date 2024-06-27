@@ -219,8 +219,8 @@ return(
             type="number"
             label="Size"
             // placeholder="set minimum order  for item"
-            onChange={(newvalue)=>handleChangeValueCommon2(newvalue,"productDetails","image","borderRadius",data,setData,bundleOption)}
-            value={data[bundleOption]["productDetails"]["image"]["borderRadius"]}
+            onChange={(newvalue)=>handleChangeValueCommon(newvalue,"productDetails","plusfontSize",data,setData,bundleOption)}
+            value={data[bundleOption]["productDetails"]["plusfontSize"]}
             autoComplete="off"
             min="0"
           />

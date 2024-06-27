@@ -66,7 +66,7 @@ const DiscountOptions=(props)=>{
               </div>
       )}
     </div>
-    <div className="sd-bundle-item sd-bundle-item-price">
+    {/* <div className="sd-bundle-item sd-bundle-item-price">
       <input
         type="radio"
         name="discount"
@@ -100,7 +100,7 @@ const DiscountOptions=(props)=>{
 }
         </>
       )}
-    </div>
+    </div> */}
 
     <div className="sd-bundle-item">
       <input

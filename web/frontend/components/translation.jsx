@@ -124,6 +124,25 @@ if(response.data.status == 200){
                <div className='sd-bundle-translate-originalText'><h3>Grab the deal</h3>
                <input onChange={handleTranslation} name='grabTheDeal' className='sd-bundle-translate-translate-text' type="text"  value={translateField.grabTheDeal}/>
                </div>
+               <div className='sd-bundle-translate-originalText'><h3>You have not selected any items yet</h3>
+               <input onChange={handleTranslation} name='youHavenotSelectedanyItemsYet' className='sd-bundle-translate-translate-text' type="text"  value={translateField.youHavenotSelectedanyItemsYet}/>
+               </div>
+               <div className='sd-bundle-translate-originalText'><h3>You have selected {"{{item}}"} items</h3>
+               <input onChange={handleTranslation} name='youHaveSelectedItems' className='sd-bundle-translate-translate-text' type="text"  value={translateField.youHaveSelectedItems}/>
+               </div>
+               <div className='sd-bundle-translate-originalText'><h3>No discount is applied on the selected products</h3>
+               <input onChange={handleTranslation} name='noDiscountIsApplied' className='sd-bundle-translate-translate-text' type="text"  value={translateField.noDiscountIsApplied}/>
+               </div>
+               <div className='sd-bundle-translate-originalText'><h3>discount is applied on the selected products</h3>
+               <input onChange={handleTranslation} name='discountIsApplied' className='sd-bundle-translate-translate-text' type="text"  value={translateField.discountIsApplied}/>
+               </div>
+               <div className='sd-bundle-translate-originalText'><h3>Select at least {"{{item}}"} items to apply the discount</h3>
+               <input onChange={handleTranslation} name='selectAtLeastItemsToApplyTheDiscount' className='sd-bundle-translate-translate-text' type="text"  value={translateField.selectAtLeastItemsToApplyTheDiscount}/>
+               </div>
+               <div className='sd-bundle-translate-originalText'><h3>All Products</h3>
+               <input onChange={handleTranslation} name='allProducts' className='sd-bundle-translate-translate-text' type="text"  value={translateField.allProducts}/>
+               </div>
+               
                </div>
              
                </div>

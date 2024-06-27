@@ -7,6 +7,7 @@ import pic from "../../assets/image2.png";
 import EmptyPreview from "../commonSections/emptyPreview";
 const CollectionMixMatchPreview=({data})=>{
 // const {currency}=useAPI();
+// console.log('check collection data****',data);
 
     return (
         <div className="sd-bundle-bundleSection-common">

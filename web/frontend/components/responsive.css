@@ -52,11 +52,18 @@
 
     .sd-bundle-mainContent-wrapper .sd-bundle-centerContent {
         width: 100% !important;
-        order: 3 !important;
+        /* order: 3 !important; */
+        margin-top: 0 !important;
     }
-
+    /* .sd-bundle-customizationBundle-wrapper .sd-bundle-mainContent-wrapper {
+        row-gap: 1rem;
+        flex-direction: row !important;
+    } */
+    .sd-bundle-bundleSection-common {
+        box-shadow: none;
+    }
     .sd-bundle-mainContent-wrapper .sd-bundle-leftSider {
-        width: 60% !important;
+        width: 90% !important;
         height: max-content !important;
     }
 
@@ -65,7 +72,7 @@
     }
 
     .sd-bundle-mainContent-wrapper .sd-bundle-rightSider {
-        width: 30% !important;
+        width: 90% !important;
         height: auto !important;
     }
 
@@ -143,9 +150,7 @@
     .sd-popUp-customise-preview {
         width: 100% !important;
     }
-    .sd-bundle-mainContent-wrapper .sd-bundle-centerContent {
-        margin-top: 1rem !important;
-      }
+
 }
 
 @media screen and (max-width:576px) {

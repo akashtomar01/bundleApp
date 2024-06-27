@@ -71,7 +71,7 @@ function CreateBundle() {
   });
 
   const app = useAppBridge();
-
+console.log("check error array**************************",pickerError);
   const getBundleData = async () => {
     let body = { id: param.id };
     setSpinner(true);
@@ -146,9 +146,12 @@ function CreateBundle() {
   // }
 
   //   };
-
+  
+console.log("hellloooo******check******error*******s",pickerError);
   const removeProductFromList = (item, index) => {
+    // console.log("check-****-*****-*****",index);
     let update = [...data.bundleDetail.products];
+    console.log("nbnbnbnnnnbbbnbbn*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-",index,item);
     update.splice(update.indexOf(item), 1);
     let copy = [...data.bundleDetail.display.productPagesList];
 
@@ -190,14 +193,21 @@ function CreateBundle() {
         },
       });
     }
-    let copyErrorArray = [...pickerError];
-    let copyArray = [];
-    copyErrorArray.map((item2) => {
-      if (item2 >= index) {
-        copyArray.push(item2 - 1);
-      }
-    });
-    setPickerError(copyArray);
+    if(pickerError.length == 1){
+      setPickerError([]);
+    }else{
+      let copyErrorArray = [...pickerError];
+      let copyArray = [];
+      copyErrorArray.map((item2) => {
+        if(item2 < index){
+          copyArray.push(item2);
+        }
+        if (item2 > index) {
+          copyArray.push(item2 - 1);
+        }
+      });
+      setPickerError(copyArray);
+    }
   };
 
   const temp = {
@@ -207,7 +217,7 @@ function CreateBundle() {
     setCheckedIds,
     setVariantData,
   };
-
+  // console.log('hello test array====>',showPrice);
   useEffect(() => {
     let dummyArray = [];
     data.bundleDetail.products.map((item, mainindex) => {
@@ -219,9 +229,9 @@ function CreateBundle() {
       );
     });
     setArr(dummyArray);
-    setShowPrice({});
+// console.log("check arr data of bundle------->",dummyArray);
+setShowPrice({});
   }, [data.bundleDetail.products]);
-
   const setCancel = () => {
     setVariantData([]);
     setCheckedIds([]);
@@ -471,6 +481,7 @@ function CreateBundle() {
   }
 
   const handleSave = async () => {
+   
     let alertText = [];
     let flag = true;
 
@@ -489,6 +500,7 @@ function CreateBundle() {
       );
     }
 
+ 
     if (data.name == "") {
       if (!errorArray.includes("bundleName")) {
         setErrorArray((prev) => [...prev, "bundleName"]);
@@ -505,22 +517,25 @@ function CreateBundle() {
       alertText.push("Please provide title of bundle");
     }
     
-    if (data.startdate == "") {
-      if (!errorArray.includes("startdate")) {
-        setErrorArray((prev) => [...prev, "startdate"]);
-      }
-      flag = false;
-      alertText.push("Please select start date & time");
-    }
+    // if (data.startdate == "") {
+    //   if (!errorArray.includes("startdate")) {
+    //     setErrorArray((prev) => [...prev, "startdate"]);
+    //   }
+    //   flag = false;
+    //   alertText.push("Please select start date & time");
+    // }
     if (flag == false) {
       alertCommon(setAlert, alertText, "critical", false);
     }
+
 
     if (flag == true) {
       setSpinner(true);
       setErrorArray("");
       setPickerError([]);
       if (param.id == "create") {
+       try{
+        console.log("in the try")
         const response = await postApi("/api/admin/createBundle", data, app);
         if (response.data.status === 200) {
           return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
@@ -532,6 +547,9 @@ function CreateBundle() {
             false
           );
         }
+       }catch(err){
+        console.log(err)
+       }
       } else {
         const response = await postApi("/api/admin/updateBundle", data, app);
         if (response.data.status === 200) {
@@ -550,8 +568,6 @@ function CreateBundle() {
       }
     }
   };
-
- 
 
   return (
     <Spin spinning={spinner}
@@ -599,6 +615,8 @@ function CreateBundle() {
                 data={data}
                 setData={setData}
                 temp={temp}
+                setPickerError={setPickerError}
+                // index={index}
                 errorArray={pickerError}
                 removeProductFromList={removeProductFromList}
               />
@@ -631,7 +649,7 @@ function CreateBundle() {
               currency={currencyCode}
             />
 
-            <DateTime data={data} setData={setData} errorArray={errorArray} />
+            {/* <DateTime data={data} setData={setData} errorArray={errorArray} /> */}
 
             <DeleteSave handleSave={handleSave} />
           </div>

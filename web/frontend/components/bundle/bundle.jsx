@@ -125,7 +125,9 @@ const CreateBundle = () => {
       navigate(`/buyxgety/${id}`);
     }else if(type==='fbt'){
       navigate(`/FrequentlyBoughtTogether/${id}`);
-    }else{
+    } else if(type == "productMixMatch"){
+      navigate(`/ProductMixMatch/${id}`);
+    } else{
       navigate(`/CollectionMixMatch/${id}`);
     }
   };
@@ -326,6 +328,7 @@ return check;
           </div>
         );
       })}
+      
           {
     item.bundleDetail.products?.length > 3 ? <div className="sd-bundle-more-item"><EllipsisOutlined /></div> : null
    }
@@ -377,6 +380,8 @@ return check;
           : null
         : item.type == "volumeBundle"
         ? `${item.bundleDetail.discountOptions.length} Options`
+        : item.type == "productMixMatch"
+        ? `${item.bundleDetail.discountOptions.length} Options`
         : item.type == "collectionMixMatch"
         ? item.bundleDetail.discountType == "percent"
           ? `${item.bundleDetail.discountValue}% off`
@@ -389,6 +394,18 @@ return check;
           : item.bundleDetail.discountType == "noDiscount"
           ? "No Discount"
           : null
+        : item.type == "fbt"
+        ? item.bundleDetail.discountType == "percent"
+          ? `${item.bundleDetail.discountValue}% off`
+          : item.bundleDetail.discountType == "fixed"
+          ? `Rs.${item.bundleDetail.discountValue} off`
+          : item.bundleDetail.discountType == "price"
+          ? `Fixed Rs.${item.bundleDetail.discountValue} `
+          : item.bundleDetail.discountType == "freeShipping"
+          ? "Free Shipping"
+          : item.bundleDetail.discountType == "noDiscount"
+          ? "No Discount"
+          :null
         : null,
     status: (
       <div>
@@ -415,7 +432,8 @@ return check;
     // />
     // </div>,
 
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
+    // type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" :item.type == "fbt"? "Frequently Baught Together" :"",
     performance: item.analytics.bundleSold+" " +"Sold" ,
   }));
 
@@ -440,7 +458,7 @@ return check;
    size="small"
    alt="products thumbnails"
  />: null)}
-        {item.type == "bxgy" ?
+        { item.type == "bxgy" ?
         item.bundleDetail?.xproducts?.slice(0,3).map((ele,index) => {
           return (
             <div key={index} className="sd-bundle-dashboard-img">
@@ -459,8 +477,9 @@ return check;
              
             </div>
           );
-        })
+        }) 
        : item.bundleDetail?.products?.slice(0,3).map((ele,index) => {
+        {/* {console.log('check home items:*******',item)} */}
         return (
           <div key={index} className="sd-bundle-dashboard-img">
             {/* <img src={ele?.images ? ele.images[0].originalSrc : ele?.image ? ele.image.originalSrc:""} alt="" /> */}
@@ -527,6 +546,8 @@ return check;
       : null
     : item.type == "volumeBundle"
     ? `${item.bundleDetail.discountOptions.length} Options`
+    : item.type == "productMixMatch"
+    ? `${item.bundleDetail.discountOptions.length} Options`
     : item.type == "collectionMixMatch"
     ? item.bundleDetail.discountType == "percent"
       ? `${item.bundleDetail.discountValue}% off`
@@ -539,7 +560,31 @@ return check;
       : item.bundleDetail.discountType == "noDiscount"
       ? "No Discount"
       : null
-    : null,
+    : item.type == "fbt"
+    ? item.bundleDetail.discountType == "percent"
+      ? `${item.bundleDetail.discountValue}% off`
+      : item.bundleDetail.discountType == "fixed"
+      ? `Rs.${item.bundleDetail.discountValue} off`
+      : item.bundleDetail.discountType == "price"
+      ? `Fixed Rs.${item.bundleDetail.discountValue} `
+      : item.bundleDetail.discountType == "freeShipping"
+      ? "Free Shipping"
+      : item.bundleDetail.discountType == "noDiscount"
+      ? "No Discount"
+      :null
+    : item.type == "bxgy"
+    ? item.bundleDetail.discountType == "percent"
+      ? `${item.bundleDetail.discountValue}% off`
+      : item.bundleDetail.discountType == "fixed"
+      ? `Rs.${item.bundleDetail.discountValue} off`
+      : item.bundleDetail.discountType == "price"
+      ? `Fixed Rs.${item.bundleDetail.discountValue} `
+      : item.bundleDetail.discountType == "freeShipping"
+      ? "Free Shipping"
+      : item.bundleDetail.discountType == "noDiscount"
+      ? "No Discount"
+      :null
+    :null,
     status: (
       <div>
         <Switch
@@ -549,7 +594,7 @@ return check;
         />
       </div>
     ),
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" : item.type == "fbt"? "Frequently Baught Together" :"",
     performance: item.analytics.bundleSold +" "+ "Sold",
   }));
 
@@ -662,6 +707,8 @@ return check;
       : null
     : item.type == "volumeBundle"
     ? `${item.bundleDetail.discountOptions.length} Options`
+    : item.type == "productMixMatch"
+    ? `${item.bundleDetail.discountOptions.length} Options`
     : item.type == "collectionMixMatch"
     ? item.bundleDetail.discountType == "percent"
       ? `${item.bundleDetail.discountValue}% off`
@@ -684,7 +731,7 @@ return check;
         />
       </div>
     ),
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" :item.type == "productMixMatch" ? "Product Mix & Match" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
     performance: item.analytics.bundleSold +" "+ "Sold",
   }));
 
@@ -739,13 +786,10 @@ return check;
         <Skeleton style={{marginTop:"1rem"}} loading={loader} active  paragraph={{rows:5,width:"100%"}} title={{width:"100%"}}>
 
           <Table
-          
-            
             rowSelection={{
               type: "checkbox",
               selectedRowKeys: actionId,
               onChange: (e) => handleSelected(e),
-
               // ...rowSelection,
             }}
             columns={columns}
@@ -753,7 +797,6 @@ return check;
             pagination={{
               defaultPageSize:6,
               hideOnSinglePage:true,
-
             }}
           />
               </Skeleton>
@@ -769,7 +812,6 @@ return check;
         <div>
         <Skeleton style={{marginTop:"1rem"}} loading={loader} active  paragraph={{rows:5,width:"100%"}} title={{width:"100%"}}>
           <Table
-           
             rowSelection={{
               type: "checkbox",
               selectedRowKeys: actionId,
@@ -779,8 +821,7 @@ return check;
             dataSource={activeData}
             pagination={{
               defaultPageSize:6,
-              hideOnSinglePage:true,
-              
+              hideOnSinglePage:true, 
             }}
           />
            </Skeleton>
@@ -806,8 +847,7 @@ return check;
             dataSource={draftData}
             pagination={{
               defaultPageSize:6,
-              hideOnSinglePage:true,
-              
+              hideOnSinglePage:true
             }}
           />
               </Skeleton>
@@ -982,6 +1022,7 @@ return check;
           <div
             className="sd-bundle-choose-collectionMixAndMatch"
             onClick={() => navigate("/FrequentlyBoughtTogether/create")}
+            // onClick={() => navigate("/collectionMixMatch/create")}
             
           >
             <Card

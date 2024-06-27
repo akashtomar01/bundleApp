@@ -211,6 +211,7 @@ const OfferedProducts = (props) => {
                 modalType="Product"
                 setData={props.setData}
                 data={props.data}
+                selectMultiple={5}
               />
             )}
            

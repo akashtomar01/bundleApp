@@ -40,11 +40,10 @@ return(
 <div className="sd-bundle-custom-item-common">
     <p className="sd-bundle-custom-item-heading-common">Description styling</p>
     <div className="sd-bundle-custom-item-inputSection">
-<input type="color" value={data[bundleOption]["title"]["color"]}  onChange={(e)=>handleChangeCommon(e,"title","descriptionColor",data,setData,bundleOption)}/>
+<input type="color" value={data[bundleOption]["title"]["descriptionColor"]}  onChange={(e)=>handleChangeCommon(e,"title","descriptionColor",data,setData,bundleOption)}/>
 <div className="sd-bundle-custom-fieldColorCode-common">
     <p>Description Color </p>
 <p> {data[bundleOption]["title"]["descriptionColor"]} </p>
-
 </div>
 </div>
 

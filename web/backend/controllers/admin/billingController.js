@@ -22,7 +22,7 @@ export async function recurringBiling(req, res) {
       const recurringString = `mutation CreateSubscription {
               appSubscriptionCreate(
                   name: "${plan}",
-        returnUrl: "https://${shop}/admin/apps/${API_KEY}/plans"
+ s       returnUrl: "https://${shop}/admin/apps/${API_KEY}/plans"
                   test : ${testCharge}
                   lineItems: [{
                       plan: {

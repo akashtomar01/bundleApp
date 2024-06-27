@@ -13,14 +13,13 @@ import discountIdModel from "../../models/discountIdSchema.js";
 const MAX_RETRIES = 3;
 let retries = 0;
 
-
 export async function createBundle(req,res){
   try{
  
     const session = res.locals.shopify.session;
     let shop = session.shop;
    const {type,name,title,description,status,bundleDetail,customization,startdate,endDate,display,currencyCode,timeZone} = req.body
-
+  //  console.log("check customization===========>",customization);
    const response = await bundleModel.create({
     shop:shop ,
       type:type,
@@ -132,6 +131,7 @@ export async function editBundle (req,res){
   
 try {
   const {id}= req.body
+
 const session = res.locals.shopify.session;
 let shop = session.shop;
 const response = await bundleModel.aggregate([
@@ -140,7 +140,7 @@ const response = await bundleModel.aggregate([
     
       {
         shop: shop,
-        _id: ObjectId(id)
+        _id: new ObjectId(id)
       },
   },
   {
@@ -156,7 +156,7 @@ const response = await bundleModel.aggregate([
 ])
 
 if(response){
-
+console.log("chedjedeeje///////////////////////////////////////////////////////////////=>",response);
 return res.status(200).send({message:"success",response:response[0],status:200})
 
 }
@@ -169,11 +169,77 @@ return res.status(503).send({message:"something went wrong",status:503})
 
 
 
-
+export async function createProduct(session) {
+  // let shop = res.locals.shopify.session.shop;
+  // let session = res.locals.shopify.session;
+  // const client = new shopify.api.clients.Graphql({ session });
+  // let {name, price, check, quantity } = req.body;
+// console.log("name, price, check, quantity ",name, price, check, quantity )
+  const product = new shopify.api.rest.Product({
+    session
+  });
+ 
+  product.title = "testpro";
+  product.status = "active";
+  product.variants = [
+    {
+      price: "10",
+      taxable: true,
+      requires_shipping: true,
+      inventory_quantity: 2,
+    },
+  ];
+  try {
+    let result = await product.save({
+      update: true,
+    });
+    console.log("result10june==>",product)
+    // if (req.body.check2 == "createProductSubscriptionEdit") {
+    //   console.log("iniffff10june")
+    //   let pid = product?.admin_graphql_api_id;
+ 
+    //   let vid = product?.variants[0].admin_graphql_api_id;
+ 
+    //   let lines = [];
+ 
+    //   lines.push({
+    //     product_id: pid,
+ 
+    //     product_name: product?.title,
+ 
+    //     product_image:
+    //       product?.images.length > 0 ? product.images[0].originalSrc : "",
+ 
+    //     hasOnlyDefaultVariant: true,
+    //     requiresShipping: product.variants[0].requires_shipping,
+    //     id: vid,
+    //     image: "",
+    //     price: product.variants[0].price,
+ 
+    //     title: product.variants[0].title,
+    //     quantity: 1,
+    //     // quantity: product.variants[0].inventory_quantity,
+    //   });  
+ 
+    //   req.createProductData = {
+    //     data: lines,
+    //   };
+ 
+    //   next();
+    // } else {
+    //   console.log("first in createProduct");
+    //   res.send({ message: "success", data: product });
+    // }
+  } catch (error) {
+    console.log("error",error)
+    res.send({ message: "error", data: "Something went wrong" });
+  }
+}
 export async function getBundle (req,res){
    try {
     const session = res.locals.shopify.session;
     let shop = session.shop;
+    createProduct(session);
     // const response = await bundleModel.aggregate(
     //   [
     //     {
@@ -390,17 +456,23 @@ return res.status(503).send({message:"something went wrong",status:503})
   export async function updateBundleCustomization (req,res){
     const session = res.locals.shopify.session;
     let shop = session.shop;
+    // let body={product:"njdhjwhdkdkdkk"}
  
     const response = await customizationModel.findOneAndUpdate({shop:shop},{shop:shop,
                                                                             bundle:req.body.bundle,
                                                                             collectionMixMatch:req.body.collection,
                                                                             volume:req.body.volume,
                                                                             buyXgetY:req.body.buyXgetY,
-                                                                          popUp:req.body.popUp},{upsert:true})
+                                                                            frequentlyBoughtTogether:req.body.frequentlyBoughtTogether,
+                                                                            productMixMatch:req.body.productMixMatch,
+                                                                            popUp:req.body.popUp},
+                                                                            {upsert:true})
+                                                                           
 
                                                                 
   if(response){
     return res.status(200).send({message :"success",status : 200})
+    // console.log("check response from api update======>>>>>>>>><<<<<<<<<<========",req.body);
   }
   return res.status(400).send({message:"BAD_REQUEST",status:400})
   }
@@ -647,3 +719,73 @@ export async function createAutomaticDiscount(req,res){
   //   console.log(response.body.data.discountAutomaticAppCreate.automaticAppDiscount.discountId)
   //   res.send(response)
 }
+
+// export async function checkTest(req,res){
+//   let session = res.locals.shopify.session
+//   console.log(session,"session")
+//   const client = new shopify.api.clients.Graphql({session});
+//   let queryString = `query {
+//     discountNodes(first: 100) {
+//       edges {
+//         node {
+//           id
+//           discount {
+//             ... on DiscountAutomaticApp {
+//               title
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }`
+
+//   const response = await client.query({
+//     data: {
+//       query: queryString,
+//     },
+//   });
+//   res.status(200).send({msg:response});
+// // console.log("heyyyyyy ***** **** -------**** ******",response);
+//   // return res.send(response);
+// }
+
+
+// export async function testMutation(req,res){
+//   let session = res.locals.shopify.session
+//   console.log(session,"session")
+//   const client = new shopify.api.clients.Graphql({session});
+
+//   let Input = {
+//     id:"gid://shopify/DiscountCodeNode/1333065449707",
+//     namespace:"volume-discount",
+//     key:"8a835d62-e158-4212-a40f-43303f59565a",
+//   }
+//   let queryString = `mutation {
+//     discountAutomaticAppUpdate(
+//       id: ${Input.id},
+//       automaticAppDiscount: {
+//         metafields: [
+//           {
+//             namespace: ${Input.namespace}
+//             key: ${Input.key}
+//             value: "{ \"quantity\": 3, \"percentage\": 15.0 }"
+//             type: "json"
+//           }
+//         ]
+//       }
+//   ) {
+//       userErrors {
+//         field
+//         message
+//       }
+//     }
+//   }`
+
+//   const response = await client.query({
+//     data: {
+//       query: queryString,
+//       variables: Input
+//     },
+//   });
+//   res.status(200).send({msg:response});
+// }

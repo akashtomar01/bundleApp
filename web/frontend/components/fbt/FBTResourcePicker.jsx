@@ -7,7 +7,7 @@ const BxgyResourcePicker = (props) => {
     if (props.type==='MainProduct') {
         setSlectMultiple(false);
     }else{
-      setSlectMultiple(true);
+      setSlectMultiple(3);
     }
   },[selectMultiple]);
     const handleProducts = (e, page) => {
