@@ -1,34 +1,29 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-name = "RobinBundleApp"
-client_id = "4907bbf433e1b6953549dd702efdfe87"
-application_url = "https://loans-porsche-selection-realized.trycloudflare.com"
+client_id = "d2a22c5ede7eb9ed65436e4d5b3d85fb"
+name = "akashbundle"
+handle = "akashbundle"
+application_url = "https://dir-tones-gallery-recommended.trycloudflare.com"
 embedded = true
-
-[access_scopes]
-# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products,write_price_rules, write_discounts,read_content,write_content,write_orders,read_themes"
-use_legacy_install_flow = true
-
-[auth]
-redirect_urls = [
-  "https://loans-porsche-selection-realized.trycloudflare.com/auth/callback",
-  "https://loans-porsche-selection-realized.trycloudflare.com/auth/shopify/callback",
-  "https://loans-porsche-selection-realized.trycloudflare.com/api/auth/callback",
-  "https://loans-porsche-selection-realized.trycloudflare.com/.shopify/graphiql/auth/callback"
-]
-
-[webhooks]
-api_version = "2023-01"
-
-  [webhooks.privacy_compliance]
-  customer_deletion_url = "https://267f-14-99-195-170.ngrok-free.app/api/webhooks"
-  customer_data_request_url = "https://267f-14-99-195-170.ngrok-free.app/api/webhooks"
-  shop_deletion_url = "https://267f-14-99-195-170.ngrok-free.app/api/webhooks"
-
-[pos]
-embedded = false
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = "nezuko-komada.myshopify.com"
+dev_store_url = "robins-store1.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_checkouts,read_content,read_customers,read_orders,read_themes,unauthenticated_read_checkouts,unauthenticated_write_checkouts,write_checkouts,write_content,write_discounts,write_orders,write_price_rules,write_products"
+
+[auth]
+redirect_urls = [
+  "https://dir-tones-gallery-recommended.trycloudflare.com/auth/callback",
+  "https://dir-tones-gallery-recommended.trycloudflare.com/auth/shopify/callback",
+  "https://dir-tones-gallery-recommended.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+[pos]
+embedded = false

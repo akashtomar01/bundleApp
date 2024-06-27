@@ -627,7 +627,7 @@ export async function getBundleViews(req, res) {
 
 export async function getBundleClick(req, res) {
   try {
-    const objectId = ObjectId(req.body.bundleId);
+    const objectId = new ObjectId(req.body.bundleId);
 
     const bundles = await analyticsModel.find({ bundleId: objectId });
 

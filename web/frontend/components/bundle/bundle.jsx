@@ -572,7 +572,19 @@ return check;
       : item.bundleDetail.discountType == "noDiscount"
       ? "No Discount"
       :null
-    : null,
+    : item.type == "bxgy"
+    ? item.bundleDetail.discountType == "percent"
+      ? `${item.bundleDetail.discountValue}% off`
+      : item.bundleDetail.discountType == "fixed"
+      ? `Rs.${item.bundleDetail.discountValue} off`
+      : item.bundleDetail.discountType == "price"
+      ? `Fixed Rs.${item.bundleDetail.discountValue} `
+      : item.bundleDetail.discountType == "freeShipping"
+      ? "Free Shipping"
+      : item.bundleDetail.discountType == "noDiscount"
+      ? "No Discount"
+      :null
+    :null,
     status: (
       <div>
         <Switch
@@ -774,13 +786,10 @@ return check;
         <Skeleton style={{marginTop:"1rem"}} loading={loader} active  paragraph={{rows:5,width:"100%"}} title={{width:"100%"}}>
 
           <Table
-          
-            
             rowSelection={{
               type: "checkbox",
               selectedRowKeys: actionId,
               onChange: (e) => handleSelected(e),
-
               // ...rowSelection,
             }}
             columns={columns}
@@ -788,7 +797,6 @@ return check;
             pagination={{
               defaultPageSize:6,
               hideOnSinglePage:true,
-
             }}
           />
               </Skeleton>
@@ -804,7 +812,6 @@ return check;
         <div>
         <Skeleton style={{marginTop:"1rem"}} loading={loader} active  paragraph={{rows:5,width:"100%"}} title={{width:"100%"}}>
           <Table
-           
             rowSelection={{
               type: "checkbox",
               selectedRowKeys: actionId,
@@ -814,8 +821,7 @@ return check;
             dataSource={activeData}
             pagination={{
               defaultPageSize:6,
-              hideOnSinglePage:true,
-              
+              hideOnSinglePage:true, 
             }}
           />
            </Skeleton>
@@ -841,8 +847,7 @@ return check;
             dataSource={draftData}
             pagination={{
               defaultPageSize:6,
-              hideOnSinglePage:true,
-              
+              hideOnSinglePage:true
             }}
           />
               </Skeleton>

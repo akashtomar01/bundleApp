@@ -21,11 +21,12 @@ import { privacyPolicy } from "./backend/controllers/admin/adminController.js";
 import dotenv from "dotenv";
 import planModel from "./backend/models/plan.js";
 import discountIdModel from "./backend/models/discountIdSchema.js";
- 
- 
+import mobileRoutes from "./backend/routes/mobileRoutes.js";
+
 dotenv.config();
 const app=express();
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
+// app.use("/mobileBundle",mobileRoutes);
 // DB.connect();
 // app.use(express.static(`${process.cwd()}/../uploads`))
 
@@ -192,8 +193,9 @@ app.post(
 app.use(express.json({limit : "100mb"}));
 // All endpoints after this point will require an active session
 
-app.use("/api/storefront",api)
-app.get("/api/privacy-policy", privacyPolicy)
+app.use("/api/mobileBundle",mobileRoutes);
+app.use("/api/storefront",api);
+app.get("/api/privacy-policy", privacyPolicy);
 
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use("/api",api)

@@ -11,7 +11,11 @@ import EmptyPreview from "../commonSections/emptyPreview";
 import { Button, Modal, Image } from "antd";
 import pic from "../../assets/image2.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
+// import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
+// import Swiper and modules styles
+import 'swiper/css';
+import 'swiper/css/navigation';
 import { Thumbnail } from "@shopify/polaris";
 import { showAmountWithCurrency } from "../showCurrencyFormat";
 const ProductBundlePreview = ({
@@ -79,9 +83,10 @@ const ProductBundlePreview = ({
     }
  
   };
+  
 
   return (
-    <div className="sd-bundle-bundleSection-common sd-bundle-productBundle-preview first-previewCard">
+    <div className="sd-bundle-bundleSection-common">
       <div className="sd-bundle-bundleSection-heading-common">Preview</div>
       <div className="sd-preview-displaySelect">
         <select value={display} onChange={(e) => setDisplay(e.target.value)}>
@@ -427,7 +432,7 @@ const ProductBundlePreview = ({
                 centeredSlides={
                   data.bundleDetail.products.length == 1 ? true : false
                 }
-                navigation={true}
+                Navigation={true}
                 modules={[Navigation]}
               >
                 {data.bundleDetail.products.map((item, index) => {

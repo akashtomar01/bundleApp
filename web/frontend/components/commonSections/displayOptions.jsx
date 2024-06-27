@@ -30,7 +30,7 @@ const DisplayOptions=(props)=>{
           
             <br />
 
-{ props.bundleType == "productBundle" ||props.bundleType == "prupductMixMatch" || props.bundleType == "collectionMixMatch" ?
+{props.bundleType == "productBundle" ||props.bundleType == "prupductMixMatch" || props.bundleType == "collectionMixMatch" ?
             <div className={props.products.length > 0 ? "sd-bundle-productPage-selection" : null}>
               {props?.products.map((item,ind) => {
                 return (
@@ -43,7 +43,7 @@ const DisplayOptions=(props)=>{
                         onChange={props.handleDisplayPageOptions}
                         className=""
                       >
-                       <div className='sd-bundle-product-pages'> {item.title}  </div> 
+                      <div className='sd-bundle-product-pages'> {item.title}  </div> 
                       </Checkbox>
                       <br/>
                     </Checkbox.Group>
@@ -52,7 +52,31 @@ const DisplayOptions=(props)=>{
               })}
             </div>
             : ""
+
+            
 }    
+            {props.bundleType == "bxgy" &&
+              <div className={props.xproducts.length > 0 ? "sd-bundle-productPage-selection" : null}>
+                {props?.xproducts.map((item,i) => {
+                  return (
+                    <>
+                      <Checkbox.Group key={i}
+                        value={props.display.productPagesList}
+                      >
+                        <Checkbox
+                          value={item.id}
+                          onChange={props.handleDisplayOptions}
+                          className=""
+                        >
+                        <div className='sd-bundle-product-pages'> {item.title}  </div> 
+                        </Checkbox>
+                        <br/>
+                      </Checkbox.Group>
+                    </>
+                  );
+                })}
+              </div>
+            }
           {/* { props?.bundleType == "productBundle" ? <Checkbox
               value={props.display.popUp}
               className="sd-bundle-set-checkbox"

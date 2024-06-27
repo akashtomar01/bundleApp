@@ -25,7 +25,6 @@ import {
 import {
   activateRule,
   createRule,
-
   deactivateRule,
 
 } from "../controllers/admin/bundleController.js";
@@ -58,7 +57,6 @@ router.post("/admin/createAutomaticDiscount",createAutomaticDiscount);
 router.post("/createRule", createRule);
 router.post("/deactivateRule", deactivateRule);
 router.post("/activateRule", activateRule);
-
 
 //------------------------------------Storefront: ---------------------------------------------------------
 router.post("/getBundleData",getBundleData)
