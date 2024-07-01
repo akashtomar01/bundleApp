@@ -54,7 +54,7 @@ const {app}=useAPI()
                                       plain
                                      onClick={() => handleEditFurther(item.id,temp.setPid,temp.setAntModal,temp.setLoader,data.bundleDetail.yproducts,temp.setCheckedIds,temp.setVariantData,app)}
                                    >
-                                     Edit Further
+                                     See Selected Variants
                                    </Button>
                                  </span>   
                                  {showOutOfStockError(item)  && (

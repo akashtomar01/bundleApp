@@ -53,7 +53,7 @@ const {app}=useAPI()
                                       plain
                                      onClick={() => handleEditFurther(item.id,temp.setPid,temp.setAntModal,temp.setLoader,data.bundleDetail.xproducts,temp.setCheckedIds,temp.setVariantData,app)}
                                    >
-                                     Edit Further
+                                     See Selected Variants
                                    </Button>
                                  </span>   
                                  {showOutOfStockError(item)  && (

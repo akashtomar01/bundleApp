@@ -168,10 +168,11 @@ const BuyX = (props) => {
             
             {antModal && (
           <Modal
-            title="Select Variant Options  for Bundle Modal"
+            title="Selected Variant Options  for Bundle Modal"
             open={antModal}
             onOk={setOk}
             onCancel={setCancel}
+            footer={false}
             className="sd-bundle-modal sd-bundle-modal-variant"
             // width={1000}
           >
