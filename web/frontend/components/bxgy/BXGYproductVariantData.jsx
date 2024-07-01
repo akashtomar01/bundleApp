@@ -3,6 +3,7 @@ import { LoadingOutlined} from "@ant-design/icons";
 import { Spin,Checkbox } from "antd";
 import { Thumbnail,InlineError } from "@shopify/polaris";
 import noImg from "../../assets/no-Image.png" 
+import { disable } from '@shopify/app-bridge/actions/LeaveConfirmation';
 const BXGYproductVariantData = (props) => {
   return (
     <Spin
@@ -37,6 +38,7 @@ const BXGYproductVariantData = (props) => {
 
                   }
                 }}
+                disabled = {true}
               >
                <div className="sd-bundle-moadl-product-variant-img-title-box">
                <div>

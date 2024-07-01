@@ -104,16 +104,70 @@ const BuyXgetY = () => {
 
   //----------------------------------------------------------
 
+  // const handleDisplayOptions = (e) => {
+  //   if (e.target.checked) {
+  //     if (e.target.name == "productPages") {
+  //       let arrX = [];
+  //       let arrY = [];
+  //       data.bundleDetail.xproducts.map((item) => {
+  //         arrX.push(item.id);
+  //       });
+  //       data.bundleDetail.yproducts.map((item) => {
+  //         arrY.push(item.id);
+  //       });
+
+  //       setData({
+  //         ...data,
+  //         bundleDetail: {
+  //           ...data.bundleDetail,
+  //           display: {
+  //             ...data.bundleDetail.display,
+  //             productPages: true,
+  //             productPagesList: [...arrX, ...arrY],
+  //           },
+  //         },
+  //       });
+  //     } else {
+  //       setData({
+  //         ...data,
+  //         bundleDetail: {
+  //           ...data.bundleDetail,
+  //           display: { ...data.bundleDetail.display, [e.target.name]: true },
+  //         },
+  //       });
+  //     }
+  //   } else {
+  //     console.log("enter in handleDisplayOptions",e);
+  //     if (e.target.name == "productPages") {
+  //       setData({
+  //         ...data,
+  //         bundleDetail: {
+  //           ...data.bundleDetail,
+  //           display: {
+  //             ...data.bundleDetail.display,
+  //             productPages: false,
+  //             productPagesList: [],
+  //           },
+  //         },
+  //       });
+  //     } else {
+  //       setData({
+  //         ...data,
+  //         bundleDetail: {
+  //           ...data.bundleDetail,
+  //           display: { ...data.bundleDetail.display, [e.target.name]: false },
+  //         },
+  //       });
+  //     }
+  //   }
+  // };
+
   const handleDisplayOptions = (e) => {
     if (e.target.checked) {
       if (e.target.name == "productPages") {
-        let arrX = [];
-        let arrY = [];
+        let arr = [];
         data.bundleDetail.xproducts.map((item) => {
-          arrX.push(item.id);
-        });
-        data.bundleDetail.yproducts.map((item) => {
-          arrY.push(item.id);
+          arr.push(item.id);
         });
 
         setData({
@@ -123,7 +177,7 @@ const BuyXgetY = () => {
             display: {
               ...data.bundleDetail.display,
               productPages: true,
-              productPagesList: [...arrX, ...arrY],
+              productPagesList: [...arr],
             },
           },
         });
@@ -137,7 +191,6 @@ const BuyXgetY = () => {
         });
       }
     } else {
-      console.log("enter in handleDisplayOptions",e);
       if (e.target.name == "productPages") {
         setData({
           ...data,
@@ -156,6 +209,56 @@ const BuyXgetY = () => {
           bundleDetail: {
             ...data.bundleDetail,
             display: { ...data.bundleDetail.display, [e.target.name]: false },
+          },
+        });
+      }
+    }
+  };
+
+  const handleDisplayPageOptions = (e) => {
+    if (e.target.checked) {
+      // setData([...data,e.target.value])
+      let update = { ...data };
+
+      if (update.bundleDetail.display?.productPagesList.length < 1) {
+        update.bundleDetail.display = {
+          ...update.bundleDetail.display,
+          productPages: true,
+          productPagesList: [e.target.value],
+        };
+
+        setData(update);
+      } else {
+        update.bundleDetail.display.productPagesList = [
+          ...update.bundleDetail.display.productPagesList,
+          e.target.value,
+        ];
+        setData(update);
+      }
+    } else {
+      let update = { ...data };
+      let temp = update.bundleDetail.display.productPagesList.filter((item) => {
+        return item !== e.target.value;
+      });
+
+      if (temp.length > 0) {
+        setData({
+          ...data,
+          bundleDetail: {
+            ...data.bundleDetail,
+            display: { ...data.bundleDetail.display, productPagesList: temp },
+          },
+        });
+      } else {
+        setData({
+          ...data,
+          bundleDetail: {
+            ...data.bundleDetail,
+            display: {
+              ...update.bundleDetail.display,
+              productPages: false,
+              productPagesList: temp,
+            },
           },
         });
       }
@@ -408,7 +511,7 @@ const BuyXgetY = () => {
               display={data.bundleDetail.display}
               handleDisplayOptions={handleDisplayOptions}
               displayPageOptions={data.bundleDetail.display.productPages}
-              // handleDisplayPageOptions={handleDisplayPageOptions}
+              handleDisplayPageOptions={handleDisplayPageOptions}
               xproducts={data.bundleDetail.xproducts}
               yproducts={data.bundleDetail.yproducts}
             />

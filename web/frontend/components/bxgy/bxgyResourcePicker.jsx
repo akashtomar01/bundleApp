@@ -1,9 +1,9 @@
 import React from 'react'
 import { ResourcePicker } from "@shopify/app-bridge-react";
-
+import toastNotification from '../commonSections/Toast';
 const BxgyResourcePicker = (props) => {
     const handleProducts = (e, page) => {
-        if (page == "xproduct") {
+         if (page == "xproduct") {
           let x = {};
           props?.data.bundleDetail.xproducts.map((item) => {
             x[item.id] = item.minimumOrder ? item.minimumOrder : 0;
@@ -26,14 +26,17 @@ const BxgyResourcePicker = (props) => {
           let arr = [];
           result2.map((item, index) => {
             item.minimumOrder = 1;
-            arr.push(item.id);
-    
+            if(!props.data.bundleDetail.display.productPagesList.includes(item.id)){
+              arr.push(item.id);  
+            }
             if (index + 1 == result2.length) {
+          let finalArray= filterXYProductsCommon([...update, ...result2],props.data.bundleDetail.yproducts)
+
               props.setData({
                 ...props.data,
                 bundleDetail: {
                   ...props.data.bundleDetail,
-                  xproducts: [...update, ...result2],
+                  xproducts:finalArray,
                   display:
                     props.data.bundleDetail.display.productPages == true
                       ? {
@@ -79,14 +82,18 @@ const BxgyResourcePicker = (props) => {
           let arr = [];
           result2.map((item, index) => {
             item.minimumOrder = 1;
-            arr.push(item.id);
-    
+         if(!props.data.bundleDetail.display.productPagesList.includes(item.id)){
+            arr.push(item.id);  
+          }
+         
+            
             if (index + 1 == result2.length) {
+              let finalArray= filterXYProductsCommon([...update, ...result2],props.data.bundleDetail.xproducts)
               props.setData({
                 ...props.data,
                 bundleDetail: {
                   ...props.data.bundleDetail,
-                  yproducts: [...update, ...result2],
+                  yproducts: finalArray,
                   display:
                     props.data.bundleDetail.display.productPages == true
                       ? {
@@ -124,6 +131,38 @@ const BxgyResourcePicker = (props) => {
     
         props.setOpen(false);
       };
+      
+      const filterXYProductsCommon=(array,itemArray)=>{
+
+        // let array=[...update, ...result2];
+        let finalArray=[];
+      let notification=false;
+        array.forEach((mainItem,index) => {
+          
+          let itemMatched = itemArray.find(item => item.id == mainItem.id);
+          
+          if (!itemMatched) {               
+            finalArray.push(mainItem);
+          } else {                
+            let filteredVariants = mainItem.variants.filter(mainVariant =>
+              !itemMatched.variants.some(itemVariant => itemVariant.id == mainVariant.id)
+            );
+            if(filteredVariants.length > 0){               
+            finalArray.push({ ...mainItem, variants: filteredVariants});
+          }
+         
+         if(mainItem.variants.length != filteredVariants.length) {
+            notification=true
+          }       
+        }
+        });
+   
+       if(notification){
+        toastNotification("warning","Same variants of  a product cann't be added in both Buy X and Buy Y !!","top")
+       }
+        return finalArray ;
+      }
+
   return (
     <>
     <ResourcePicker
@@ -135,6 +174,7 @@ const BxgyResourcePicker = (props) => {
         initialQuery={props.searchValue ? props.searchValue : ""}
         selectMultiple ={true}
         showDraftBadge={true}
+                
       />
     </>
   )

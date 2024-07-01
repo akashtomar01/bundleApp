@@ -406,7 +406,15 @@ return check;
           : item.bundleDetail.discountType == "noDiscount"
           ? "No Discount"
           :null
-        : null,
+        : item.type == "bxgy"
+        ? item.bundleDetail.discountType == "percent"
+          ? `${item.bundleDetail.discountValue}% off`
+          : item.bundleDetail.discountType == "fixed"
+          ? `Rs.${item.bundleDetail.discountValue} off`
+          : item.bundleDetail.discountType == "free"
+          ? "Free Gift"
+          :null
+        :null,
     status: (
       <div>
         <Switch
@@ -433,7 +441,7 @@ return check;
     // </div>,
 
     // type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" :item.type == "fbt"? "Frequently Baught Together" :"",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" :item.type == "fbt"? "Frequently Baught Together": item.type == "bxgy" ? "BUY X GET Y" :"",
     performance: item.analytics.bundleSold+" " +"Sold" ,
   }));
 
@@ -451,13 +459,17 @@ return check;
     key: index,
     bundle:  (
       <div className="sd-bundle-dashboard-img-box">
-          {  ( item.bundleDetail.discountedProductType == "all_products"  ?<Thumbnail
-   source={
-     allProductsImg
-   }
-   size="small"
-   alt="products thumbnails"
- />: null)}
+        {  
+          ( item.bundleDetail.discountedProductType == "all_products" ?
+            <Thumbnail
+              source={allProductsImg}
+              size="small"
+              alt="products thumbnails"
+            />
+            : 
+            null
+          )
+        }
         { item.type == "bxgy" ?
         item.bundleDetail?.xproducts?.slice(0,3).map((ele,index) => {
           return (
@@ -494,13 +506,12 @@ return check;
               size="small"
               alt="products thumbnails"
             />
-           
           </div>
         );
       })}
-          {
-    item.bundleDetail.products?.length > 3 ? <div className="sd-bundle-more-item"><EllipsisOutlined /></div> : null
-   }
+      {
+        item.bundleDetail.products?.length > 3 ? <div className="sd-bundle-more-item"><EllipsisOutlined /></div> : null
+      }
       </div>
     ),
     name: (

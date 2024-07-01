@@ -1,9 +1,8 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 
 import { Checkbox} from "antd";
 
 const DisplayOptions=(props)=>{
-
  
     return(
 
@@ -65,7 +64,26 @@ const DisplayOptions=(props)=>{
                       >
                         <Checkbox
                           value={item.id}
-                          onChange={props.handleDisplayOptions}
+                          onChange={props.handleDisplayPageOptions}
+                          className=""
+                        >
+                        <div className='sd-bundle-product-pages'> {item.title}  </div> 
+                        </Checkbox>
+                        <br/>
+                      </Checkbox.Group>
+                    </>
+                  );
+                })}
+
+{props?.yproducts.map((item,i) => {
+                  return (
+                    !props?.xproducts.some(itm=>itm.id == item.id) && <>
+                      <Checkbox.Group key={i}
+                        value={props.display.productPagesList}
+                      >
+                        <Checkbox
+                          value={item.id}
+                          onChange={props.handleDisplayPageOptions}
                           className=""
                         >
                         <div className='sd-bundle-product-pages'> {item.title}  </div> 
