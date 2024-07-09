@@ -12,8 +12,6 @@ const BxgyBundlePreviewData = ({
 }) => {
   const { shop, timeZone, currencyCode } = useAPI();
   console.log("bxgypreviewdta", data);
-  
-
 
   return (
     <div className="sd-bundle-bundleSection-common sd-bundle-productBundle-preview first-previewCard">
@@ -233,9 +231,9 @@ const BxgyBundlePreviewData = ({
                     : data.bundleDetail.discountType === "fixed"
                     ? currencyCode.replace(/{{.*?}}/g, "") +
                       data.bundleDetail.discountValue +
-                      " off"
+                      " off On Each"
                     : data.bundleDetail.discountType === "percent"
-                    ? data.bundleDetail.discountValue + "% off"
+                    ? data.bundleDetail.discountValue + "% off On Each"
                     : null}
                 </h5>
               </div>
@@ -262,9 +260,9 @@ const BxgyBundlePreviewData = ({
                     : data.bundleDetail.discountType === "fixed"
                     ? currencyCode.replace(/{{.*?}}/g, "") +
                       data.bundleDetail.discountValue +
-                      " off"
+                      " off On Each"
                     : data.bundleDetail.discountType === "percent"
-                    ? data.bundleDetail.discountValue + "% off"
+                    ? data.bundleDetail.discountValue + "% off On Each"
                     : null}
                 </h5>
               </div>
@@ -287,9 +285,9 @@ const BxgyBundlePreviewData = ({
                     : data.bundleDetail.discountType === "fixed"
                     ? currencyCode.replace(/{{.*?}}/g, "") +
                       data.bundleDetail.discountValue +
-                      " off"
+                      " off On Each"
                     : data.bundleDetail.discountType === "percent"
-                    ? data.bundleDetail.discountValue + "% off"
+                    ? data.bundleDetail.discountValue + "% off On Each"
                     : null}
                 </span>
               </div>

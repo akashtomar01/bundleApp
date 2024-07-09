@@ -299,12 +299,20 @@ const BuyXgetY = () => {
   }, [data.bundleDetail.xproducts, data.bundleDetail.yproducts]);
 
   useEffect(() => {
-    setEndPrice(parseFloat(calculateFinalPrice(arrX, arrY)).toFixed(2));
-  }, [arrX, data.bundleDetail.discountType, data.bundleDetail.discountValue]);
+    let MergedArray = []
+    arrY.map((item,index)=>{
+      console.log("iiii",item);
+      MergedArray = [...MergedArray,...item]
+    });
+    console.log("array y",MergedArray);
+    setEndPrice(parseFloat(calculateFinalPrice(arrX, arrY,MergedArray.length)).toFixed(2));
+    
+  }, [arrY,arrX, data.bundleDetail.discountType, data.bundleDetail.discountValue]);
 
   //function to calculate final EndPrice
-  function calculateFinalPrice(arrX, arrY) {
+  function calculateFinalPrice(arrX, arrY,lengthOfYProducts) {
     let finalPrice = 0;
+    console.log("test",lengthOfYProducts,data.bundleDetail.yproducts.length);
     const totalMrp = calculateMrp(arrX) + calculateMrp(arrY);
     setMrp(parseFloat(totalMrp).toFixed(2));
 
@@ -319,7 +327,7 @@ const BuyXgetY = () => {
       }
     } else if (data.bundleDetail.discountType == "fixed") {
       if (
-        parseFloat(data.bundleDetail.discountValue) >
+        parseFloat(data.bundleDetail.discountValue*lengthOfYProducts) >
         calculateMrp(arrY) + calculateMrp(arrX)
       ) {
         finalPrice = 0;
@@ -327,7 +335,7 @@ const BuyXgetY = () => {
         finalPrice =
           calculateMrp(arrX) +
           calculateMrp(arrY) -
-          data.bundleDetail.discountValue;
+          (data.bundleDetail.discountValue*lengthOfYProducts);
       }
     } else {
       finalPrice = calculateMrp(arrX);

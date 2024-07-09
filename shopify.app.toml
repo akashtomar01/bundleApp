@@ -3,7 +3,7 @@
 client_id = "d2a22c5ede7eb9ed65436e4d5b3d85fb"
 name = "akashbundle"
 handle = "akashbundle"
-application_url = "https://dir-tones-gallery-recommended.trycloudflare.com"
+application_url = "https://afraid-penalty-sell-shopzilla.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_checkouts,read_content,read_customers,read_orders,read_themes,una
 
 [auth]
 redirect_urls = [
-  "https://dir-tones-gallery-recommended.trycloudflare.com/auth/callback",
-  "https://dir-tones-gallery-recommended.trycloudflare.com/auth/shopify/callback",
-  "https://dir-tones-gallery-recommended.trycloudflare.com/api/auth/callback"
+  "https://afraid-penalty-sell-shopzilla.trycloudflare.com/auth/callback",
+  "https://afraid-penalty-sell-shopzilla.trycloudflare.com/auth/shopify/callback",
+  "https://afraid-penalty-sell-shopzilla.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

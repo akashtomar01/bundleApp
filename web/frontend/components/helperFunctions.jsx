@@ -58,17 +58,20 @@ export async function handleEditFurther(id,setPid,setAntModal,setLoader,products
  }
 
 
-export const handleChangeValueCommon=(newvalue,key1,key2,data,setData,bundleOption)=>{
-     console.log(newvalue)
+export const handleChangeValueCommon=(newvalue,key1,key2,data,setData,bundleOption,sizeValue)=>{
+     console.log("655654654564564",sizeValue)
 
  if (newvalue == "" || newvalue < 0) {
- setData({...data,[key1]:{...(data[key1]),[key2]:0}})  
- setData({...data,[bundleOption]:{...(data[bundleOption]) ,[key1]:{...(data[bundleOption][key1]),[key2]:0}}})  
+ setData({...data,[key1]:{...(data[key1]),[key2]:1}})  
+ setData({...data,[bundleOption]:{...(data[bundleOption]) ,[key1]:{...(data[bundleOption][key1]),[key2]:1}}})  
  } 
  else {  
      newvalue = String(newvalue);
-     {
-     newvalue = newvalue.replace(/^0/, "");
+     if(sizeValue != "" && newvalue > sizeValue ){
+      newvalue = sizeValue
+ setData({...data,[bundleOption]:{...(data[bundleOption]),[key1]:{...(data[bundleOption][key1]),[key2]:newvalue}}}) 
+     }else{
+     newvalue = newvalue.replace(/^0/, 1);
  setData({...data,[bundleOption]:{...(data[bundleOption]),[key1]:{...(data[bundleOption][key1]),[key2]:newvalue}}})   
  }}
  }
