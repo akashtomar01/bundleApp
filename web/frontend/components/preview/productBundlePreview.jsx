@@ -82,8 +82,7 @@ const ProductBundlePreview = ({
       
     }
  
-  };
-  
+  };  
 
   return (
     <div className="sd-bundle-bundleSection-common">
@@ -174,10 +173,11 @@ const ProductBundlePreview = ({
                           {item.title}
                         </div>
                         <div>
-                          {item.variants.length == 1 &&
+                          {/* {item.variants.length == 1 &&
                           item.hasOnlyDefaultVariant == false
                             ? item.variants[0].title
-                            : ""}
+                            : ""} */}
+                             {item.hasOnlyDefaultVariant == false ? item.variants[0].title : ""}
                         </div>
                         <div
                           style={{

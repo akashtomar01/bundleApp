@@ -13,14 +13,11 @@
     "start": "node web/index.js"
   },
   "dependencies": {
-    "@remote-ui/react": "^5.0.4",
     "@shopify/app": "^3.58.0",
-    "@shopify/cli": "^3.58.0",
-    "@shopify/ui-extensions": "2024.4.2",
-    "@shopify/ui-extensions-react": "2024.4.2",
-    "axios": "^1.7.2",
+    "@shopify/cli": "^3.63.2",
+    "@shopify/shopify_function": "0.1.0",
     "dotenv": "^16.4.5",
-    "react": "^18.3.1"
+    "javy": "0.1.1"
   },
   "author": "ShineD-106"
 }

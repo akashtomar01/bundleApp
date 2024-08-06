@@ -33,8 +33,8 @@ const DisplayOptions=(props)=>{
             <div className={props.products.length > 0 ? "sd-bundle-productPage-selection" : null}>
               {props?.products.map((item,ind) => {
                 return (
-                  <>
-                    <Checkbox.Group key={ind}
+                  <div key={ind}>
+                    <Checkbox.Group 
                       value={props.display.productPagesList}
                     >
                       <Checkbox
@@ -46,20 +46,19 @@ const DisplayOptions=(props)=>{
                       </Checkbox>
                       <br/>
                     </Checkbox.Group>
-                  </>
+                  </div>
                 );
               })}
             </div>
             : ""
-
             
 }    
             {props.bundleType == "bxgy" &&
               <div className={props.xproducts.length > 0 ? "sd-bundle-productPage-selection" : null}>
                 {props?.xproducts.map((item,i) => {
                   return (
-                    <>
-                      <Checkbox.Group key={i}
+                    <div key={i}>
+                      <Checkbox.Group 
                         value={props.display.productPagesList}
                       >
                         <Checkbox
@@ -71,14 +70,14 @@ const DisplayOptions=(props)=>{
                         </Checkbox>
                         <br/>
                       </Checkbox.Group>
-                    </>
+                    </div>
                   );
                 })}
 
 {props?.yproducts.map((item,i) => {
                   return (
-                    !props?.xproducts.some(itm=>itm.id == item.id) && <>
-                      <Checkbox.Group key={i}
+                    !props?.xproducts.some(itm=>itm.id == item.id) && <div key={i}>
+                      <Checkbox.Group 
                         value={props.display.productPagesList}
                       >
                         <Checkbox
@@ -90,7 +89,7 @@ const DisplayOptions=(props)=>{
                         </Checkbox>
                         <br/>
                       </Checkbox.Group>
-                    </>
+                    </div>
                   );
                 })}
               </div>

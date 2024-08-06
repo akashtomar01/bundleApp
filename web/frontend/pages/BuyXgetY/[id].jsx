@@ -62,7 +62,6 @@ const BuyXgetY = () => {
     timeZone: timeZone,
   });
 
-  console.log("BxGymaindata", data);
 
   // function to fetch  customization data from customization api and updating existing
 
@@ -82,7 +81,7 @@ const BuyXgetY = () => {
   }, []); 
   
   useEffect(() => {
-    console.log("customizationdata", customizationData);
+   
     setData((prevData) => ({
       ...prevData,
       customization: [
@@ -441,7 +440,7 @@ const BuyXgetY = () => {
       setPickerError([]);
       if (param.id == "create") {
         try {
-          console.log(" in the try");
+        
           const response = await postApi("/api/admin/createBundle", data, app);
           if (response.data.status === 200) {
             return (

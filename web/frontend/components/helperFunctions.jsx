@@ -59,8 +59,7 @@ export async function handleEditFurther(id,setPid,setAntModal,setLoader,products
 
 
 export const handleChangeValueCommon=(newvalue,key1,key2,data,setData,bundleOption)=>{
-     console.log(newvalue)
-
+    
  if (newvalue == "" || newvalue < 0) {
  setData({...data,[key1]:{...(data[key1]),[key2]:0}})  
  setData({...data,[bundleOption]:{...(data[bundleOption]) ,[key1]:{...(data[bundleOption][key1]),[key2]:0}}})  

@@ -11,7 +11,7 @@ export async function createRule(req,res){
       const shop = req.body.shop;
       const title = req.body.discount_name;
       const code = req.body.code;
-      const discountValue = req.body.discountValue;
+      const discountValue = req.body.discountValue; 
       const variantsId = req.body.variantsId;
       const startDate = req.body.startDate;
       const endDate = req.body.endDate;
@@ -29,7 +29,7 @@ export async function createRule(req,res){
       let productVariantsId = []
       // console.log("create rule check id***********************",code,"***********************",type);
         // console.log("type != bxgy");
-          if(discountId.length > 0){ 
+         if(discountId.length > 0){ 
             // console.log("discount id is greater than zero",discountId);
           let getDiscountquery =`query {
             codeDiscountNode(id:"${discountId}") {
@@ -60,7 +60,7 @@ export async function createRule(req,res){
               query: getDiscountquery,
             }
           });
-  
+
           if(response.body.data.codeDiscountNode == null){
             // console.log("discount id is null");
   
@@ -304,7 +304,7 @@ export async function createRule(req,res){
               getDiscountProductArr?.forEach((e)=>{
                 productVariantsId.push(e.node.id)
               })
-  
+                
               const filteredArray = productVariantsId.filter((element) => !mergedArray.includes(element));
               let bundleDiscountId = response.body.data.codeDiscountNode.id
               
@@ -480,7 +480,6 @@ export async function createRule(req,res){
           }else{
             // console.log("discount id is found than create discount code instead of freeshipping",code);
             
-  
             let Input ={
               "basicCodeDiscount": {
                 "appliesOncePerCustomer": false,
@@ -515,8 +514,8 @@ export async function createRule(req,res){
                 "title": code,
                 "usageLimit": null
               }
-            }
-      
+            }      
+          
             let queryString =  `  mutation discountCodeBasicCreate($basicCodeDiscount: DiscountCodeBasicInput!) {
               discountCodeBasicCreate(basicCodeDiscount: $basicCodeDiscount) {
                 codeDiscountNode {
@@ -566,7 +565,8 @@ export async function createRule(req,res){
                 variables: Input,
               },
             });
-            // console.log("responseresponseresponseresponse",response.body.data.discountCodeBasicCreate.userErrors);
+            console.log("responseresponseresponseresponse",response.body.data.discountCodeBasicCreate?.codeDiscountNode);
+            console.log("responseresponseresponseresponse",response.body.data.discountCodeBasicCreate.codeDiscountNode?.useErrors);
             let bundleDiscountId = response.body.data.discountCodeBasicCreate.codeDiscountNode.id
             return  res.status(200).json({message:"SUCCESS!",response:bundleDiscountId,status:200})
           }

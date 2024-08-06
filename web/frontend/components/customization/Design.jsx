@@ -10,7 +10,7 @@ const Design=(props)=>{
         }
         props.setData({...props.data,frequentlyBoughtTogether:{design:e.target.value}});
     }
-    console.log("Check Design Data from handle click***",props);
+   
     return(
     <div className="sd-bundle-designCustom">
         <div className="sd-bundle-item-custom-radio-common">

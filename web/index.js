@@ -196,7 +196,6 @@ app.use(express.json({limit : "100mb"}));
 app.use("/api/mobileBundle",mobileRoutes);
 app.use("/api/storefront",api);
 app.get("/api/privacy-policy", privacyPolicy);
-
 app.use("/api/*", shopify.validateAuthenticatedSession());
 app.use("/api",api)
 

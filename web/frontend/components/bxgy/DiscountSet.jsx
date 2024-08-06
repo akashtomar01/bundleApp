@@ -3,7 +3,7 @@ import { Select,InputNumber } from 'antd';
 import { useAPI } from '../shop';
 const DiscountSet = (props) => {
   const { shop, timeZone, currencyCode } = useAPI();
-    console.log("check props--------------------------------->",props);
+   
     // const [discount,setDiscount] = useState(props.discountType)
     function handleSelectDiscount(e){
       // setDiscount(e)

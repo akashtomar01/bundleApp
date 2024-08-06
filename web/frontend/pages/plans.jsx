@@ -20,7 +20,7 @@ const [loader,setLoader] = useState(false)
         charge_id : charge_id
     }
     const response = await postApi("/api/admin/billingSelected",body,app)
-    console.log(response)
+  
     if(response.status == 202){
         setLoader(false)
         setSelectedPlan(response.data.plan)
@@ -31,7 +31,7 @@ const [loader,setLoader] = useState(false)
   async function getPlans (){
     setLoader(true)
     const response = await postApi("/api/admin/getPlans",{},app)
-    console.log(response)
+   
     if(response.status == 200){
         setLoader(false)
         setSelectedPlan(response.data.data.plan)

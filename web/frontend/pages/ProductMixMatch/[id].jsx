@@ -203,7 +203,7 @@ const ProductMixMatch = () => {
     }
   };
   const handleSave = async () => {
-    console.log("enter in save function",data)
+   
     let alertText = [];
     let flag = true;
 
@@ -263,8 +263,7 @@ const ProductMixMatch = () => {
           alertCommon(setAlert, alertText, "critical", false);
         }
         if(errorArray.length != 0){
-          console.log("thhis is in working -----?????",errorArray.length);
-          flag = false;
+             flag = false;
         }
     //     else{
     //       if (flag == true) {

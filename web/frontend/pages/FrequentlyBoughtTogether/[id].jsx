@@ -6,18 +6,16 @@ import OfferedProducts from '../../components/fbt/offeredProducts';
 import { useAPI } from '../../components/shop';
 import defaultData from "../../components/customization/defaultData.json";
 import General from '../../components/bxgy/General';
-import DateTime from '../../components/commonSections/dateTime';
 import BundleStatus from '../../components/commonSections/bundleStatus';
-import DisplayOptions from '../../components/commonSections/displayOptions';
 import DeleteSave from '../../components/commonSections/deleteSave';
-import BxgyBundlePreviewData from '../../components/preview/BxgyBundlePreviewData';
 import { useNavigate, useParams } from "react-router-dom";
 import postApi from '../../components/postApi';
 import { useAppBridge } from "@shopify/app-bridge-react";
 import toastNotification from '../../components/commonSections/Toast';
 import { Spin } from 'antd';
 import FBTBundlePreview from '../../components/preview/fbtBundlePreview';
-
+import { alertCommon } from '../../components/helperFunctions';
+import AlertSection from '../../components/commonSections/AlertSection';
 const FrequentlyBoughtTogether = () => {
   const navigate = useNavigate();
   const param = useParams();
@@ -49,17 +47,12 @@ const FrequentlyBoughtTogether = () => {
         discountType: "percent",
         discountValue: 5,
         mainProducts: [],
-        offeredProducts: [],
-        display: {
-          productPages: true,
-          popUp: false,
-          bundle: false,
-          productPagesList: [],
-        },
+        offeredProducts: [],    
       },
       customization: [defaultData] ,
       timeZone:timeZone
   })
+  const [alert, setAlert] = useState({ state: false, message: [], status: "" });
   
   let [mainProductLength, setMainProductLength] = useState(0);
   let [selectedProducts,setSelectedProducts] = useState([]);
@@ -83,7 +76,7 @@ const FrequentlyBoughtTogether = () => {
     if(selectedProducts.length>0){
       selectedProducts.map((item,index)=>{
         newArray.push(Array.from(
-          { length: item.minimumOrder },
+          { length: 1 },
           (x, itemIndex) => item.variants[0].price
         ));
       });
@@ -181,19 +174,69 @@ const FrequentlyBoughtTogether = () => {
     }
   }, []);
   
+
+
   const handleSave = async () => {
-    
-  if (param.id == "create") {
-        const response = await postApi("/api/admin/createBundle", data, app);
-        if (response.data.status === 200) {
-          return toastNotification("success", "Saved", "bottom"), navigate("/bundle");
-        } else {
-          return alertCommon(
-            setAlert,
-            ["Something went wrong"],
-            "warning",
-            false
-          );
+    let alertText = [];
+    let flag = true;   
+
+if(data.bundleDetail.discountedProductType=='specific_product'){
+    if ( data.bundleDetail.mainProducts.length < 1) {
+      flag = false;
+     alertText.push(
+        "Add a product to Main product."
+      );
+    }
+    if(data.bundleDetail.offeredProducts.length > 3){
+      flag = false;
+      alertText.push(
+         "Maximum number of offered products  allowed is 3."
+       );
+    }
+  }
+    if (data.name.trim() == "") {
+      if (!errorArray.includes("bundleName")) {
+        setErrorArray((prev) => [...prev, "bundleName"]);
+      }
+
+      flag = false;
+      alertText.push("Please provide name of bundle");
+    }
+    if (data.title.trim() == "") {
+      if (!errorArray.includes("bundleTitle")) {
+        setErrorArray((prev) => [...prev, "bundleTitle"]);
+      }
+      flag = false;
+      alertText.push("Please provide title of bundle");
+    }
+
+    if (flag == false) {      
+      alertCommon(setAlert, alertText, "critical", false);
+    }
+
+    if (flag == true) {
+      setSpinner(true);
+      setErrorArray("");
+
+      if (param.id == "create") {
+        try {
+          
+          const response = await postApi("/api/admin/createBundle", data, app);
+          if (response.data.status === 200) {
+            return (
+              toastNotification("success", "Saved", "bottom"),
+              navigate("/bundle")
+            );
+          } else {
+            return alertCommon(
+              setAlert,
+              ["Something went wrong"],
+              "warning",
+              false
+            );
+          }
+        } catch (err) {
+          console.log(err);
         }
       } else {
         const response = await postApi("/api/admin/updateBundle", data, app);
@@ -202,9 +245,16 @@ const FrequentlyBoughtTogether = () => {
             toastNotification("success", "Update successfully", "bottom"),
             navigate("/bundle")
           );
+        } else {
+          return alertCommon(
+            setAlert,
+            ["Something went wrong"],
+            "warning",
+            false
+          );
         }
       }
-
+    }
   };
 
   function calculateFinalPrice() {
@@ -269,7 +319,13 @@ const FrequentlyBoughtTogether = () => {
     <Spin spinning={spinner}>
     <div className="Polaris-Page Polaris-Page--fullWidth">
         <MoveToHomePage data={headerkey}/>
-        
+        {alert.state == true && (
+          <AlertSection
+            message={alert.message}
+            setAlert={setAlert}
+            status={alert.status}
+          />
+        )}
         <div className="sd-bundle-wrapper-common">
         
         <div className="sd-bundle-left-section-common">

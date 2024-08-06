@@ -1,11 +1,10 @@
 import {useState,useEffect} from 'react'
 
 import { Modal, Spin } from "antd";
-import ProductVariantData from '../productVariantData';
-import BxgyResourcePicker from './FBTResourcePicker';
-import XpickerData from './mainProductPickerData';
-import XproductVariantData from './FBTproductVariantData';
-import BXGYproductVariantData from './FBTproductVariantData';
+import FBTResourcePicker from './FBTResourcePicker';
+import FBTMainProductPickerData from './mainProductPickerData';
+import FBTProductVariantData from './FBTproductVariantData';
+// import BXGYproductVariantData from './FBTproductVariantData';
 
 const MainProducts = (props) => {
     const [myModal, setMyModal] = useState(false);
@@ -38,58 +37,73 @@ const MainProducts = (props) => {
         setCheckedIds,
         setVariantData,
       };
+
+      // const removeProductFromList = (item, index) => {
+      //   let update = [...props.data.bundleDetail.mainProducts];
+      //   update.splice(update.indexOf(item), 1);
+      //   let copy = [props.data.bundleDetail.display.productPagesList];
+    
+      //   let copy2 = copy.filter((item2) => item2 != item.id);
+    
+      //   if (update.length > 0 && copy2.length == 0) {
+      //       props.setData({
+      //       ...props.data,
+      //       bundleDetail: {
+      //         ...props.data.bundleDetail,
+      //         mainProducts: update,
+      //         display: {
+      //           ...props.data.bundleDetail.display,
+      //           productPages: false,
+      //           productPagesList: copy2,
+      //         },
+      //       },
+      //     });
+      //   } else if (update.length == 0) {
+      //       props.setData({
+      //       ...props.data,
+      //       bundleDetail: {
+      //         ...props.data.bundleDetail,
+      //         mainProducts: update,
+      //         display: {
+      //           ...props.data.bundleDetail.display,
+      //           productPages: true,
+      //           productPagesList: copy2,
+      //         },
+      //       },
+      //     });
+      //   } else {
+      //       props.setData({
+      //       ...props.data,
+      //       bundleDetail: {
+      //         ...props.data.bundleDetail,
+      //         mainProducts: update,
+      //         display: { ...props.data.bundleDetail.display, productPagesList: copy2 },
+      //       },
+      //     });
+      //   }
+      //   let copyErrorArray = [...xPickerError];
+      //   let copyArray = [];
+      //   copyErrorArray.map((item2) => {
+      //     if (item2 >= index) {
+      //       copyArray.push(item2 - 1);
+      //     }
+      //   });
+      //   setXpickerError(copyArray);
+      // };
+
       const removeProductFromList = (item, index) => {
         let update = [...props.data.bundleDetail.mainProducts];
-        update.splice(update.indexOf(item), 1);
-        let copy = [props.data.bundleDetail.display.productPagesList];
-    
-        let copy2 = copy.filter((item2) => item2 != item.id);
-    
-        if (update.length > 0 && copy2.length == 0) {
+        update.splice(update.indexOf(item), 1);       
             props.setData({
             ...props.data,
             bundleDetail: {
               ...props.data.bundleDetail,
               mainProducts: update,
-              display: {
-                ...props.data.bundleDetail.display,
-                productPages: false,
-                productPagesList: copy2,
-              },
             },
-          });
-        } else if (update.length == 0) {
-            props.setData({
-            ...props.data,
-            bundleDetail: {
-              ...props.data.bundleDetail,
-              mainProducts: update,
-              display: {
-                ...props.data.bundleDetail.display,
-                productPages: true,
-                productPagesList: copy2,
-              },
-            },
-          });
-        } else {
-            props.setData({
-            ...props.data,
-            bundleDetail: {
-              ...props.data.bundleDetail,
-              mainProducts: update,
-              display: { ...props.data.bundleDetail.display, productPagesList: copy2 },
-            },
-          });
-        }
-        let copyErrorArray = [...xPickerError];
-        let copyArray = [];
-        copyErrorArray.map((item2) => {
-          if (item2 >= index) {
-            copyArray.push(item2 - 1);
-          }
-        });
-        setXpickerError(copyArray);
+          });        
+       
       };
+
       const setOk = () => {
         let getData = variantData.data.filter(
           (item) => checkedIds.indexOf(item.id) != -1
@@ -157,8 +171,8 @@ const MainProducts = (props) => {
                 </button>
               </div>
 
-              <XpickerData
-                page="xproduct"
+              <FBTMainProductPickerData
+                page="fbtMainProducts"
                 modalType=""
                 data={props.data}
                 setData={props.setData}
@@ -176,7 +190,7 @@ const MainProducts = (props) => {
             className="sd-bundle-modal sd-bundle-modal-variant"
             // width={1000}
           >
-            <BXGYproductVariantData
+            <FBTProductVariantData
               checkedIds={checkedIds}
               setCheckedIds={setCheckedIds}
               variantData={variantData}
@@ -187,12 +201,12 @@ const MainProducts = (props) => {
         )}
 
             {myModal && (
-              <BxgyResourcePicker
+              <FBTResourcePicker
                 open={myModal}
                 setOpen={setMyModal}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
-                page={"xproduct"}
+                page={"fbtMainProducts"}
                 modalType="Product"
                 setData={props.setData}
                 type={props.type}

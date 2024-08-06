@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 // dotenv.config();
 
 const contactEmail = (req, res) => {
-  try {
+  try {   
     const shop = res.locals.shopify.session.shop;
     const { uname, umail, message, storePassword } = req.body;
     const __filename = fileURLToPath(import.meta.url);

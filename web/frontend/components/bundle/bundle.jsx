@@ -282,7 +282,7 @@ return check;
     bundle: (
 
       <div className="sd-bundle-dashboard-img-box">
-          {  ( item.bundleDetail.discountedProductType == "all_products"  ?<Thumbnail
+          {  ( item.bundleDetail.discountedProductType == "all_products"  ? <Thumbnail
    source={
      allProductsImg
    }
@@ -290,8 +290,9 @@ return check;
    alt="products thumbnails"
  />: null)}
         {item.type == "bxgy" ?
-        item.bundleDetail?.xproducts?.slice(0,3).map((ele,index) => {
+       [...item.bundleDetail?.xproducts,...item.bundleDetail?.yproducts]?.slice(0,3).map((ele,index) => {
           return (
+            
             <div key={index} className="sd-bundle-dashboard-img">
               {/* <img src={ele?.images ? ele.images[0].originalSrc : ele?.image ? ele.image.originalSrc:""} alt="" /> */}
               <Thumbnail
@@ -307,9 +308,11 @@ return check;
               />
              
             </div>
+            
+            
           );
         })
-       : item.bundleDetail?.products?.slice(0,3).map((ele,index) => {
+       : (item.bundleDetail?.discountedProductType == 'specific_product' ?  [...item.bundleDetail?.mainProducts,...item.bundleDetail?.offeredProducts] :item.bundleDetail?.products)?.slice(0,3).map((ele,index) => {
         return (
           <div key={index} className="sd-bundle-dashboard-img">
             {/* <img src={ele?.images ? ele.images[0].originalSrc : ele?.image ? ele.image.originalSrc:""} alt="" /> */}
@@ -441,7 +444,7 @@ return check;
     // </div>,
 
     // type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" :item.type == "fbt"? "Frequently Baught Together": item.type == "bxgy" ? "BUY X GET Y" :"",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" :item.type == "fbt"? "Frequently bought Together": item.type == "bxgy" ? "BUY X GET Y" :"",
     performance: item.analytics.bundleSold+" " +"Sold" ,
   }));
 
@@ -471,7 +474,7 @@ return check;
           )
         }
         { item.type == "bxgy" ?
-        item.bundleDetail?.xproducts?.slice(0,3).map((ele,index) => {
+        [...item.bundleDetail?.xproducts,...item.bundleDetail?.yproducts]?.slice(0,3).map((ele,index) => {
           return (
             <div key={index} className="sd-bundle-dashboard-img">
               {/* <img src={ele?.images ? ele.images[0].originalSrc : ele?.image ? ele.image.originalSrc:""} alt="" /> */}
@@ -490,7 +493,7 @@ return check;
             </div>
           );
         }) 
-       : item.bundleDetail?.products?.slice(0,3).map((ele,index) => {
+       : (item.bundleDetail?.discountedProductType == 'specific_product' ?  [...item.bundleDetail?.mainProducts,...item.bundleDetail?.offeredProducts] :item.bundleDetail?.products)?.slice(0,3).map((ele,index) => {
         {/* {console.log('check home items:*******',item)} */}
         return (
           <div key={index} className="sd-bundle-dashboard-img">
@@ -605,7 +608,7 @@ return check;
         />
       </div>
     ),
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" : item.type == "fbt"? "Frequently Baught Together" :"",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" : item.type == "fbt"? "Frequently bought Together" :item.type == "bxgy" ? "BUY X GET Y":"",
     performance: item.analytics.bundleSold +" "+ "Sold",
   }));
 
@@ -631,7 +634,7 @@ return check;
    alt="products thumbnails"
  />: null)}
          {item.type == "bxgy" ?
-        item.bundleDetail?.xproducts?.slice(0,3).map((ele,index) => {
+        [...item.bundleDetail?.xproducts,...item.bundleDetail?.yproducts]?.slice(0,3).map((ele,index) => {
           return (
             <div key={index} className="sd-bundle-dashboard-img">
               {/* <img src={ele?.images ? ele.images[0].originalSrc : ele?.image ? ele.image.originalSrc:""} alt="" /> */}
@@ -650,7 +653,7 @@ return check;
             </div>
           );
         })
-       : item.bundleDetail?.products?.slice(0,3).map((ele,index) => {
+       : (item.bundleDetail?.discountedProductType == 'specific_product' ?  [...item.bundleDetail?.mainProducts,...item.bundleDetail?.offeredProducts] :item.bundleDetail?.products)?.slice(0,3).map((ele,index) => {
         return (
           <div key={index} className="sd-bundle-dashboard-img">
             {/* <img src={ele?.images ? ele.images[0].originalSrc : ele?.image ? ele.image.originalSrc:""} alt="" /> */}
@@ -732,7 +735,27 @@ return check;
       : item.bundleDetail.discountType == "noDiscount"
       ? "No Discount"
       : null
-    : null,
+    :   item.type == "fbt"
+      ? item.bundleDetail.discountType == "percent"
+        ? `${item.bundleDetail.discountValue}% off`
+        : item.bundleDetail.discountType == "fixed"
+        ? `Rs.${item.bundleDetail.discountValue} off`
+        : item.bundleDetail.discountType == "price"
+        ? `Fixed Rs.${item.bundleDetail.discountValue} `
+        : item.bundleDetail.discountType == "freeShipping"
+        ? "Free Shipping"
+        : item.bundleDetail.discountType == "noDiscount"
+        ? "No Discount"
+        :null
+    : item.type == "bxgy"
+    ? item.bundleDetail.discountType == "percent"
+      ? `${item.bundleDetail.discountValue}% off`
+      : item.bundleDetail.discountType == "fixed"
+      ? `Rs.${item.bundleDetail.discountValue} off`
+      : item.bundleDetail.discountType == "free"
+      ? "Free Gift"
+      :null
+    :null  ,
     status: (
       <div>
         <Switch
@@ -742,7 +765,7 @@ return check;
         />
       </div>
     ),
-    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" :item.type == "productMixMatch" ? "Product Mix & Match" : item.type == "collectionMixMatch" ? "Collection Mix & Match" : "",
+    type: item.type == "productBundle" ? "Product Bundle" : item.type == "volumeBundle" ? "Volume Bundle" : item.type == "collectionMixMatch" ? "Collection Mix & Match" :item.type == "productMixMatch" ? "Product Mix & Match" :item.type == "fbt"? "Frequently bought Together": item.type == "bxgy" ? "BUY X GET Y" :"",
     performance: item.analytics.bundleSold +" "+ "Sold",
   }));
 

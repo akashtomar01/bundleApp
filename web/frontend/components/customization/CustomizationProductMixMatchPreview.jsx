@@ -5,7 +5,7 @@ import {
 } from "@ant-design/icons";
 
 const CustomizationProductMixMatchPreview = ({data}) =>{
-  console.log("check data ****",data);
+ 
   return(
   
       <div 

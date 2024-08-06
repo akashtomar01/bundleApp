@@ -151,18 +151,12 @@ export async function getBundleData(req, res) {
             },
             {
               $and: [
-                { type: "fbt" },
+                { type: "fbt"},
                 {
                   $or: [
-                    { "bundleDetail.display.productPages": false },
-                    {
-                      $and: [
-                        { "bundleDetail.display.productPages": true },
-                        {
-                          "bundleDetail.display.productPagesList": pId,
-                        },
-                      ],
-                    },
+                    { "bundleDetail.mainProducts":{ $elemMatch: { id: pId }}},                    
+                    { "bundleDetail.offeredProducts":{ $elemMatch: { id: pId }}}, 
+                    {"bundleDetail.discountedProductType": "all_products"}               
                   ],
                 },
               ],
@@ -647,7 +641,7 @@ export async function getBundleClick(req, res) {
       res.status(200).send("success");
     }
   } catch (error) {
-    console.log(error.message);
+    console.log("error",error.message);
   }
 }
 

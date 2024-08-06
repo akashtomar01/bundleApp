@@ -2,7 +2,6 @@ import React from "react" ;
 import { TextField } from "@shopify/polaris";
 
 const Box=(props)=>{
-console.log(props)
 
      let dataToChange=props["data"][props.bundleOption]
     const handleChangeCommon=(e,key1,key2,bundleOption)=>{

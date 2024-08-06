@@ -30,7 +30,7 @@ const BundleCustomization = () => {
     async function getCustomizationData(){
       setSpinner(true)
       const response = await postApi("/api/admin/getCustomization",{},app)
-      console.log('get api call',response);
+    
       if(response.data.status == 200){
         setSpinner(false)
         

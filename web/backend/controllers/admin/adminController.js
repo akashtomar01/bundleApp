@@ -291,7 +291,10 @@ export async function getBundle (req,res){
           "bundleDetail.products.image" : 1,
           "bundleDetail.discountType":1,
           "bundleDetail.xproducts":1,
-          "bundleDetail.yproducts":1
+          "bundleDetail.yproducts":1,
+          "bundleDetail.mainProducts":1,
+          "bundleDetail.offeredProducts":1,
+          "bundleDetail.discountedProductType":1          
         }
       },
       {

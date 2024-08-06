@@ -71,7 +71,6 @@ function CreateBundle() {
   });
 
   const app = useAppBridge();
-console.log("check error array**************************",pickerError);
   const getBundleData = async () => {
     let body = { id: param.id };
     setSpinner(true);
@@ -145,13 +144,11 @@ console.log("check error array**************************",pickerError);
 
   // }
 
-  //   };
-  
-console.log("hellloooo******check******error*******s",pickerError);
+  //   };  
+
   const removeProductFromList = (item, index) => {
     // console.log("check-****-*****-*****",index);
-    let update = [...data.bundleDetail.products];
-    console.log("nbnbnbnnnnbbbnbbn*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-",index,item);
+    let update = [...data.bundleDetail.products];   
     update.splice(update.indexOf(item), 1);
     let copy = [...data.bundleDetail.display.productPagesList];
 
@@ -535,7 +532,7 @@ setShowPrice({});
       setPickerError([]);
       if (param.id == "create") {
        try{
-        console.log("in the try")
+       
         const response = await postApi("/api/admin/createBundle", data, app);
         if (response.data.status === 200) {
           return toastNotification("success", "Saved", "bottom"), navigate("/bundle");

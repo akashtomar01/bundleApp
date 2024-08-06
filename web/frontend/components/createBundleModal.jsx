@@ -3,12 +3,10 @@ import { ResourcePicker } from "@shopify/app-bridge-react";
 
 function CreateBundleModal(props) {
 
-  const handleCancel = () => {
-    
+  const handleCancel = () => {    
     if (props.searchValue) {
       props.setSearchValue("");
     }
-
     props.setOpen(false);
   };
 
@@ -19,7 +17,7 @@ function CreateBundleModal(props) {
       let x = {};
       
       props?.data.bundleDetail.products.map((item) => {
-        console.log("item for checking:",item)
+      
         x[item.id] = item.minimumOrder ? item.minimumOrder : 0;
       });
       const result1 = e.selection.filter(({ id: id1 }) =>
@@ -80,7 +78,7 @@ function CreateBundleModal(props) {
       let x = {};
       
       props?.data.bundleDetail.products.map((item) => {
-        console.log("item for checking:",item)
+        
         x[item.id] = item.minimumOrder ? item.minimumOrder : 0;
       });
       const result1 = e.selection.filter(({ id: id1 }) =>

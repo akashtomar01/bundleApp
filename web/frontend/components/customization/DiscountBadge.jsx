@@ -4,15 +4,8 @@ import { TextField,Select } from "@shopify/polaris";
 import { Radio,Space,Avatar } from 'antd';
 import { handleChangeCommon,handleChangeValueCommon } from "../helperFunctions";
 const DiscountBadge=({data,setData,bundleOption,displayOption})=>{
-  console.log(data)
-
-
-
-
-
-
-
-    const handleText=(newvalue)=>{
+ 
+  const handleText=(newvalue)=>{
            setData({...data,
             [bundleOption]:{
                 ...data[bundleOption],

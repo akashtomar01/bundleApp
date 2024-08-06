@@ -1,12 +1,8 @@
 import {useState,useEffect} from 'react'
-
-import { Modal, Spin } from "antd";
-import ProductVariantData from '../productVariantData';
-import BxgyResourcePicker from './FBTResourcePicker';
-import XpickerData from './mainProductPickerData';
-import XproductVariantData from './FBTproductVariantData';
-import YpickerData from './offeredProductPickerData';
-import BXGYproductVariantData from './FBTproductVariantData';
+import { Modal } from "antd";
+import FBTResourcePicker from './FBTResourcePicker';
+import FBTProductVariantData from './FBTproductVariantData';
+import FBTOfferedProductPickerData from './offeredProductPickerData';
 
 const OfferedProducts = (props) => {
     const [myModal, setMyModal] = useState(false);
@@ -19,6 +15,21 @@ const OfferedProducts = (props) => {
   const [xPickerError, setXpickerError] = useState([]);
   const [errorArray, setErrorArray] = useState([]);
   const [disable,setDisable] = useState(true);
+
+  useEffect(()=>{
+    handleDisable();
+  },[props.mainProductsLength]);
+  
+  useEffect(()=>{
+    if(props.data.bundleDetail.offeredProducts.length >=3){
+     
+     setDisable(true)
+
+    }
+    
+ 
+  },[props.data.bundleDetail.offeredProducts]);
+  
     
     const handleSearchInput = (e) => {
         const { value } = e.target;
@@ -40,57 +51,24 @@ const OfferedProducts = (props) => {
         setVariantData,
       };
       const removeProductFromList = (item, index) => {
+      
         let update = [...props.data.bundleDetail.offeredProducts];
-        update.splice(update.indexOf(item), 1);
-        let copy = [props.data.bundleDetail.display.productPagesList];
-    
-        let copy2 = copy.filter((item2) => item2 != item.id);
-    
-        if (update.length > 0 && copy2.length == 0) {
+        update.splice(update.indexOf(item), 1);  
             props.setData({
             ...props.data,
             bundleDetail: {
               ...props.data.bundleDetail,
-              offeredProducts: update,
-              display: {
-                ...props.data.bundleDetail.display,
-                productPages: false,
-                productPagesList: copy2,
-              },
+              offeredProducts: update,             
             },
-          });
-        } else if (update.length == 0) {
-            props.setData({
-            ...props.data,
-            bundleDetail: {
-              ...props.data.bundleDetail,
-              offeredProducts: update,
-              display: {
-                ...props.data.bundleDetail.display,
-                productPages: true,
-                productPagesList: copy2,
-              },
-            },
-          });
-        } else {
-            props.setData({
-            ...props.data,
-            bundleDetail: {
-              ...props.data.bundleDetail,
-              offeredProducts: update,
-              display: { ...props.data.bundleDetail.display, productPagesList: copy2 },
-            },
-          });
-        }
-        let copyErrorArray = [...xPickerError];
-        let copyArray = [];
-        copyErrorArray.map((item2) => {
-          if (item2 >= index) {
-            copyArray.push(item2 - 1);
-          }
-        });
-        setXpickerError(copyArray);
+          });    
+          
+          // handling browse button
+ 
+  if(update.length < 3){
+setDisable(false)
+  }
       };
+      
       const setOk = () => {
         let getData = variantData.data.filter(
           (item) => checkedIds.indexOf(item.id) != -1
@@ -119,8 +97,7 @@ const OfferedProducts = (props) => {
     
           setAntModal(false);
         } else if (checkedIds.length == 0) {
-          setErrorArray([...errorArray, "uncheckedVariantModal"]);
-    
+          setErrorArray([...errorArray, "uncheckedVariantModal"]);    
           return false;
         }
       };
@@ -132,9 +109,7 @@ const OfferedProducts = (props) => {
           setDisable(true);
         }
       }
-      useEffect(()=>{
-        handleDisable();
-      },[props.mainProductsLength]);
+    
 
       const setCancel = () => {
         setVariantData([]);
@@ -172,8 +147,8 @@ const OfferedProducts = (props) => {
                 </button>
               </div>
 
-              <YpickerData
-                page="yproduct"
+              <FBTOfferedProductPickerData
+                page="fbtOfferedProducts"
                 modalType=""
                 data={props.data}
                 setData={props.setData}
@@ -191,27 +166,27 @@ const OfferedProducts = (props) => {
             className="sd-bundle-modal sd-bundle-modal-variant"
             // width={1000}
           >
-            <BXGYproductVariantData
+            <FBTProductVariantData
               checkedIds={checkedIds}
               setCheckedIds={setCheckedIds}
               variantData={variantData}
               loader={loader}
-              errorArray={errorArray}
+              errorArray={errorArray}         
             />
           </Modal>
         )}
 
             {myModal && (
-              <BxgyResourcePicker
+              <FBTResourcePicker
                 open={myModal}
                 setOpen={setMyModal}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
-                page={"yproduct"}
+                page={"fbtOfferedProducts"}
                 modalType="Product"
                 setData={props.setData}
-                data={props.data}
-                selectMultiple={5}
+                data={props.data}       
+                   
               />
             )}
            

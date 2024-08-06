@@ -709,7 +709,7 @@ if(param.id !== "create"){
   const handleDelete = () => {};
 
   const handleSave = async() => {
-    console.log("enter in handle save");
+   
     let alertText=[]
     let flag=true;
 
@@ -727,10 +727,9 @@ if(param.id !== "create"){
       alertText.push(message)
     }else{
       let copy = [...errorArray];
-      console.log("enter in else part of**********--************-*************");
+   
       if(errorArray.includes("emptyProduct")==true){
-        console.log("enter in else part of**********--************-*************",errorArray.indexOf("emptyProduct"));
-
+        
         errorArray.splice(copy.indexOf("emptyProduct"),1);
         setErrorArray([...errorArray]);
       }
@@ -787,8 +786,7 @@ if(param.id !== "create"){
     }
 
     if(errorArray.length>0){
-      console.log("error length********",errorArray);
-      return false;
+         return false;
     }else{
       if(flag==true){
         setErrorArray([]);
@@ -821,7 +819,7 @@ if(param.id !== "create"){
      //     );
      //   }
      // }
-     console.log("**************************param.id",param.id);
+    
      if (param.id == "create") {
        setSpinner(true);
        const response = await postApi("/api/admin/createBundle", data, app);
@@ -865,7 +863,7 @@ if(param.id !== "create"){
     //    return alertCommon(setAlert, ["Something went wrong"],"warning",false)
      }
     }
-    console.log("check the errors and flag",errorArray,flag);
+
 }
   return (
     <Spin spinning={spinner}

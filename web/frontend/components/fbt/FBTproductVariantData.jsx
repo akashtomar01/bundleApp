@@ -1,9 +1,9 @@
 import React from 'react'
 import { LoadingOutlined} from "@ant-design/icons";
 import { Spin,Checkbox } from "antd";
-import { Thumbnail,InlineError } from "@shopify/polaris";
+import { Thumbnail} from "@shopify/polaris";
 import noImg from "../../assets/no-Image.png" 
-const BXGYproductVariantData = (props) => {
+const FBTProductVariantData = (props) => {
   return (
     <Spin
     spinning={props.loader}
@@ -64,4 +64,4 @@ const BXGYproductVariantData = (props) => {
   )
 }
 
-export default BXGYproductVariantData
+export default FBTProductVariantData

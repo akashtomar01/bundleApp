@@ -11,33 +11,17 @@ const BxgyBundlePreviewData = ({
   handleVariantChoice,
 }) => {
   const { shop, timeZone, currencyCode } = useAPI();
-  console.log("bxgypreviewdta", data);
-  
+ 
 
 
   return (
     <div className="sd-bundle-bundleSection-common sd-bundle-productBundle-preview first-previewCard">
       <div className="sd-bundle-bundleSection-heading-common">Preview</div>
-<<<<<<< HEAD
-      
-  { data.bundleDetail.xproducts.length && data.bundleDetail.yproducts.length > 0 ? <div class="sd-preview-wrapper-common sd-productBundle-preview-specific" style={{"backgroundColor":data.customization[0].buyXgetY.box.backgroundColor,"border":data.customization[0].buyXgetY.box.thickness+"px solid"+ data.customization[0].buyXgetY.box.borderColor,"borderRadius":data.customization[0].buyXgetY.box.borderRadius+"px"}}>
-{data.customization[0].buyXgetY.button.position=="top" &&
-        <div class="bxgy_productT_Cart-bottom">
-            <button style={{"color":data.customization[0].buyXgetY.button.color,"fontSize":data.customization[0].buyXgetY.button.fontSize+"px","backgroundColor":data.customization[0].buyXgetY.button.backgroundColor}}>Add to Cart</button>
-        </div>}
-        <h5 style={{"color":data.customization[0].buyXgetY.title.color, "fontSize": data.customization[0].buyXgetY.title.fontSize + "px","fontWeight":data.customization[0].buyXgetY.title.titleBold,"textAlign":data.customization[0].buyXgetY.title.alignment }}>{data.title}</h5>
-        <p style={{"color":data.customization[0].buyXgetY.title.descriptionColor, "fontSize": data.customization[0].buyXgetY.title.descriptionFontSize + "px","fontWeight":data.customization[0].buyXgetY.title.descriptionBold,"textAlign":data.customization[0].buyXgetY.title.alignment  }}>Bundle description</p>
-        <div class="bxgy_productsListing_main">
-           {data.bundleDetail.xproducts.map((item,index)=>{
-            return (
-              <>
-=======
->>>>>>> 1ae11fa69423d7b049c32a57342e1410b2cab9ce
 
       {data.bundleDetail.xproducts.length &&
       data.bundleDetail.yproducts.length > 0 ? (
         <div
-          class="sd-preview-wrapper-common sd-productBundle-preview-specific"
+          className="sd-preview-wrapper-common sd-productBundle-preview-specific"
           style={{
             backgroundColor: data.customization[0].buyXgetY.box.backgroundColor,
             border:
@@ -49,7 +33,7 @@ const BxgyBundlePreviewData = ({
           }}
         >
           {data.customization[0].buyXgetY.button.position == "top" && (
-            <div class="bxgy_productT_Cart-bottom">
+            <div className="bxgy_productT_Cart-bottom">
               <button
                 style={{
                   color: data.customization[0].buyXgetY.button.color,
@@ -84,11 +68,11 @@ const BxgyBundlePreviewData = ({
           >
             {data.description}
           </p>
-          <div class="bxgy_productsListing_main">
+          <div className="bxgy_productsListing_main">
             {data.bundleDetail.xproducts.map((item, index) => {
               return (
-                <>
-                  <div class="bxgy_products_listing">
+                <div key={index}>
+                  <div className="bxgy_products_listing" >
                     <div
                       style={{
                         borderColor:
@@ -98,7 +82,7 @@ const BxgyBundlePreviewData = ({
                           data.customization[0].buyXgetY.productDetails.image
                             .borderRadius + "px",
                       }}
-                      class="bxgy_product_listingImg"
+                      className="bxgy_product_listingImg"
                     >
                       <img
                         style={{
@@ -113,7 +97,7 @@ const BxgyBundlePreviewData = ({
                         }
                       ></img>
                     </div>
-                    <div class="bxgy_product_listingText">
+                    <div className="bxgy_product_listingText">
                       <h6
                         style={{
                           color:
@@ -158,7 +142,7 @@ const BxgyBundlePreviewData = ({
                           data.customization[0].buyXgetY.productDetails
                             .quantities.borderColor,
                       }}
-                      class="bxgy_product_listingClose"
+                      className="bxgy_product_listingClose"
                     >
                       <h3
                         style={{
@@ -172,11 +156,11 @@ const BxgyBundlePreviewData = ({
                     </div>
                   </div>
                   {item.variants.length > 1 && (
-                    <div class="bxgy_product_variant_main">
+                    <div className="bxgy_product_variant_main">
                       {Array.from({ length: item.minimumOrder }).map(
                         (emptyItem, index) => {
                           return (
-                            <div class="bxgy_product_variant">
+                            <div className="bxgy_product_variant" key={index}>
                               <h6
                                 style={{
                                   color:
@@ -186,7 +170,7 @@ const BxgyBundlePreviewData = ({
                               >
                                 {index + 1}
                               </h6>
-                              <div class="bxgy_selected_field">
+                              <div className="bxgy_selected_field">
                                 <select
                                   style={{
                                     backgroundColor:
@@ -201,11 +185,11 @@ const BxgyBundlePreviewData = ({
                                         .productDetails.variantSelector
                                         .borderColor,
                                   }}
-                                  class="selectpicker"
+                                  className="selectpicker"
                                   disabled={true}
                                 >
                                   {item.variants.map((vItem, i) => {
-                                    return <option>{vItem.title}</option>;
+                                    return <option key={i}>{vItem.title}</option>;
                                   })}
                                 </select>
                               </div>
@@ -215,20 +199,20 @@ const BxgyBundlePreviewData = ({
                       )}
                     </div>
                   )}
-                </>
+                </div>
               );
             })}
           </div>
 
-          <div class="bxgy_plusProduct_icon">
+          <div className="bxgy_plusProduct_icon">
             <h5>+</h5>
           </div>
 
-          <div class="bxgy_productsListing_main">
+          <div className="bxgy_productsListing_main">
             {data.customization[0].buyXgetY.DiscountBadge.badgeType ==
             "rightBanner" ? (
               <div
-                class="bxgy_productDiscount_badges"
+                className="bxgy_productDiscount_badges"
                 style={{
                   background:
                     data.customization[0].buyXgetY.DiscountBadge
@@ -257,7 +241,7 @@ const BxgyBundlePreviewData = ({
             ) : data.customization[0].buyXgetY.DiscountBadge.badgeType ==
               "leftBanner" ? (
               <div
-                class="bxgy_productDiscount_badges left"
+                className="bxgy_productDiscount_badges left"
                 style={{
                   background:
                     data.customization[0].buyXgetY.DiscountBadge
@@ -285,7 +269,7 @@ const BxgyBundlePreviewData = ({
               </div>
             ) : data.customization[0].buyXgetY.DiscountBadge.badgeType ==
               "ribbon" ? (
-              <div class="dis-ribbon">
+              <div className="dis-ribbon">
                 <span
                   style={{
                     background:
@@ -312,8 +296,8 @@ const BxgyBundlePreviewData = ({
 
             {data.bundleDetail.yproducts.map((item, index) => {
               return (
-                <>
-                  <div class="bxgy_products_listing second">
+                <div key={index}>
+                  <div className="bxgy_products_listing second" >
                     <div
                       style={{
                         borderColor:
@@ -323,7 +307,7 @@ const BxgyBundlePreviewData = ({
                           data.customization[0].buyXgetY.productDetails.image
                             .borderRadius + "px",
                       }}
-                      class="bxgy_product_listingImg"
+                      className="bxgy_product_listingImg"
                     >
                       <img
                         style={{
@@ -338,7 +322,7 @@ const BxgyBundlePreviewData = ({
                         }
                       ></img>
                     </div>
-                    <div class="bxgy_product_listingText">
+                    <div className="bxgy_product_listingText">
                       <h6
                         style={{
                           color:
@@ -382,7 +366,7 @@ const BxgyBundlePreviewData = ({
                           data.customization[0].buyXgetY.productDetails
                             .quantities.borderColor,
                       }}
-                      class="bxgy_product_listingClose"
+                      className="bxgy_product_listingClose"
                     >
                       <h3
                         style={{
@@ -397,11 +381,11 @@ const BxgyBundlePreviewData = ({
                   </div>
 
                   {item.variants.length > 1 && (
-                    <div class="bxgy_product_variant_main">
+                    <div className="bxgy_product_variant_main">
                       {Array.from({ length: item.minimumOrder }).map(
                         (emptyItem, index) => {
                           return (
-                            <div class="bxgy_product_variant">
+                            <div className="bxgy_product_variant" key={index}>
                               <h6
                                 style={{
                                   color:
@@ -411,7 +395,7 @@ const BxgyBundlePreviewData = ({
                               >
                                 {index + 1}
                               </h6>
-                              <div class="bxgy_selected_field">
+                              <div className="bxgy_selected_field">
                                 <select
                                   style={{
                                     backgroundColor:
@@ -426,11 +410,11 @@ const BxgyBundlePreviewData = ({
                                         .productDetails.variantSelector
                                         .borderColor,
                                   }}
-                                  class="selectpicker"
+                                  className="selectpicker"
                                   disabled={true}
                                 >
                                   {item.variants.map((vItem, i) => {
-                                    return <option>{vItem.title}</option>;
+                                    return <option key={i}>{vItem.title}</option>;
                                   })}
                                 </select>
                               </div>
@@ -440,19 +424,19 @@ const BxgyBundlePreviewData = ({
                       )}
                     </div>
                   )}
-                </>
+                </div>
               );
             })}
           </div>
 
           <div
-            class="bxgy_productTotal"
+            className="bxgy_productTotal"
             style={{
               backgroundColor:
                 data.customization[0].buyXgetY.totalSection.background,
             }}
           >
-            <div class="bxgy_productTotal_text">
+            <div className="bxgy_productTotal_text">
               <h4
                 style={{
                   color: data.customization[0].buyXgetY.totalSection.color,
@@ -463,7 +447,7 @@ const BxgyBundlePreviewData = ({
                 Total
               </h4>
             </div>
-            <div class="bxgy_productTotal_price">
+            <div className="bxgy_productTotal_price">
               <h3
                 style={{
                   color:
@@ -492,7 +476,7 @@ const BxgyBundlePreviewData = ({
             </div>
           </div>
           {data.customization[0].buyXgetY.button.position == "bottom" && (
-            <div class="bxgy_productT_Cart">
+            <div className="bxgy_productT_Cart">
               <button
                 style={{
                   color: data.customization[0].buyXgetY.button.color,
